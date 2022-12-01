@@ -1,0 +1,18 @@
+type Donation @searchable @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  amount: Int
+  description: String
+  date: AWSDate
+  donorID: ID! @index(name: "byDonor")
+  Donor: Donor @belongsTo(fields: ["donorID"])
+}
+
+type Donor @searchable @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  date: AWSDate
+  Donations: [Donation] @hasMany(indexName: "byDonor", fields: ["id"])
+}
+ 
