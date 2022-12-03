@@ -2,13 +2,15 @@
 import { reactive } from 'vue'
 import TableLite from "vue3-table-lite";
 import { DonorsApi } from '../api/DonorsApi';
+import { DonationsApi } from '../api/DonationsApi';
+import ApiSelectComponent from '../components/ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
 import createSearchFilter from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, FilterComponent },
+  components: { TableLite, ApiSelectComponent, FilterComponent },
 
-  async setup(props) {
+  async setup() {
     const table = reactive({
       isLoading: true,
       columns: [
@@ -28,13 +30,18 @@ export default {
           width: "3%",
         },
         {
-          label: "Брой дарения",
-          field: "donationsNumber",
+          label: "Дарител",
+          field: "donor",
+          width: "5%",
+        },
+        {
+          label: "Сума",
+          field: "amount",
           width: "3%",
         },
         {
-          label: "Общо дарени",
-          field: "donationsSum",
+          label: "Използвани",
+          field: "expensesSum",
           width: "3%",
         },
       ],
@@ -43,55 +50,58 @@ export default {
     });
 
     const donorsApi = new DonorsApi();
+    const donationsApi = new DonationsApi();
 
-    const searchDonors = async (filter = {}) => {
-      const apiDonors = await donorsApi.search(filter);
-      const rows = parseApiDonors(apiDonors.items);
+    const searchDonations = async (filter = {}) => {
+      const apiDonations = await donationsApi.search(filter);
+      const rows = parseApiDonations(apiDonations.items);
       table.rows = rows;
-      table.totalRecordCount = apiDonors.total;
+      table.totalRecordCount = apiDonations.total;
       table.isLoading = false;
     }
 
+    const formInputs = reactive({
+        donorID: {
+          type: 'string',
+        }
+      });
+
     const filterCallback = async (event) => {
+      
       const filter = {};
-      for (let e in event) {
+      [event, formInputs].forEach(input => {
+        for (let e in input) {
         filter[e] = {
           type: input[e].type,
           value: input[e].value
         }
-      };
+      }
+      });
       
       const searchFilter = createSearchFilter(filter);
-      await searchDonors(searchFilter);
+      await searchDonations(searchFilter);
       
     }
 
-    await searchDonors();
+    await searchDonations();
 
     return {
       table,
-      filterCallback
+      donorsApi,
+      filterCallback,
+      formInputs
     };
   }
 }
 
-function parseApiDonors(apiDonors) { 
-  return apiDonors.map(donor => {
-    let donationsSum, donationsNumber;
-
-    if (donor.Donations && donor.Donations.items) {
-      donationsSum = 0;
-      donor.Donations.items.forEach(donation => {
-        donationsSum += donation.amount;
-      });
-      donationsNumber = donor.Donations.items.length;
-    }
+function parseApiDonations(apiDonations) {
+  return apiDonations.map(donation => {
     return {
-      name: donor.name, 
-      date: donor.date,
-      description: donor.description,
-      donationsSum: donationsSum, 
-      donationsNumber: donationsNumber
+      name: donation.name, 
+      date: donation.date,
+      description: donation.description,
+      amount: donation.amount, 
+      donor: donation.Donor.name
     }
   });
 }
@@ -103,9 +113,17 @@ function parseApiDonors(apiDonors) {
   :config="[
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
-      {name: 'date', label: 'дата', type: 'date'}]"
+      {name: 'date', label: 'дата', type: 'date'},
+      ]"
   @filterButtonClick="filterCallback"  
->  
+>
+  <template #filter1>
+    <label>Дарител</label>
+    <div>
+      <ApiSelectComponent :api="donorsApi" v-model="formInputs.donorID.value" />
+    </div>
+  </template>
+  
 </FilterComponent>
 
   <div>
@@ -120,11 +138,4 @@ function parseApiDonors(apiDonors) {
     />
   </div>
 </template>
-
-<style scoped>
-  main {
-    display: flex;
-    align-items: center;
-  }
-</style>
 

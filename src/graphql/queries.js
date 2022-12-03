@@ -147,6 +147,9 @@ export const searchDonations = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        Donor {
+          name
+        }
       }
       nextToken
       total

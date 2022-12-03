@@ -1,8 +1,8 @@
 <script>
-import DonorsList from '../components/DonorsList.vue'
+import DonationsList from '../components/DonationsList.vue'
 
 export default {
-  components: { DonorsList }
+  components: { DonationsList }
 }
 </script>
 
@@ -10,7 +10,7 @@ export default {
   <div class="main-content">
     <Suspense>
       <template #default>
-        <DonorsList />
+        <DonationsList />
       </template>
       <template #fallback>
         <div class="loading">
