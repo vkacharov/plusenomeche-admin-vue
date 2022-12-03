@@ -2,12 +2,12 @@
 import DonorsList from '../components/DonorsList.vue'
 
 export default {
-  components: { DonorsList },
+  components: { DonorsList }
 }
 </script>
 
 <template>
-  <main>
+  <div class="main-content">
     <Suspense>
       <template #default>
         <DonorsList />
@@ -18,7 +18,7 @@ export default {
         </div>
       </template>      
     </Suspense>
-  </main>
+  </div>
 </template>
 
 <style scoped>

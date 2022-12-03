@@ -1,67 +1,150 @@
 <script>
 import { reactive } from 'vue'
 import TableLite from "vue3-table-lite";
-import { API } from 'aws-amplify';
-import { searchDonors } from '../graphql/queries';
+import { DonorsApi } from '../api/DonorsApi';
+import ApiSelectComponent from '../components/ApiSelectComponent.vue';
+import FilterComponent from './FilterComponent.vue';
+import createSearchFilter from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite },
+  components: { TableLite, ApiSelectComponent, FilterComponent },
 
-  async setup() {
-    const donors = await API.graphql({
-          query: searchDonors,
-          variables: { limit: 100 }
-        });
+  data() {
+    return {
+      formInputs: {
+        donorId: {
+          type: 'string',
+        }
+      }
+    }
+  },
 
-    console.log('DONORS', donors);
-    const rows = donors.data.searchDonors.items;
-
+  async setup(props) {
     const table = reactive({
-      isLoading: false,
+      isLoading: true,
       columns: [
         {
           label: "Име",
           field: "name",
-          width: "3%",
-          sortable: false,
-          isKey: false,
+          width: "5%",
         },
         {
           label: "Описание",
           field: "description",
-          width: "15%",
-          sortable: false,
+          width: "12%",
         },
         {
-          label: "Дата на започване",
+          label: "Дата",
           field: "date",
-          width: "1%",
-          sortable: false,
+          width: "3%",
+        },
+        {
+          label: "Брой дарения",
+          field: "donationsNumber",
+          width: "3%",
+        },
+        {
+          label: "Общо дарени",
+          field: "donationsSum",
+          width: "3%",
         },
       ],
-      rows: rows,
-      totalRecordCount: rows.length
+      rows: [],
+      totalRecordCount: 0
     });
 
+    const donorsApi = new DonorsApi();
+
+    const searchDonors = async (filter = {}) => {
+      const apiDonors = await donorsApi.search(filter);
+      const rows = parseApiDonors(apiDonors.items);
+      table.rows = rows;
+      table.totalRecordCount = apiDonors.total;
+      table.isLoading = false;
+    }
+
+    const filterCallback = async (event) => {
+      const filter = {};
+      for (let e in event) {
+        filter[e] = {
+          type: event[e].type,
+          value: event[e].value
+        }
+      }
+
+      for (let e in props.formInputs) {
+        filter[e] = {
+          type: event[e].type,
+          value: event[e].value
+        }
+      }
+      
+      const searchFilter = createSearchFilter(filter);
+      await searchDonors(searchFilter);
+      
+    }
+
+    await searchDonors();
+
     return {
-      table
+      table,
+      donorsApi, 
+      filterCallback
     };
   }
+}
+
+function parseApiDonors(apiDonors) { 
+  return apiDonors.map(donor => {
+    let donationsSum, donationsNumber;
+
+    if (donor.Donations && donor.Donations.items) {
+      donationsSum = 0;
+      donor.Donations.items.forEach(donation => {
+        donationsSum += donation.amount;
+      });
+      donationsNumber = donor.Donations.items.length;
+    }
+    return {
+      name: donor.name, 
+      date: donor.date,
+      description: donor.description,
+      donationsSum: donationsSum, 
+      donationsNumber: donationsNumber
+    }
+  });
 }
 </script>
 
 <template>
-  <main>
+
+<FilterComponent 
+  :config="[
+      {name: 'name', label: 'име', type: 'string'}, 
+      {name: 'description', label: 'описание', type: 'string'}, 
+      {name: 'date', label: 'дата', type: 'date'}]"
+  @filterButtonClick="filterCallback"  
+>
+  <template #filter1>
+    <label>Дарител</label>
+    <div>
+      <ApiSelectComponent :api="donorsApi" />
+    </div>
+  </template>
+  
+</FilterComponent>
+
+  <div>
     <table-lite
       :is-loading="table.isLoading"
       :columns="table.columns"
       :rows="table.rows"
       :total="table.totalRecordCount"
-      :sortable="false"
+
       @is-finished="table.isLoading = false"
       :isHidePaging="true"
     />
-  </main>
+  </div>
 </template>
 
 <style scoped>

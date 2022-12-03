@@ -265,6 +265,12 @@ export const searchDonors = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        Donations {
+          items {
+            name,
+            amount
+          }
+        }
       }
       nextToken
       total
