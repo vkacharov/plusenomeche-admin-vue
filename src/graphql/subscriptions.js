@@ -1,13 +1,311 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateExpense = /* GraphQL */ `
+  subscription OnCreateExpense($filter: ModelSubscriptionExpenseFilterInput) {
+    onCreateExpense(filter: $filter) {
+      id
+      name
+      description
+      date
+      causeID
+      donationID
+      amount
+      Cause {
+        id
+        name
+        description
+        date
+        amount
+        type
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Donation {
+        id
+        name
+        description
+        amount
+        type
+        date
+        donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateExpense = /* GraphQL */ `
+  subscription OnUpdateExpense($filter: ModelSubscriptionExpenseFilterInput) {
+    onUpdateExpense(filter: $filter) {
+      id
+      name
+      description
+      date
+      causeID
+      donationID
+      amount
+      Cause {
+        id
+        name
+        description
+        date
+        amount
+        type
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Donation {
+        id
+        name
+        description
+        amount
+        type
+        date
+        donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteExpense = /* GraphQL */ `
+  subscription OnDeleteExpense($filter: ModelSubscriptionExpenseFilterInput) {
+    onDeleteExpense(filter: $filter) {
+      id
+      name
+      description
+      date
+      causeID
+      donationID
+      amount
+      Cause {
+        id
+        name
+        description
+        date
+        amount
+        type
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Donation {
+        id
+        name
+        description
+        amount
+        type
+        date
+        donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateCause = /* GraphQL */ `
+  subscription OnCreateCause($filter: ModelSubscriptionCauseFilterInput) {
+    onCreateCause(filter: $filter) {
+      id
+      name
+      description
+      date
+      amount
+      type
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateCause = /* GraphQL */ `
+  subscription OnUpdateCause($filter: ModelSubscriptionCauseFilterInput) {
+    onUpdateCause(filter: $filter) {
+      id
+      name
+      description
+      date
+      amount
+      type
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteCause = /* GraphQL */ `
+  subscription OnDeleteCause($filter: ModelSubscriptionCauseFilterInput) {
+    onDeleteCause(filter: $filter) {
+      id
+      name
+      description
+      date
+      amount
+      type
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateDonation = /* GraphQL */ `
   subscription OnCreateDonation($filter: ModelSubscriptionDonationFilterInput) {
     onCreateDonation(filter: $filter) {
       id
       name
-      amount
       description
+      amount
+      type
       date
       donorID
       Donor {
@@ -15,11 +313,33 @@ export const onCreateDonation = /* GraphQL */ `
         name
         description
         date
+        Donations {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+      }
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
@@ -34,8 +354,9 @@ export const onUpdateDonation = /* GraphQL */ `
     onUpdateDonation(filter: $filter) {
       id
       name
-      amount
       description
+      amount
+      type
       date
       donorID
       Donor {
@@ -43,11 +364,33 @@ export const onUpdateDonation = /* GraphQL */ `
         name
         description
         date
+        Donations {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+      }
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
@@ -62,8 +405,9 @@ export const onDeleteDonation = /* GraphQL */ `
     onDeleteDonation(filter: $filter) {
       id
       name
-      amount
       description
+      amount
+      type
       date
       donorID
       Donor {
@@ -71,11 +415,33 @@ export const onDeleteDonation = /* GraphQL */ `
         name
         description
         date
+        Donations {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+      }
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
@@ -93,6 +459,20 @@ export const onCreateDonor = /* GraphQL */ `
       description
       date
       Donations {
+        items {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         nextToken
         startedAt
       }
@@ -112,6 +492,20 @@ export const onUpdateDonor = /* GraphQL */ `
       description
       date
       Donations {
+        items {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         nextToken
         startedAt
       }
@@ -131,6 +525,20 @@ export const onDeleteDonor = /* GraphQL */ `
       description
       date
       Donations {
+        items {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         nextToken
         startedAt
       }

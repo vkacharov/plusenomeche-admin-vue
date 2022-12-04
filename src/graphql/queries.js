@@ -1,13 +1,541 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getExpense = /* GraphQL */ `
+  query GetExpense($id: ID!) {
+    getExpense(id: $id) {
+      id
+      name
+      description
+      date
+      causeID
+      donationID
+      amount
+      Cause {
+        id
+        name
+        description
+        date
+        amount
+        type
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Donation {
+        id
+        name
+        description
+        amount
+        type
+        date
+        donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listExpenses = /* GraphQL */ `
+  query ListExpenses(
+    $filter: ModelExpenseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listExpenses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        date
+        causeID
+        donationID
+        amount
+        Cause {
+          id
+          name
+          description
+          date
+          amount
+          type
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Donation {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncExpenses = /* GraphQL */ `
+  query SyncExpenses(
+    $filter: ModelExpenseFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncExpenses(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        description
+        date
+        causeID
+        donationID
+        amount
+        Cause {
+          id
+          name
+          description
+          date
+          amount
+          type
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Donation {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const expensesByCauseID = /* GraphQL */ `
+  query ExpensesByCauseID(
+    $causeID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelExpenseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    expensesByCauseID(
+      causeID: $causeID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        description
+        date
+        causeID
+        donationID
+        amount
+        Cause {
+          id
+          name
+          description
+          date
+          amount
+          type
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Donation {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const expensesByDonationID = /* GraphQL */ `
+  query ExpensesByDonationID(
+    $donationID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelExpenseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    expensesByDonationID(
+      donationID: $donationID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        description
+        date
+        causeID
+        donationID
+        amount
+        Cause {
+          id
+          name
+          description
+          date
+          amount
+          type
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Donation {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const searchExpenses = /* GraphQL */ `
+  query SearchExpenses(
+    $filter: SearchableExpenseFilterInput
+    $sort: [SearchableExpenseSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableExpenseAggregationInput]
+  ) {
+    searchExpenses(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        name
+        description
+        date
+        causeID
+        donationID
+        amount
+        Cause {
+          id
+          name
+          description
+          date
+          amount
+          type
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Donation {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const getCause = /* GraphQL */ `
+  query GetCause($id: ID!) {
+    getCause(id: $id) {
+      id
+      name
+      description
+      date
+      amount
+      type
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listCauses = /* GraphQL */ `
+  query ListCauses(
+    $filter: ModelCauseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCauses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        date
+        amount
+        type
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCauses = /* GraphQL */ `
+  query SyncCauses(
+    $filter: ModelCauseFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCauses(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        description
+        date
+        amount
+        type
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const searchCauses = /* GraphQL */ `
+  query SearchCauses(
+    $filter: SearchableCauseFilterInput
+    $sort: [SearchableCauseSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableCauseAggregationInput]
+  ) {
+    searchCauses(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        name
+        description
+        date
+        amount
+        type
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 export const getDonation = /* GraphQL */ `
   query GetDonation($id: ID!) {
     getDonation(id: $id) {
       id
       name
-      amount
       description
+      amount
+      type
       date
       donorID
       Donor {
@@ -15,11 +543,33 @@ export const getDonation = /* GraphQL */ `
         name
         description
         date
+        Donations {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+      }
+      Expenses {
+        items {
+          id
+          name
+          description
+          date
+          causeID
+          donationID
+          amount
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
@@ -39,10 +589,26 @@ export const listDonations = /* GraphQL */ `
       items {
         id
         name
-        amount
         description
+        amount
+        type
         date
         donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -70,10 +636,26 @@ export const syncDonations = /* GraphQL */ `
       items {
         id
         name
-        amount
         description
+        amount
+        type
         date
         donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -103,10 +685,26 @@ export const donationsByDonorID = /* GraphQL */ `
       items {
         id
         name
-        amount
         description
+        amount
+        type
         date
         donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -138,18 +736,34 @@ export const searchDonations = /* GraphQL */ `
       items {
         id
         name
-        amount
         description
+        amount
+        type
         date
         donorID
+        Donor {
+          id
+          name
+          description
+          date
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Expenses {
+          nextToken
+          startedAt
+          items {
+            amount
+          }
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        Donor {
-          name
-        }
       }
       nextToken
       total
@@ -178,6 +792,20 @@ export const getDonor = /* GraphQL */ `
       description
       date
       Donations {
+        items {
+          id
+          name
+          description
+          amount
+          type
+          date
+          donorID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         nextToken
         startedAt
       }
@@ -201,6 +829,10 @@ export const listDonors = /* GraphQL */ `
         name
         description
         date
+        Donations {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -230,6 +862,10 @@ export const syncDonors = /* GraphQL */ `
         name
         description
         date
+        Donations {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -263,17 +899,18 @@ export const searchDonors = /* GraphQL */ `
         name
         description
         date
+        Donations {
+          nextToken
+          startedAt
+          items {
+            amount
+          }
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        Donations {
-          items {
-            name,
-            amount
-          }
-        }
       }
       nextToken
       total

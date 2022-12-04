@@ -6,6 +6,86 @@ import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@a
 
 
 
+type EagerExpense = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Expense, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly description?: string | null;
+  readonly date?: string | null;
+  readonly causeID: string;
+  readonly donationID: string;
+  readonly amount?: number | null;
+  readonly Cause?: Cause | null;
+  readonly Donation?: Donation | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyExpense = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Expense, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly description?: string | null;
+  readonly date?: string | null;
+  readonly causeID: string;
+  readonly donationID: string;
+  readonly amount?: number | null;
+  readonly Cause: AsyncItem<Cause | undefined>;
+  readonly Donation: AsyncItem<Donation | undefined>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Expense = LazyLoading extends LazyLoadingDisabled ? EagerExpense : LazyExpense
+
+export declare const Expense: (new (init: ModelInit<Expense>) => Expense) & {
+  copyOf(source: Expense, mutator: (draft: MutableModel<Expense>) => MutableModel<Expense> | void): Expense;
+}
+
+type EagerCause = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Cause, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly description?: string | null;
+  readonly date?: string | null;
+  readonly amount?: number | null;
+  readonly type?: string | null;
+  readonly Expenses?: (Expense | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCause = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Cause, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly description?: string | null;
+  readonly date?: string | null;
+  readonly amount?: number | null;
+  readonly type?: string | null;
+  readonly Expenses: AsyncCollection<Expense>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Cause = LazyLoading extends LazyLoadingDisabled ? EagerCause : LazyCause
+
+export declare const Cause: (new (init: ModelInit<Cause>) => Cause) & {
+  copyOf(source: Cause, mutator: (draft: MutableModel<Cause>) => MutableModel<Cause> | void): Cause;
+}
+
 type EagerDonation = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Donation, 'id'>;
@@ -13,11 +93,13 @@ type EagerDonation = {
   };
   readonly id: string;
   readonly name?: string | null;
-  readonly amount?: number | null;
   readonly description?: string | null;
+  readonly amount?: number | null;
+  readonly type?: string | null;
   readonly date?: string | null;
   readonly donorID: string;
   readonly Donor?: Donor | null;
+  readonly Expenses?: (Expense | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -29,11 +111,13 @@ type LazyDonation = {
   };
   readonly id: string;
   readonly name?: string | null;
-  readonly amount?: number | null;
   readonly description?: string | null;
+  readonly amount?: number | null;
+  readonly type?: string | null;
   readonly date?: string | null;
   readonly donorID: string;
   readonly Donor: AsyncItem<Donor | undefined>;
+  readonly Expenses: AsyncCollection<Expense>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

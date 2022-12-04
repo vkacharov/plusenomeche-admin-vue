@@ -5,7 +5,7 @@ import { DonorsApi } from '../api/DonorsApi';
 import { DonationsApi } from '../api/DonationsApi';
 import ApiSelectComponent from '../components/ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
-import createSearchFilter from '../helpers/filter-helpers.js';
+import {createSearchFilter, createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
   components: { TableLite, ApiSelectComponent, FilterComponent },
@@ -44,6 +44,11 @@ export default {
           field: "expensesSum",
           width: "3%",
         },
+        {
+          label: "Оставащи",
+          field: "remaining",
+          width: "3%",
+        },
       ],
       rows: [],
       totalRecordCount: 0
@@ -52,12 +57,17 @@ export default {
     const donorsApi = new DonorsApi();
     const donationsApi = new DonationsApi();
 
-    const searchDonations = async (filter = {}) => {
-      const apiDonations = await donationsApi.search(filter);
+    const searchDonations = async (filter) => {
+      const aggr = createSumAggregate('amount');
+      const apiDonations = await donationsApi.search(filter, aggr);
       const rows = parseApiDonations(apiDonations.items);
       table.rows = rows;
       table.totalRecordCount = apiDonations.total;
       table.isLoading = false;
+      if (aggr) {
+        aggregates.donatedAmountSum = apiDonations.aggregateItems.find(agg => agg.name == 'amountSum').result.value;
+        aggregates.numberOfDonations = apiDonations.total;
+      }
     }
 
     const formInputs = reactive({
@@ -67,7 +77,6 @@ export default {
       });
 
     const filterCallback = async (event) => {
-      
       const filter = {};
       [event, formInputs].forEach(input => {
         for (let e in input) {
@@ -80,8 +89,12 @@ export default {
       
       const searchFilter = createSearchFilter(filter);
       await searchDonations(searchFilter);
-      
     }
+
+    const aggregates = reactive({
+      donatedAmountSum: 0,
+      numberOfDonations: 0
+    });
 
     await searchDonations();
 
@@ -89,19 +102,33 @@ export default {
       table,
       donorsApi,
       filterCallback,
-      formInputs
+      formInputs,
+      aggregates
     };
   }
 }
 
 function parseApiDonations(apiDonations) {
   return apiDonations.map(donation => {
+    let expensesSum, remaining;
+    
+    if (donation.Expenses && donation.Expenses.items) {
+      expensesSum = 0;
+      donation.Expenses.items.forEach(expense => {
+        expensesSum += expense.amount;
+      });
+
+      remaining = donation.amount - expensesSum;
+    }
+
     return {
       name: donation.name, 
       date: donation.date,
       description: donation.description,
       amount: donation.amount, 
-      donor: donation.Donor.name
+      donor: donation.Donor.name,
+      expensesSum: expensesSum,
+      remaining: remaining
     }
   });
 }
@@ -136,6 +163,17 @@ function parseApiDonations(apiDonations) {
       @is-finished="table.isLoading = false"
       :isHidePaging="true"
     />
+  </div>
+
+  <div class="aggregates">
+    <ul>
+      <li>
+        <label>Брой дарения: </label><span>{{aggregates.numberOfDonations}}</span>
+      </li>
+      <li>
+        <label>Обща дарена сума: </label><span> {{aggregates.donatedAmountSum}} </span>
+      </li>
+    </ul>
   </div>
 </template>
 

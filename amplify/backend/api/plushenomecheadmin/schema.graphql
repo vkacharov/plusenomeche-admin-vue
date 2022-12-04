@@ -1,0 +1,41 @@
+type Expense @searchable @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  date: AWSDateTime
+  causeID: ID! @index(name: "byCause")
+  donationID: ID! @index(name: "byDonation")
+  amount: Int
+  Cause: Cause @belongsTo(fields: ["causeID"])
+  Donation: Donation @belongsTo(fields: ["causeID"])
+}
+
+type Cause @searchable @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  date: AWSDateTime
+  amount: Int
+  type: String
+  Expenses: [Expense] @hasMany(indexName: "byCause", fields: ["id"])
+}
+
+type Donation @searchable @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  amount: Int
+  type: String
+  date: AWSDateTime
+  donorID: ID! @index(name: "byDonor")
+  Donor: Donor @belongsTo(fields: ["donorID"])
+  Expenses: [Expense] @hasMany(indexName: "byDonation", fields: ["id"])
+}
+
+type Donor @searchable @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  date: AWSDateTime
+  Donations: [Donation] @hasMany(indexName: "byDonor", fields: ["id"])
+} 

@@ -1,4 +1,4 @@
-export default function createSearchFilter(filter) {
+export function createSearchFilter(filter) {
     const searchFilter = {};
 
     for (let field in filter) {
@@ -12,4 +12,12 @@ export default function createSearchFilter(filter) {
     }
 
     return searchFilter;
+}
+
+export function createSumAggregate(field) {
+    return {
+        type: 'sum', 
+        field: field, 
+        name: field + 'Sum' 
+    };
 }

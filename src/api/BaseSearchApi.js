@@ -9,12 +9,13 @@ export class BaseSearchApi {
         this.#query = query;
     }
 
-    async search(filter = {}) {
+    async search(filter, aggregates) {
         const result = await API.graphql({
               query: this.#query,
               variables: { 
                 limit: 100,
                 filter: filter,
+                aggregates: aggregates
               }
             });
     

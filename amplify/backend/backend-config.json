@@ -1,6 +1,6 @@
 {
   "api": {
-    "testplushenomeche": {
+    "plushenomecheadmin": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
