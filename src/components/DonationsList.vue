@@ -5,10 +5,11 @@ import { DonorsApi } from '../api/DonorsApi';
 import { DonationsApi } from '../api/DonationsApi';
 import ApiSelectComponent from '../components/ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
+import AggregatesComponent from './AggregatesComponent.vue';
 import {createSearchFilter, createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, ApiSelectComponent, FilterComponent },
+  components: { TableLite, ApiSelectComponent, FilterComponent, AggregatesComponent },
 
   async setup() {
     const table = reactive({
@@ -37,6 +38,11 @@ export default {
         {
           label: "Сума",
           field: "amount",
+          width: "3%",
+        },
+        {
+          label: "Вид",
+          field: "type",
           width: "3%",
         },
         {
@@ -125,7 +131,8 @@ function parseApiDonations(apiDonations) {
       name: donation.name, 
       date: donation.date,
       description: donation.description,
-      amount: donation.amount, 
+      amount: donation.amount,
+      type: donation.type,
       donor: donation.Donor.name,
       expensesSum: expensesSum,
       remaining: remaining
@@ -165,15 +172,5 @@ function parseApiDonations(apiDonations) {
     />
   </div>
 
-  <div class="aggregates">
-    <ul>
-      <li>
-        <label>Брой дарения: </label><span>{{aggregates.numberOfDonations}}</span>
-      </li>
-      <li>
-        <label>Обща дарена сума: </label><span> {{aggregates.donatedAmountSum}} </span>
-      </li>
-    </ul>
-  </div>
+  <AggregatesComponent :aggregates="aggregates" />
 </template>
-
