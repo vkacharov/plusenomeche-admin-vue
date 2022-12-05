@@ -501,7 +501,10 @@ export const searchCauses = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
+          startedAt,
+          items {
+            amount
+          }
         }
         createdAt
         updatedAt

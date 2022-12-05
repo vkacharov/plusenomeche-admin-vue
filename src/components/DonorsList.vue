@@ -120,11 +120,3 @@ function parseApiDonors(apiDonors) {
     />
   </div>
 </template>
-
-<style scoped>
-  main {
-    display: flex;
-    align-items: center;
-  }
-</style>
-

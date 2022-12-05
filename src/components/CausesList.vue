@@ -1,16 +1,13 @@
 <script>
 import { reactive } from 'vue'
 import TableLite from "vue3-table-lite";
-import { DonationsApi } from '../api/DonationsApi';
 import { CausesApi } from '../api/CausesApi';
-import { ExpensesApi } from '../api/ExpensesApi';
-import ApiSelectComponent from './ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
 import {createSearchFilter, createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, ApiSelectComponent, FilterComponent, AggregatesComponent },
+  components: { TableLite, FilterComponent, AggregatesComponent},
 
   async setup() {
     const table = reactive({
@@ -32,64 +29,58 @@ export default {
           width: "3%",
         },
         {
-          label: "Дарение",
-          field: "donation",
-          width: "5%",
-        },
-        {
-          label: "Кауза",
-          field: "cause",
-          width: "5%",
-        },
-        {
           label: "Сума",
           field: "amount",
           width: "3%",
-        }
+        },
+        {
+          label: "Вид",
+          field: "type",
+          width: "3%",
+        },
+        {
+          label: "Използвани",
+          field: "expensesSum",
+          width: "3%",
+        },
+        {
+          label: "Оставащи",
+          field: "remaining",
+          width: "3%",
+        },
       ],
       rows: [],
       totalRecordCount: 0
     });
 
-    const donationsApi = new DonationsApi();
-    const expensesApi = new ExpensesApi();
     const causesApi = new CausesApi();
 
-    const searchExpenses = async (filter) => {
+    const searchCauses = async (filter) => {
       const aggr = createSumAggregate('amount');
-      const apiExpenses = await expensesApi.search(filter, aggr);
-      const rows = parseApiExpenses(apiExpenses.items);
+      const apiCauses = await causesApi.search(filter, aggr);
+      const rows = parseApiCauses(apiCauses.items);
       table.rows = rows;
-      table.totalRecordCount = apiExpenses.total;
+      table.totalRecordCount = apiCauses.total;
       table.isLoading = false;
+
       if (aggr) {
-        aggregates.totalSum = apiExpenses.aggregateItems.find(agg => agg.name == 'amountSum').result.value;
-        aggregates.totalNumber = apiExpenses.total;
+        aggregates.totalSum = apiCauses.aggregateItems.find(agg => agg.name == 'amountSum').result.value;
+        aggregates.totalNumber = apiCauses.total;
       }
     }
 
-    const formInputs = reactive({
-        donationID: {
-          type: 'string',
-        },
-        causeID: {
-          type: 'string'
-        }
-      });
-
     const filterCallback = async (event) => {
       const filter = {};
-      [event, formInputs].forEach(input => {
-        for (let e in input) {
+      for (let e in event) {
         filter[e] = {
           type: input[e].type,
           value: input[e].value
         }
-      }
-      });
+      };
       
       const searchFilter = createSearchFilter(filter);
-      await searchExpenses(searchFilter);
+      await searchCauses(searchFilter);
+      
     }
 
     const aggregates = reactive({
@@ -97,28 +88,35 @@ export default {
       totalNumber: 0
     });
 
-    await searchExpenses();
+    await searchCauses();
 
     return {
       table,
-      donationsApi,
-      causesApi,
       filterCallback,
-      formInputs,
       aggregates
     };
   }
 }
 
-function parseApiExpenses(apiExpenses) {
-  return apiExpenses.map(expense => {
+function parseApiCauses(apiCauses) {
+  return apiCauses.map(cause => {
+    let expensesSum;
+
+    if (cause.Expenses && cause.Expenses.items) {
+      expensesSum = 0;
+      cause.Expenses.items.forEach(expense => {
+        expensesSum += expense.amount;
+      });
+
+    }
     return {
-      name: expense.name, 
-      date: expense.date,
-      description: expense.description,
-      amount: expense.amount,
-      donation: expense.Donation.name,
-      cause: expense.Cause.name
+      name: cause.name, 
+      date: cause.date,
+      description: cause.description,
+      amount: cause.amount,
+      type: cause.type,
+      expensesSum: expensesSum, 
+      remaining: cause.amount - expensesSum
     }
   });
 }
@@ -131,22 +129,10 @@ function parseApiExpenses(apiExpenses) {
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
+      {name: 'type', label: 'вид', type: 'string'}
       ]"
   @filterButtonClick="filterCallback"  
->
-  <template #filter1>
-    <label>Дарение</label>
-    <div>
-      <ApiSelectComponent :api="donationsApi" v-model="formInputs.donationID.value" />
-    </div>
-  </template>
-
-  <template #filter2>
-    <label>Кауза</label>
-    <div>
-      <ApiSelectComponent :api="causesApi" v-model="formInputs.causeID.value" />
-    </div>
-  </template>
+>  
 </FilterComponent>
 
   <div>
