@@ -1,8 +1,8 @@
 <script>
 import { reactive } from 'vue'
 import TableLite from "vue3-table-lite";
-import { DonorsApi } from '../api/DonorsApi';
 import { DonationsApi } from '../api/DonationsApi';
+import { ExpensesApi } from '../api/ExpensesApi';
 import ApiSelectComponent from './ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
@@ -31,53 +31,43 @@ export default {
           width: "3%",
         },
         {
-          label: "Дарител",
-          field: "donor",
+          label: "Дарение",
+          field: "donation",
+          width: "5%",
+        },
+        {
+          label: "Кауза",
+          field: "cause",
           width: "5%",
         },
         {
           label: "Сума",
           field: "amount",
           width: "3%",
-        },
-        {
-          label: "Вид",
-          field: "type",
-          width: "3%",
-        },
-        {
-          label: "Използвани",
-          field: "expensesSum",
-          width: "3%",
-        },
-        {
-          label: "Оставащи",
-          field: "remaining",
-          width: "3%",
-        },
+        }
       ],
       rows: [],
       totalRecordCount: 0
     });
 
-    const donorsApi = new DonorsApi();
     const donationsApi = new DonationsApi();
+    const expensesApi = new ExpensesApi();
 
-    const searchDonations = async (filter) => {
+    const searchExpenses = async (filter) => {
       const aggr = createSumAggregate('amount');
-      const apiDonations = await donationsApi.search(filter, aggr);
-      const rows = parseApiDonations(apiDonations.items);
+      const apiExpenses = await expensesApi.search(filter, aggr);
+      const rows = parseApiExpenses(apiExpenses.items);
       table.rows = rows;
-      table.totalRecordCount = apiDonations.total;
+      table.totalRecordCount = apiExpenses.total;
       table.isLoading = false;
       if (aggr) {
-        aggregates.totalSum = apiDonations.aggregateItems.find(agg => agg.name == 'amountSum').result.value;
-        aggregates.totalNumber = apiDonations.total;
+        aggregates.totalSum = apiExpenses.aggregateItems.find(agg => agg.name == 'amountSum').result.value;
+        aggregates.totalNumber = apiExpenses.total;
       }
     }
 
     const formInputs = reactive({
-        donorID: {
+        donationID: {
           type: 'string',
         }
       });
@@ -94,7 +84,7 @@ export default {
       });
       
       const searchFilter = createSearchFilter(filter);
-      await searchDonations(searchFilter);
+      await searchExpenses(searchFilter);
     }
 
     const aggregates = reactive({
@@ -102,11 +92,11 @@ export default {
       totalNumber: 0
     });
 
-    await searchDonations();
+    await searchExpenses();
 
     return {
       table,
-      donorsApi,
+      donationsApi,
       filterCallback,
       formInputs,
       aggregates
@@ -114,28 +104,15 @@ export default {
   }
 }
 
-function parseApiDonations(apiDonations) {
-  return apiDonations.map(donation => {
-    let expensesSum, remaining;
-    
-    if (donation.Expenses && donation.Expenses.items) {
-      expensesSum = 0;
-      donation.Expenses.items.forEach(expense => {
-        expensesSum += expense.amount;
-      });
-
-      remaining = donation.amount - expensesSum;
-    }
-
+function parseApiExpenses(apiExpenses) {
+  return apiExpenses.map(expense => {
     return {
-      name: donation.name, 
-      date: donation.date,
-      description: donation.description,
-      amount: donation.amount,
-      type: donation.type,
-      donor: donation.Donor.name,
-      expensesSum: expensesSum,
-      remaining: remaining
+      name: expense.name, 
+      date: expense.date,
+      description: expense.description,
+      amount: expense.amount,
+      donation: expense.Donation.name,
+      cause: expense.Cause.name
     }
   });
 }
@@ -152,9 +129,9 @@ function parseApiDonations(apiDonations) {
   @filterButtonClick="filterCallback"  
 >
   <template #filter1>
-    <label>Дарител</label>
+    <label>Дарение</label>
     <div>
-      <ApiSelectComponent :api="donorsApi" v-model="formInputs.donorID.value" />
+      <ApiSelectComponent :api="donationsApi" v-model="formInputs.donationID.value" />
     </div>
   </template>
   

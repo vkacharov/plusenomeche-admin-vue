@@ -13,11 +13,17 @@
   <div class="aggregates">
     <ul>
       <li>
-        <label>Брой: </label><span>{{aggregates.numberOfDonations}}</span>
+        <label>Общ брой: </label><span>{{aggregates.totalNumber}}</span>
       </li>
       <li>
-        <label>Обща сума: </label><span> {{aggregates.donatedAmountSum}} </span>
+        <label>Обща сума: </label><span> {{aggregates.totalSum}} </span>
       </li>
     </ul>
   </div>
 </template>
+
+<style>
+    .aggregates ul {
+    list-style: none;
+    }
+</style>
