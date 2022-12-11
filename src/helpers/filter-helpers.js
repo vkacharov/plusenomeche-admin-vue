@@ -1,16 +1,28 @@
 export function createSearchFilter(filter) {
     const searchFilter = {};
 
-    for (let field in filter) {
-        if (filter[field].value) {
-            if (filter[field].type == 'string') {
-                searchFilter[field] = {
-                    match: filter[field].value
+    for (let key in filter) {
+        const field = filter[key];
+        if (field.value) {
+            if (field.type == 'string') {
+                searchFilter[key] = {
+                    match: field.value
+                }
+            }
+
+            if (field.type == 'date') {
+                console.log(field);
+                const from = field.value[0].toISOString();
+                const to = field.value[1].toISOString();
+                console.log('fromto', [from, to]);
+                searchFilter[key] = {
+                    range: [from, to]
                 }
             }
         }
     }
 
+    console.log(searchFilter);
     return searchFilter;
 }
 

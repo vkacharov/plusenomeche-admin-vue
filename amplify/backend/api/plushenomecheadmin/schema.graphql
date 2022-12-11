@@ -2,7 +2,7 @@ type Expense @searchable @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   description: String
-  date: AWSDateTime
+  date: AWSDate
   causeID: ID! @index(name: "byCause")
   donationID: ID! @index(name: "byDonation")
   amount: Int
@@ -14,7 +14,7 @@ type Cause @searchable @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   description: String
-  date: AWSDateTime
+  date: AWSDate
   amount: Int
   type: String
   Expenses: [Expense] @hasMany(indexName: "byCause", fields: ["id"])
@@ -26,7 +26,7 @@ type Donation @searchable @model @auth(rules: [{allow: public}]) {
   description: String
   amount: Int
   type: String
-  date: AWSDateTime
+  date: AWSDate
   donorID: ID! @index(name: "byDonor")
   Donor: Donor @belongsTo(fields: ["donorID"])
   Expenses: [Expense] @hasMany(indexName: "byDonation", fields: ["id"])
@@ -36,6 +36,6 @@ type Donor @searchable @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   description: String
-  date: AWSDateTime
+  date: AWSDate
   Donations: [Donation] @hasMany(indexName: "byDonor", fields: ["id"])
 } 

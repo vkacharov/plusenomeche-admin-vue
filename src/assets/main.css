@@ -23,8 +23,9 @@ a,
 .vtl-table .vtl-thead .vtl-thead-th {
   color: #fff;
   background-color: #f47d34;
-  border-color: #f47d34;
+  border: 1px solid #dee2e6;
 }
+
 .vtl-table td,
 .vtl-table tr {
   border: none;

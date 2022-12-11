@@ -1,5 +1,10 @@
 <script>
+    import Datepicker from '@vuepic/vue-datepicker';
+    import '@vuepic/vue-datepicker/dist/main.css';
+    
     export default {
+        components: {Datepicker},
+
         props: {
             config: {
                 type: Array,
@@ -32,8 +37,18 @@
     <div class="filter-component">
         <div v-for="field in config" class="filter-field">
             <label>{{field.label}}</label>
-            <div>
+            <div v-if="field.type == 'string'">
                 <input v-model="formInputs[field.name].value">
+            </div>
+            <div v-if="field.type == 'date'">
+                <Datepicker 
+                    v-model="formInputs[field.name].value"
+                    text-input 
+                    range
+                    :partial-range="true" 
+                    :timezone="'UTC'"
+                    :enable-time-picker="false"
+                    />
             </div>
         </div>
 
@@ -66,7 +81,7 @@
 
     .filter-field {
         margin-right: 1rem;
-        width: 16rem;
+        width: 24rem;
     }
 
     .filter-field > div > input {
@@ -81,5 +96,9 @@
         background-color: #f47d34;
         color: white;
         border-color: #f47d34;
+    }
+
+    div[role=dialog] .dp__overlay {
+        height: 311px;
     }
 </style>

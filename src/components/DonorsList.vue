@@ -56,8 +56,8 @@ export default {
       const filter = {};
       for (let e in event) {
         filter[e] = {
-          type: input[e].type,
-          value: input[e].value
+          type: event[e].type,
+          value: event[e].value
         }
       };
       
