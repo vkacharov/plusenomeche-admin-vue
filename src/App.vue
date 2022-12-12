@@ -1,24 +1,36 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
+import { Authenticator } from '@aws-amplify/ui-vue';
+import '@aws-amplify/ui-vue/styles.css';
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <authenticator :hide-sign-up="true">
+    <template v-slot="{ user, signOut }">
+      <h1>Hello {{ user.username }}!</h1>
+      <button @click="signOut">Sign Out</button>
 
-      <nav>
-        <RouterLink to="/">Дарители</RouterLink>
-        <RouterLink to="/donations">Дарения</RouterLink>
-        <RouterLink to="/causes">Каузи</RouterLink>
-        <RouterLink to="/expenses">Разходи</RouterLink>
-      </nav>
-    </div>
-  </header>
+      <header>
+        <div class="wrapper">
+          <HelloWorld msg="You did it!" />
 
-  <RouterView />
-</template>
+          <nav>
+            <RouterLink to="/">Дарители</RouterLink>
+            <RouterLink to="/donations">Дарения</RouterLink>
+            <RouterLink to="/causes">Каузи</RouterLink>
+            <RouterLink to="/expenses">Разходи</RouterLink>
+          </nav>
+        </div>
+      </header>
+
+      <RouterView />
+      
+    </template>
+  </authenticator>
+  </template>
+
 
 <style scoped>
 header {

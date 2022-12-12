@@ -16,7 +16,8 @@ export class BaseSearchApi {
                 limit: 100,
                 filter: filter,
                 aggregates: aggregates
-              }
+              },
+              authMode: 'AMAZON_COGNITO_USER_POOLS'
             });
     
         const rows = result.data[this.#api];
