@@ -3,7 +3,6 @@ import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
 import FilterComponent from './FilterComponent.vue';
 import DonorsForm from './DonorsForm.vue';
-import {createSearchFilter} from '../helpers/filter-helpers.js';
 
 export default {
   components: { TableLite, FilterComponent, DonorsForm },
@@ -44,33 +43,20 @@ export default {
 
     const donorsApi = inject('donorsApi');
 
-    const searchDonors = async (filter, aggregates) => {
-      const apiDonors = await donorsApi.search(filter, aggregates);
+    const searchDonors = async (filter) => {
+      table.isLoading = true;
+      const apiDonors = await donorsApi.search(filter);
       const rows = parseApiDonors(apiDonors.items);
       table.rows = rows;
       table.totalRecordCount = apiDonors.total;
       table.isLoading = false;
     }
 
-    const filterCallback = async (event) => {
-      const filter = {};
-      for (let e in event) {
-        filter[e] = {
-          type: event[e].type,
-          value: event[e].value
-        }
-      };
-      
-      const searchFilter = createSearchFilter(filter);
-      await searchDonors(searchFilter);
-      
-    }
-
     await searchDonors();
 
     return {
       table,
-      filterCallback
+      searchDonors
     };
   }
 }
@@ -104,7 +90,7 @@ function parseApiDonors(apiDonors) {
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'}]"
-  @filterButtonClick="filterCallback"  
+  @filterButtonClick="searchDonors"  
 >  
 </FilterComponent>
 

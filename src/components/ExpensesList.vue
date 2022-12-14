@@ -1,13 +1,12 @@
 <script>
-import { reactive } from 'vue'
+import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
-import ApiSelectComponent from './ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
 import {createSearchFilter, createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, ApiSelectComponent, FilterComponent, AggregatesComponent },
+  components: { TableLite, FilterComponent, AggregatesComponent },
 
   async setup() {
     const table = reactive({
@@ -65,30 +64,6 @@ export default {
       }
     }
 
-    const formInputs = reactive({
-        donationID: {
-          type: 'string',
-        },
-        causeID: {
-          type: 'string'
-        }
-      });
-
-    const filterCallback = async (event) => {
-      const filter = {};
-      [event, formInputs].forEach(input => {
-        for (let e in input) {
-        filter[e] = {
-          type: input[e].type,
-          value: input[e].value
-        }
-      }
-      });
-      
-      const searchFilter = createSearchFilter(filter);
-      await searchExpenses(searchFilter);
-    }
-
     const aggregates = reactive({
       totalSum: 0,
       totalNumber: 0
@@ -100,8 +75,7 @@ export default {
       table,
       donationsApi,
       causesApi,
-      filterCallback,
-      formInputs,
+      searchExpenses,
       aggregates
     };
   }
@@ -128,23 +102,11 @@ function parseApiExpenses(apiExpenses) {
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
+      {name: 'donationID', label: 'дарение', type: 'select', api: 'donationsApi'},
+      {name: 'causeID', label: 'кауза', type: 'select', api: 'causesApi'}
       ]"
-  @filterButtonClick="filterCallback"  
->
-  <template #filter1>
-    <label>Дарение</label>
-    <div>
-      <ApiSelectComponent :api="'donationsApi'" v-model="formInputs.donationID.value" />
-    </div>
-  </template>
-
-  <template #filter2>
-    <label>Кауза</label>
-    <div>
-      <ApiSelectComponent :api="'causesApi'" v-model="formInputs.causeID.value" />
-    </div>
-  </template>
-</FilterComponent>
+  @filterButtonClick="searchExpenses"  
+/>
 
   <div>
     <table-lite

@@ -1,13 +1,12 @@
 <script>
 import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
-import ApiSelectComponent from './ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
-import {createSearchFilter, createSumAggregate} from '../helpers/filter-helpers.js';
+import {createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, ApiSelectComponent, FilterComponent, AggregatesComponent },
+  components: { TableLite, FilterComponent, AggregatesComponent },
 
   async setup() {
     const table = reactive({
@@ -74,27 +73,6 @@ export default {
       }
     }
 
-    const formInputs = reactive({
-        donorID: {
-          type: 'string',
-        }
-      });
-
-    const filterCallback = async (event) => {
-      const filter = {};
-      [event, formInputs].forEach(input => {
-        for (let e in input) {
-        filter[e] = {
-          type: input[e].type,
-          value: input[e].value
-        }
-      }
-      });
-      
-      const searchFilter = createSearchFilter(filter);
-      await searchDonations(searchFilter);
-    }
-
     const aggregates = reactive({
       totalSum: 0,
       totalNumber: 0
@@ -105,8 +83,7 @@ export default {
     return {
       table,
       donorsApi,
-      filterCallback,
-      formInputs,
+      searchDonations,
       aggregates
     };
   }
@@ -146,18 +123,10 @@ function parseApiDonations(apiDonations) {
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
+      {name: 'donorID', label: 'дарител', type: 'select', api: 'donorsApi'}
       ]"
-  @filterButtonClick="filterCallback"  
->
-  <template #filter1>
-    <label>Дарител</label>
-    <div>
-      <ApiSelectComponent :api="'donorsApi'" v-model="formInputs.donorID.value" />
-    </div>
-  </template>
-  
-</FilterComponent>
-
+  @filterButtonClick="searchDonations"  
+/>
   <div>
     <table-lite
       :is-loading="table.isLoading"

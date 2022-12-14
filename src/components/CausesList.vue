@@ -3,7 +3,7 @@ import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
-import {createSearchFilter, createSumAggregate} from '../helpers/filter-helpers.js';
+import {createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
   components: { TableLite, FilterComponent, AggregatesComponent},
@@ -68,20 +68,6 @@ export default {
       }
     }
 
-    const filterCallback = async (event) => {
-      const filter = {};
-      for (let e in event) {
-        filter[e] = {
-          type: input[e].type,
-          value: input[e].value
-        }
-      };
-      
-      const searchFilter = createSearchFilter(filter);
-      await searchCauses(searchFilter);
-      
-    }
-
     const aggregates = reactive({
       totalSum: 0,
       totalNumber: 0
@@ -91,7 +77,7 @@ export default {
 
     return {
       table,
-      filterCallback,
+      searchCauses,
       aggregates
     };
   }
@@ -130,7 +116,7 @@ function parseApiCauses(apiCauses) {
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'type', label: 'вид', type: 'string'}
       ]"
-  @filterButtonClick="filterCallback"  
+  @filterButtonClick="searchCauses"  
 >  
 </FilterComponent>
 

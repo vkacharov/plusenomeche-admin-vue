@@ -1,9 +1,11 @@
 <script>
     import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
+    import ApiSelectComponent from './ApiSelectComponent.vue';
+    import {createSearchFilter} from '../helpers/filter-helpers.js';
     
     export default {
-        components: {Datepicker},
+        components: {Datepicker, ApiSelectComponent},
 
         props: {
             config: {
@@ -27,7 +29,16 @@
 
         methods: {
             onfilterButtonClick() {
-                this.$emit('filterButtonClick', this.formInputs);
+                const filter = {};
+                for (let input in this.formInputs) {
+                    filter[input] = {
+                        type: this.formInputs[input].type,
+                        value: this.formInputs[input].value
+                    }
+                }
+
+                const searchFilter = createSearchFilter(filter);
+                this.$emit('filterButtonClick', searchFilter);
             }
         }
     }
@@ -50,14 +61,9 @@
                     :enable-time-picker="false"
                     />
             </div>
-        </div>
-
-        <div class="filter-field">
-            <slot name="filter1"></slot>
-        </div>
-
-        <div class="filter-field">
-            <slot name="filter2"></slot>
+            <div v-if="field.type == 'select'">
+                <ApiSelectComponent :api="field.api" v-model="formInputs[field.name].value" />
+            </div>
         </div>
         <div class="filter-field">
             <div>
