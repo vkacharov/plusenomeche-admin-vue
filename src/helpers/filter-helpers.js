@@ -11,10 +11,8 @@ export function createSearchFilter(filter) {
             }
 
             if (field.type == 'date') {
-                console.log(field);
                 const from = field.value[0].toISOString();
                 const to = field.value[1].toISOString();
-                console.log('fromto', [from, to]);
                 searchFilter[key] = {
                     range: [from, to]
                 }
@@ -22,7 +20,6 @@ export function createSearchFilter(filter) {
         }
     }
 
-    console.log(searchFilter);
     return searchFilter;
 }
 

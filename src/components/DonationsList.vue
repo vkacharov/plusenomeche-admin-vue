@@ -1,8 +1,6 @@
 <script>
-import { reactive } from 'vue'
+import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
-import { DonorsApi } from '../api/DonorsApi';
-import { DonationsApi } from '../api/DonationsApi';
 import ApiSelectComponent from './ApiSelectComponent.vue';
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
@@ -60,8 +58,8 @@ export default {
       totalRecordCount: 0
     });
 
-    const donorsApi = new DonorsApi();
-    const donationsApi = new DonationsApi();
+    const donorsApi = new inject('donorsApi');
+    const donationsApi = inject('donationsApi');
 
     const searchDonations = async (filter) => {
       const aggr = createSumAggregate('amount');
@@ -154,7 +152,7 @@ function parseApiDonations(apiDonations) {
   <template #filter1>
     <label>Дарител</label>
     <div>
-      <ApiSelectComponent :api="donorsApi" v-model="formInputs.donorID.value" />
+      <ApiSelectComponent :api="'donorsApi'" v-model="formInputs.donorID.value" />
     </div>
   </template>
   

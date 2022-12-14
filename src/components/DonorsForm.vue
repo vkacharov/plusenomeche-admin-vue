@@ -7,7 +7,6 @@
         components: {Datepicker},
 
         data() {
-            console.log(new Donor({}));
             return {
                 donor: {
                     name: '',
@@ -19,7 +18,6 @@
 
         methods: {
             onAddEditButtonClick() {
-                console.log('DONOR', new Donor(this.donor));
                 this.$emit('addEditButtonClick', this.donor);
             }
         }

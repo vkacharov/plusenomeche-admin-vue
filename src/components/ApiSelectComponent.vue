@@ -1,14 +1,13 @@
 <script>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import vSelect from 'vue-select';
-import { BaseSearchApi } from '../api/BaseSearchApi';
 
 export default {
     components: {vSelect},
     
     props: {
         api: {
-            type: BaseSearchApi
+            type: String
         },
         modelValue: {
             type: String
@@ -22,7 +21,7 @@ export default {
     },
 
     setup(props) {
-        const api = props.api;
+        const api = inject(props.api);
         const options = ref([]);
 
         const searchOptions = async (search, loading) => {

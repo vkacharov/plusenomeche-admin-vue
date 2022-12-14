@@ -1,7 +1,6 @@
 <script>
-import { reactive } from 'vue'
+import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
-import { CausesApi } from '../api/CausesApi';
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
 import {createSearchFilter, createSumAggregate} from '../helpers/filter-helpers.js';
@@ -53,7 +52,7 @@ export default {
       totalRecordCount: 0
     });
 
-    const causesApi = new CausesApi();
+    const causesApi = inject('causesApi');
 
     const searchCauses = async (filter) => {
       const aggr = createSumAggregate('amount');

@@ -1,7 +1,6 @@
 <script>
-import { reactive } from 'vue'
+import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
-import { DonorsApi } from '../api/DonorsApi';
 import FilterComponent from './FilterComponent.vue';
 import DonorsForm from './DonorsForm.vue';
 import {createSearchFilter} from '../helpers/filter-helpers.js';
@@ -43,7 +42,7 @@ export default {
       totalRecordCount: 0
     });
 
-    const donorsApi = new DonorsApi();
+    const donorsApi = inject('donorsApi');
 
     const searchDonors = async (filter, aggregates) => {
       const apiDonors = await donorsApi.search(filter, aggregates);
