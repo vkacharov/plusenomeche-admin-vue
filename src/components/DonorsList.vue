@@ -3,10 +3,11 @@ import { reactive } from 'vue'
 import TableLite from "vue3-table-lite";
 import { DonorsApi } from '../api/DonorsApi';
 import FilterComponent from './FilterComponent.vue';
+import DonorsForm from './DonorsForm.vue';
 import {createSearchFilter} from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, FilterComponent },
+  components: { TableLite, FilterComponent, DonorsForm },
 
   async setup() {
     const table = reactive({
@@ -119,4 +120,5 @@ function parseApiDonors(apiDonors) {
       :isHidePaging="true"
     />
   </div>
+  <DonorsForm />
 </template>

@@ -90,14 +90,6 @@
         border: var(--vs-border-width) var(--vs-border-style) var(--vs-border-color);
     }
 
-    .filter-field button {
-        width: 100%;
-        line-height: 1.3rem;
-        background-color: #f47d34;
-        color: white;
-        border-color: #f47d34;
-    }
-
     div[role=dialog] .dp__overlay {
         height: 311px;
     }

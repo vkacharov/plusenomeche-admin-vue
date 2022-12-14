@@ -31,6 +31,14 @@ a,
   border: none;
 }
 
+button {
+  width: 100%;
+  line-height: 1.3rem;
+  background-color: #f47d34;
+  color: white;
+  border-color: #f47d34;
+}
+
 .loading {
   min-width: 900px;
 }
