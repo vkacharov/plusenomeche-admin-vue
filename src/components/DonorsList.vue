@@ -2,10 +2,10 @@
 import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
 import FilterComponent from './FilterComponent.vue';
-import DonorsForm from './DonorsForm.vue';
+import AddEditForm from './AddEditForm.vue';
 
 export default {
-  components: { TableLite, FilterComponent, DonorsForm },
+  components: { TableLite, FilterComponent, AddEditForm },
 
   async setup() {
     const table = reactive({
@@ -52,10 +52,16 @@ export default {
       table.isLoading = false;
     }
 
+    const formConfig = [
+      {name: 'name', label: 'име', type: 'string'}, 
+      {name: 'description', label: 'описание', type: 'string'}, 
+      {name: 'date', label: 'дата', type: 'date'}];
+
     await searchDonors();
 
     return {
       table,
+      formConfig,
       searchDonors
     };
   }
@@ -86,14 +92,9 @@ function parseApiDonors(apiDonors) {
 <template>
 
 <FilterComponent 
-  :config="[
-      {name: 'name', label: 'име', type: 'string'}, 
-      {name: 'description', label: 'описание', type: 'string'}, 
-      {name: 'date', label: 'дата', type: 'date'}]"
+  :config="formConfig"
   @filterButtonClick="searchDonors"  
->  
-</FilterComponent>
-
+/>
   <div>
     <table-lite
       :is-loading="table.isLoading"
@@ -105,5 +106,8 @@ function parseApiDonors(apiDonors) {
       :isHidePaging="true"
     />
   </div>
-  <DonorsForm />
+  <AddEditForm 
+    :config="formConfig" 
+    :title="'Създай нов дарител'"  
+  />
 </template>

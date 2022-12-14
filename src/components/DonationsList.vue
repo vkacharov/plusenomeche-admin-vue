@@ -3,10 +3,11 @@ import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
+import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent },
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm },
 
   async setup() {
     const table = reactive({
@@ -78,13 +79,21 @@ export default {
       totalNumber: 0
     });
 
+    const formConfig = [
+      {name: 'name', label: 'име', type: 'string'}, 
+      {name: 'description', label: 'описание', type: 'string'}, 
+      {name: 'date', label: 'дата', type: 'date'},
+      {name: 'donorID', label: 'дарител', type: 'select', api: 'donorsApi'}
+    ];
+
     await searchDonations();
 
     return {
       table,
       donorsApi,
       searchDonations,
-      aggregates
+      aggregates,
+      formConfig
     };
   }
 }
@@ -117,16 +126,10 @@ function parseApiDonations(apiDonations) {
 </script>
 
 <template>
-
-<FilterComponent 
-  :config="[
-      {name: 'name', label: 'име', type: 'string'}, 
-      {name: 'description', label: 'описание', type: 'string'}, 
-      {name: 'date', label: 'дата', type: 'date'},
-      {name: 'donorID', label: 'дарител', type: 'select', api: 'donorsApi'}
-      ]"
-  @filterButtonClick="searchDonations"  
-/>
+  <FilterComponent 
+    :config="formConfig"
+    @filterButtonClick="searchDonations"  
+  />
   <div>
     <table-lite
       :is-loading="table.isLoading"
@@ -140,4 +143,9 @@ function parseApiDonations(apiDonations) {
   </div>
 
   <AggregatesComponent :aggregates="aggregates" />
+
+  <AddEditForm
+    :config="formConfig"
+    :title="'Създай ново дарение'"
+  />
 </template>

@@ -3,10 +3,11 @@ import { reactive, inject } from 'vue'
 import TableLite from "vue3-table-lite";
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
+import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent},
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm},
 
   async setup() {
     const table = reactive({
@@ -73,12 +74,20 @@ export default {
       totalNumber: 0
     });
 
+    const formConfig = [
+      {name: 'name', label: 'име', type: 'string'}, 
+      {name: 'description', label: 'описание', type: 'string'}, 
+      {name: 'date', label: 'дата', type: 'date'},
+      {name: 'type', label: 'вид', type: 'string'}
+    ];
+
     await searchCauses();
 
     return {
       table,
       searchCauses,
-      aggregates
+      aggregates,
+      formConfig
     };
   }
 }
@@ -110,12 +119,7 @@ function parseApiCauses(apiCauses) {
 <template>
 
 <FilterComponent 
-  :config="[
-      {name: 'name', label: 'име', type: 'string'}, 
-      {name: 'description', label: 'описание', type: 'string'}, 
-      {name: 'date', label: 'дата', type: 'date'},
-      {name: 'type', label: 'вид', type: 'string'}
-      ]"
+  :config="formConfig"
   @filterButtonClick="searchCauses"  
 >  
 </FilterComponent>
@@ -133,4 +137,8 @@ function parseApiCauses(apiCauses) {
   </div>
 
   <AggregatesComponent :aggregates="aggregates" />
+  <AddEditForm
+    :config="formConfig"
+    :title="'Създай нова кауза'"
+  />
 </template>
