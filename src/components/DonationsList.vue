@@ -79,11 +79,17 @@ export default {
       totalNumber: 0
     });
 
+    const createDonation = async (item) => {
+      donationsApi.create(item);
+    }
+
     const formConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
-      {name: 'donorID', label: 'дарител', type: 'select', api: 'donorsApi'}
+      {name: 'donorID', label: 'дарител', type: 'select', api: 'donorsApi'},
+      {name: 'amount', label: 'сума', type: 'number'},
+      {name: 'type', label: 'вид', type: 'string'},
     ];
 
     await searchDonations();
@@ -92,6 +98,7 @@ export default {
       table,
       donorsApi,
       searchDonations,
+      createDonation,
       aggregates,
       formConfig
     };
@@ -147,5 +154,6 @@ function parseApiDonations(apiDonations) {
   <AddEditForm
     :config="formConfig"
     :title="'Създай ново дарение'"
+    @addEditButtonClick="createDonation"
   />
 </template>

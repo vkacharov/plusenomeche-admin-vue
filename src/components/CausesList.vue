@@ -78,14 +78,20 @@ export default {
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
-      {name: 'type', label: 'вид', type: 'string'}
+      {name: 'type', label: 'вид', type: 'string'},
+      {name: 'amount', label: 'сума', type: 'number'}
     ];
+
+    const createCause = async (item) => {
+      causesApi.create(item);
+    }
 
     await searchCauses();
 
     return {
       table,
       searchCauses,
+      createCause,
       aggregates,
       formConfig
     };
@@ -140,5 +146,6 @@ function parseApiCauses(apiCauses) {
   <AddEditForm
     :config="formConfig"
     :title="'Създай нова кауза'"
+    @addEditButtonClick="createCause"
   />
 </template>

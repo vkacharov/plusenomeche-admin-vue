@@ -3,10 +3,12 @@ import { API } from 'aws-amplify';
 export class BaseSearchApi {
     #api;
     #query;
+    #create;
 
-    constructor(api, query) {
+    constructor(api, query, create) {
         this.#api = api;
         this.#query = query;
+        this.#create = create;
     }
 
     async search(filter, aggregates) {
@@ -22,5 +24,15 @@ export class BaseSearchApi {
     
         const rows = result.data[this.#api];
         return rows;
+    }
+
+    async create(item) {
+        const result = await API.graphql({
+            query: this.#create,
+            variables: { 
+              input: item
+            },
+            authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
     }
 }

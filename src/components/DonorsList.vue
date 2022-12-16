@@ -52,6 +52,10 @@ export default {
       table.isLoading = false;
     }
 
+    const createDonor = async (item) => {
+      donorsApi.create(item);
+    }
+
     const formConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
@@ -62,7 +66,8 @@ export default {
     return {
       table,
       formConfig,
-      searchDonors
+      searchDonors,
+      createDonor
     };
   }
 }
@@ -108,6 +113,7 @@ function parseApiDonors(apiDonors) {
   </div>
   <AddEditForm 
     :config="formConfig" 
-    :title="'Създай нов дарител'"  
+    :title="'Създай нов дарител'"
+    @addEditButtonClick="createDonor"
   />
 </template>

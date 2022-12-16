@@ -75,8 +75,13 @@ export default {
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'donationID', label: 'дарение', type: 'select', api: 'donationsApi'},
-      {name: 'causeID', label: 'кауза', type: 'select', api: 'causesApi'}
+      {name: 'causeID', label: 'кауза', type: 'select', api: 'causesApi'},
+      {name: 'amount', label: 'сума', type: 'number'}
     ];
+
+    const createExpense = async (item) => {
+      expensesApi.create(item);
+    }
 
     await searchExpenses();
 
@@ -85,6 +90,7 @@ export default {
       donationsApi,
       causesApi,
       searchExpenses,
+      createExpense,
       aggregates,
       formConfig
     };
@@ -128,5 +134,6 @@ function parseApiExpenses(apiExpenses) {
   <AddEditForm
     :config="formConfig"
     :title="'Създай нов разход'"
+    @addEditButtonClick="createExpense"
   />
 </template>

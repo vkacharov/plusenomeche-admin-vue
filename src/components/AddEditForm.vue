@@ -27,7 +27,16 @@
     
         methods: {
             onAddEditButtonClick() {
-                console.log(this.formInputs);
+                const item = {};
+                for (let input in this.formInputs) {
+                    if(input == 'date') {
+                        //TODO find a better way to make Datepicker output the ISO date without time
+                        item[input] = this.formInputs[input].toISOString().substring(0, 10);
+                    } else {
+                        item[input] = this.formInputs[input];
+                    }
+                }
+                this.$emit('addEditButtonClick', item);
             }
         }
     }
@@ -43,6 +52,11 @@
             <div v-if="field.type == 'string'">
                 <input v-model="formInputs[field.name]">
             </div>
+
+            <div v-if="field.type == 'number'">
+                <input type="number" v-model="formInputs[field.name]">
+            </div>
+
             <div v-if="field.type == 'date'">
                 <Datepicker 
                     v-model="formInputs[field.name]"
