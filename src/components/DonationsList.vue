@@ -83,14 +83,15 @@ export default {
       donationsApi.create(item);
     }
 
-    const formConfig = [
+    const filterConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'donorID', label: 'дарител', type: 'select', api: 'donorsApi'},
-      {name: 'amount', label: 'сума', type: 'number'},
       {name: 'type', label: 'вид', type: 'string'},
     ];
+
+    const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
     await searchDonations();
 
@@ -100,7 +101,8 @@ export default {
       searchDonations,
       createDonation,
       aggregates,
-      formConfig
+      filterConfig,
+      addEditConfig
     };
   }
 }
@@ -134,7 +136,7 @@ function parseApiDonations(apiDonations) {
 
 <template>
   <FilterComponent 
-    :config="formConfig"
+    :config="filterConfig"
     @filterButtonClick="searchDonations"  
   />
   <div>
@@ -152,7 +154,7 @@ function parseApiDonations(apiDonations) {
   <AggregatesComponent :aggregates="aggregates" />
 
   <AddEditForm
-    :config="formConfig"
+    :config="addEditConfig"
     :title="'Създай ново дарение'"
     @addEditButtonClick="createDonation"
   />

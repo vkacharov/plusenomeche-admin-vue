@@ -70,14 +70,15 @@ export default {
       totalNumber: 0
     });
 
-    const formConfig = [
+    const filterConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'donationID', label: 'дарение', type: 'select', api: 'donationsApi'},
       {name: 'causeID', label: 'кауза', type: 'select', api: 'causesApi'},
-      {name: 'amount', label: 'сума', type: 'number'}
     ];
+
+    const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
     const createExpense = async (item) => {
       expensesApi.create(item);
@@ -92,7 +93,8 @@ export default {
       searchExpenses,
       createExpense,
       aggregates,
-      formConfig
+      filterConfig, 
+      addEditConfig
     };
   }
 }
@@ -114,7 +116,7 @@ function parseApiExpenses(apiExpenses) {
 <template>
 
 <FilterComponent 
-  :config="formConfig"
+  :config="filterConfig"
   @filterButtonClick="searchExpenses"  
 />
 
@@ -132,7 +134,7 @@ function parseApiExpenses(apiExpenses) {
 
   <AggregatesComponent :aggregates="aggregates" />
   <AddEditForm
-    :config="formConfig"
+    :config="addEditConfig"
     :title="'Създай нов разход'"
     @addEditButtonClick="createExpense"
   />

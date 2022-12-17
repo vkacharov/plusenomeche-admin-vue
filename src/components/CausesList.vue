@@ -74,13 +74,14 @@ export default {
       totalNumber: 0
     });
 
-    const formConfig = [
+    const filterConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'type', label: 'вид', type: 'string'},
-      {name: 'amount', label: 'сума', type: 'number'}
     ];
+
+    const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
     const createCause = async (item) => {
       causesApi.create(item);
@@ -93,7 +94,8 @@ export default {
       searchCauses,
       createCause,
       aggregates,
-      formConfig
+      filterConfig,
+      addEditConfig
     };
   }
 }
@@ -125,7 +127,7 @@ function parseApiCauses(apiCauses) {
 <template>
 
 <FilterComponent 
-  :config="formConfig"
+  :config="filterConfig"
   @filterButtonClick="searchCauses"  
 >  
 </FilterComponent>
@@ -144,7 +146,7 @@ function parseApiCauses(apiCauses) {
 
   <AggregatesComponent :aggregates="aggregates" />
   <AddEditForm
-    :config="formConfig"
+    :config="addEditConfig"
     :title="'Създай нова кауза'"
     @addEditButtonClick="createCause"
   />
