@@ -35,4 +35,8 @@ export class BaseSearchApi {
             authMode: 'AMAZON_COGNITO_USER_POOLS'
         });
     }
+
+    parseApiItems(apiItems) {
+        return [];
+    }
 }

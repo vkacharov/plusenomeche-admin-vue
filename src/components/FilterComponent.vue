@@ -3,7 +3,8 @@
     import '@vuepic/vue-datepicker/dist/main.css';
     import ApiSelectComponent from './ApiSelectComponent.vue';
     import {createSearchFilter} from '../helpers/filter-helpers.js';
-    
+    import { useFiltersStore } from '@/stores/filters'; 
+
     export default {
         components: {Datepicker, ApiSelectComponent},
 
@@ -11,6 +12,9 @@
             config: {
                 type: Array,
                 default: () => []
+            }, 
+            apiName: {
+                type: String
             }
         },
 
@@ -38,7 +42,9 @@
                 }
 
                 const searchFilter = createSearchFilter(filter);
-                this.$emit('filterButtonClick', searchFilter);
+                const filtersStore = useFiltersStore();
+                console.log('STORING', searchFilter);
+                filtersStore.setFilter(this.apiName, searchFilter);
             }
         }
     }
