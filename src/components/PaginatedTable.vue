@@ -37,7 +37,7 @@ export default {
         const search = async (from, limit) => {
             table.isLoading = true;
             const filter = toRaw(filtersStore.filters[apiName]);
-            const apiResult = await api.search(filter, undefined, from, limit);
+            const apiResult = await api.search(filter, from, limit);
             const rows = api.parseApiItems(apiResult.items);
             table.rows = rows;
             table.totalRecordCount = apiResult.total;

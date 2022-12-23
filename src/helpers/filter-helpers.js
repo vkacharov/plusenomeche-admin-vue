@@ -23,10 +23,18 @@ export function createSearchFilter(filter) {
     return searchFilter;
 }
 
-export function createSumAggregate(field) {
-    return {
-        type: 'sum', 
-        field: field, 
-        name: field + 'Sum' 
-    };
+export async function createSumAggregate(api, field) {
+    const sumAggregates = {
+      type: 'sum', 
+      field: field,
+      name: field 
+    }
+
+    const apiResult = await api.aggregate(sumAggregates);
+    const aggregates = {
+      totalSum: apiResult.aggregateItems.find(agg => agg.name == field).result.value,
+      totalNumber: apiResult.total
+    }
+
+    return aggregates;
 }

@@ -62,17 +62,18 @@ export default {
     const donationsApi = inject('donationsApi');
 
     const searchDonations = async (filter) => {
-      const aggr = createSumAggregate('amount');
-      const apiDonations = await donationsApi.search(filter, aggr);
+      const apiDonations = await donationsApi.search(filter);
       const rows = parseApiDonations(apiDonations.items);
       table.rows = rows;
       table.totalRecordCount = apiDonations.total;
       table.isLoading = false;
-      if (aggr) {
-        aggregates.totalSum = apiDonations.aggregateItems.find(agg => agg.name == 'amountSum').result.value;
-        aggregates.totalNumber = apiDonations.total;
-      }
     }
+
+    const loadAggregates = async () => {
+      const aggr = await createSumAggregate(donationsApi, 'amount');
+      aggregates.totalSum = aggr.totalSum;
+      aggregates.totalNumber = aggr.totalNumber;
+    } 
 
     const aggregates = reactive({
       totalSum: 0,
@@ -94,6 +95,7 @@ export default {
     const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
     await searchDonations();
+    await loadAggregates();
 
     return {
       table,

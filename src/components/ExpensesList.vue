@@ -53,17 +53,18 @@ export default {
     const causesApi = inject('causesApi');
 
     const searchExpenses = async (filter) => {
-      const aggr = createSumAggregate('amount');
-      const apiExpenses = await expensesApi.search(filter, aggr);
+      const apiExpenses = await expensesApi.search(filter);
       const rows = parseApiExpenses(apiExpenses.items);
       table.rows = rows;
       table.totalRecordCount = apiExpenses.total;
       table.isLoading = false;
-      if (aggr) {
-        aggregates.totalSum = apiExpenses.aggregateItems.find(agg => agg.name == 'amountSum').result.value;
-        aggregates.totalNumber = apiExpenses.total;
-      }
     }
+
+    const loadAggregates = async () => {
+      const aggr = await createSumAggregate(expensesApi, 'amount');
+      aggregates.totalSum = aggr.totalSum;
+      aggregates.totalNumber = aggr.totalNumber;
+    } 
 
     const aggregates = reactive({
       totalSum: 0,
@@ -85,6 +86,7 @@ export default {
     }
 
     await searchExpenses();
+    await loadAggregates();
 
     return {
       table,
