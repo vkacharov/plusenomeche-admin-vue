@@ -5,14 +5,13 @@ import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
+import PaginatedTable from './PaginatedTable.vue';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm},
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable},
 
   async setup() {
-    const table = reactive({
-      isLoading: true,
-      columns: [
+    const columns = [
         {
           label: "Име",
           field: "name",
@@ -48,20 +47,9 @@ export default {
           field: "remaining",
           width: "3%",
         },
-      ],
-      rows: [],
-      totalRecordCount: 0
-    });
+    ];
 
     const causesApi = inject('causesApi');
-
-    const searchCauses = async (filter) => {
-      const apiCauses = await causesApi.search(filter);
-      const rows = parseApiCauses(apiCauses.items);
-      table.rows = rows;
-      table.totalRecordCount = apiCauses.total;
-      table.isLoading = false;
-    }
 
     const loadAggregates = async () => {
       const aggr = await createSumAggregate(causesApi, 'amount');
@@ -87,12 +75,10 @@ export default {
       causesApi.create(item);
     }
 
-    await searchCauses();
     await loadAggregates();
 
     return {
-      table,
-      searchCauses,
+      columns,
       createCause,
       aggregates,
       filterConfig,
@@ -100,48 +86,20 @@ export default {
     };
   }
 }
-
-function parseApiCauses(apiCauses) {
-  return apiCauses.map(cause => {
-    let expensesSum;
-
-    if (cause.Expenses && cause.Expenses.items) {
-      expensesSum = 0;
-      cause.Expenses.items.forEach(expense => {
-        expensesSum += expense.amount;
-      });
-
-    }
-    return {
-      name: cause.name, 
-      date: cause.date,
-      description: cause.description,
-      amount: cause.amount,
-      type: cause.type,
-      expensesSum: expensesSum, 
-      remaining: cause.amount - expensesSum
-    }
-  });
-}
 </script>
 
 <template>
 
 <FilterComponent 
   :config="filterConfig"
-  @filterButtonClick="searchCauses"  
+  :apiName="'causesApi'" 
 >  
 </FilterComponent>
 
   <div>
-    <table-lite
-      :is-loading="table.isLoading"
-      :columns="table.columns"
-      :rows="table.rows"
-      :total="table.totalRecordCount"
-
-      @is-finished="table.isLoading = false"
-      :isHidePaging="true"
+    <PaginatedTable
+      :columns="columns"
+      :apiName="'causesApi'"
     />
   </div>
 

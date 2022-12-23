@@ -5,14 +5,13 @@ import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
+import PaginatedTable from './PaginatedTable.vue';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm },
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable },
 
   async setup() {
-    const table = reactive({
-      isLoading: true,
-      columns: [
+    const columns = [
         {
           label: "Име",
           field: "name",
@@ -43,22 +42,9 @@ export default {
           field: "amount",
           width: "3%",
         }
-      ],
-      rows: [],
-      totalRecordCount: 0
-    });
+    ];
 
-    const donationsApi = inject('donationsApi');
     const expensesApi = inject('expensesApi');
-    const causesApi = inject('causesApi');
-
-    const searchExpenses = async (filter) => {
-      const apiExpenses = await expensesApi.search(filter);
-      const rows = parseApiExpenses(apiExpenses.items);
-      table.rows = rows;
-      table.totalRecordCount = apiExpenses.total;
-      table.isLoading = false;
-    }
 
     const loadAggregates = async () => {
       const aggr = await createSumAggregate(expensesApi, 'amount');
@@ -85,14 +71,10 @@ export default {
       expensesApi.create(item);
     }
 
-    await searchExpenses();
     await loadAggregates();
 
     return {
-      table,
-      donationsApi,
-      causesApi,
-      searchExpenses,
+      columns,
       createExpense,
       aggregates,
       filterConfig, 
@@ -100,37 +82,19 @@ export default {
     };
   }
 }
-
-function parseApiExpenses(apiExpenses) {
-  return apiExpenses.map(expense => {
-    return {
-      name: expense.name, 
-      date: expense.date,
-      description: expense.description,
-      amount: expense.amount,
-      donation: expense.Donation.name,
-      cause: expense.Cause.name
-    }
-  });
-}
 </script>
 
 <template>
 
 <FilterComponent 
   :config="filterConfig"
-  @filterButtonClick="searchExpenses"  
+  :apiName="'expensesApi'" 
 />
 
   <div>
-    <table-lite
-      :is-loading="table.isLoading"
-      :columns="table.columns"
-      :rows="table.rows"
-      :total="table.totalRecordCount"
-
-      @is-finished="table.isLoading = false"
-      :isHidePaging="true"
+    <PaginatedTable
+      :columns="columns"
+      :apiName="'expensesApi'"
     />
   </div>
 
