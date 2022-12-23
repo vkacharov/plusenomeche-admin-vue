@@ -5,14 +5,13 @@ import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
+import PaginatedTable from './PaginatedTable.vue';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm },
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable },
 
   async setup() {
-    const table = reactive({
-      isLoading: true,
-      columns: [
+    const columns = [
         {
           label: "Име",
           field: "name",
@@ -53,21 +52,9 @@ export default {
           field: "remaining",
           width: "3%",
         },
-      ],
-      rows: [],
-      totalRecordCount: 0
-    });
+      ];
 
-    const donorsApi = inject('donorsApi');
     const donationsApi = inject('donationsApi');
-
-    const searchDonations = async (filter) => {
-      const apiDonations = await donationsApi.search(filter);
-      const rows = parseApiDonations(apiDonations.items);
-      table.rows = rows;
-      table.totalRecordCount = apiDonations.total;
-      table.isLoading = false;
-    }
 
     const loadAggregates = async () => {
       const aggr = await createSumAggregate(donationsApi, 'amount');
@@ -94,13 +81,10 @@ export default {
 
     const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
-    await searchDonations();
     await loadAggregates();
 
     return {
-      table,
-      donorsApi,
-      searchDonations,
+      columns,
       createDonation,
       aggregates,
       filterConfig,
@@ -108,48 +92,17 @@ export default {
     };
   }
 }
-
-function parseApiDonations(apiDonations) {
-  return apiDonations.map(donation => {
-    let expensesSum, remaining;
-    
-    if (donation.Expenses && donation.Expenses.items) {
-      expensesSum = 0;
-      donation.Expenses.items.forEach(expense => {
-        expensesSum += expense.amount;
-      });
-
-      remaining = donation.amount - expensesSum;
-    }
-
-    return {
-      name: donation.name, 
-      date: donation.date,
-      description: donation.description,
-      amount: donation.amount,
-      type: donation.type,
-      donor: donation.Donor.name,
-      expensesSum: expensesSum,
-      remaining: remaining
-    }
-  });
-}
 </script>
 
 <template>
   <FilterComponent 
     :config="filterConfig"
-    @filterButtonClick="searchDonations"  
+    :apiName="'donationsApi'"
   />
   <div>
-    <table-lite
-      :is-loading="table.isLoading"
-      :columns="table.columns"
-      :rows="table.rows"
-      :total="table.totalRecordCount"
-
-      @is-finished="table.isLoading = false"
-      :isHidePaging="true"
+    <PaginatedTable
+      :columns="columns"
+      :apiName="'donationsApi'"
     />
   </div>
 
