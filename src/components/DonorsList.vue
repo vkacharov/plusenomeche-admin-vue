@@ -1,5 +1,5 @@
 <script>
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
 import FilterComponent from './FilterComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import PaginatedTable from './PaginatedTable.vue';
@@ -37,7 +37,7 @@ export default {
       ];
       
     const donorsApi = inject('donorsApi');
-    const createDonor = async (item) => {
+    const createDonor = (item) => {
       donorsApi.create(item);
     }
 
@@ -46,10 +46,20 @@ export default {
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'}];
 
+    const componentKey = ref(0);
+    const forceUpdate = () => {
+      // Wait 2.5 seconds for OpenSearch to index the new cause.
+      setTimeout(() => { 
+        componentKey.value += 1; // Forces a refresh of the components using this key
+      }, 2500);
+    }
+    donorsApi.onCreate(forceUpdate);
+
     return {
       columns,
       formConfig,
-      createDonor
+      createDonor,
+      componentKey
     };
   }
 }
@@ -65,6 +75,7 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'donorsApi'"
+      :key = "componentKey"
     />
   </div>
 

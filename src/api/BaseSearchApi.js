@@ -1,19 +1,22 @@
 import { API } from 'aws-amplify';
 
 export class BaseSearchApi {
-    #api;
-    #query;
-    #create;
+    #search;
+    #searchQuery;
+    #createMutation;
+    #onCreateSubscription;
 
-    constructor(api, query, create) {
-        this.#api = api;
-        this.#query = query;
-        this.#create = create;
+    constructor(search, searchQuery, createMutation, onCreateSubscription) {
+
+        this.#search = search;
+        this.#searchQuery = searchQuery;
+        this.#createMutation = createMutation;
+        this.#onCreateSubscription = onCreateSubscription;
     }
 
     async search(filter, from, limit) {
         const result = await API.graphql({
-              query: this.#query,
+              query: this.#searchQuery,
               variables: {
                 filter: filter,
                 from: from, 
@@ -22,13 +25,13 @@ export class BaseSearchApi {
               authMode: 'AMAZON_COGNITO_USER_POOLS'
             });
     
-        const rows = result.data[this.#api];
+        const rows = result.data[this.#search];
         return rows;
     }
 
-    async create(item) {
-        const result = await API.graphql({
-            query: this.#create,
+    create(item) {
+        API.graphql({
+            query: this.#createMutation,
             variables: { 
               input: item
             },
@@ -38,15 +41,25 @@ export class BaseSearchApi {
 
     async aggregate(aggregates) {
         const result = await API.graphql({
-            query: this.#query,
+            query: this.#searchQuery,
             variables: {
               aggregates: aggregates
             },
             authMode: 'AMAZON_COGNITO_USER_POOLS'
           });
   
-      const rows = result.data[this.#api];
+      const rows = result.data[this.#search];
       return rows;        
+    }
+
+    onCreate(next) {
+      API.graphql({
+          query: this.#onCreateSubscription,
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        })
+        .subscribe({
+          next: next
+        });
     }
 
     parseApiItems(apiItems) {

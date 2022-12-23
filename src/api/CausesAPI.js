@@ -1,10 +1,11 @@
 import { BaseSearchApi } from "./BaseSearchApi";
 import { searchCauses } from '../graphql/queries';
 import { createCause } from '../graphql/mutations';
+import { onCreateCause } from '../graphql/subscriptions';
 
 export class CausesApi extends BaseSearchApi {
     constructor() {
-        super('searchCauses', searchCauses, createCause);
+        super('searchCauses', searchCauses, createCause, onCreateCause);
     }
 
     parseApiItems(apiCauses) {

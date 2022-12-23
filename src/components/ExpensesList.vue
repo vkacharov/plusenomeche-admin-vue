@@ -1,6 +1,6 @@
 <script>
-import { reactive, inject } from 'vue'
-import TableLite from "vue3-table-lite";
+import { reactive, inject, ref } from 'vue';
+import TableLite from 'vue3-table-lite';
 import FilterComponent from './FilterComponent.vue';
 import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
@@ -67,9 +67,19 @@ export default {
 
     const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
-    const createExpense = async (item) => {
+    const createExpense = (item) => {
       expensesApi.create(item);
     }
+
+    const componentKey = ref(0);
+    const forceUpdate = () => {
+      // Wait 2.5 seconds for OpenSearch to index the new cause.
+      setTimeout(async () => {
+        await loadAggregates();
+        componentKey.value += 1; // Forces a refresh of the components using this key
+      }, 2500);
+    }
+    expensesApi.onCreate(forceUpdate);
 
     await loadAggregates();
 
@@ -78,7 +88,8 @@ export default {
       createExpense,
       aggregates,
       filterConfig, 
-      addEditConfig
+      addEditConfig,
+      componentKey
     };
   }
 }
@@ -95,10 +106,11 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'expensesApi'"
+      :key="componentKey"
     />
   </div>
 
-  <AggregatesComponent :aggregates="aggregates" />
+  <AggregatesComponent :aggregates="aggregates" :key="componentKey"/>
   <AddEditForm
     :config="addEditConfig"
     :title="'Създай нов разход'"
