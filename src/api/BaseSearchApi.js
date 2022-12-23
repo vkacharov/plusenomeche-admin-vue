@@ -11,13 +11,14 @@ export class BaseSearchApi {
         this.#create = create;
     }
 
-    async search(filter, aggregates) {
+    async search(filter, aggregates, from, limit) {
         const result = await API.graphql({
               query: this.#query,
-              variables: { 
-                limit: 100,
+              variables: {
                 filter: filter,
-                aggregates: aggregates
+                aggregates: aggregates,
+                from: from, 
+                limit: limit
               },
               authMode: 'AMAZON_COGNITO_USER_POOLS'
             });

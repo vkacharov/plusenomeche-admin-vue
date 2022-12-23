@@ -1,4 +1,5 @@
 <script>
+import { inject } from 'vue'
 import FilterComponent from './FilterComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import PaginatedTable from './PaginatedTable.vue';
@@ -34,7 +35,8 @@ export default {
           width: "3%",
         },
       ];
-
+      
+    const donorsApi = inject('donorsApi');
     const createDonor = async (item) => {
       donorsApi.create(item);
     }

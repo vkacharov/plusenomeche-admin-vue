@@ -58,7 +58,7 @@ export default {
       totalRecordCount: 0
     });
 
-    const donorsApi = new inject('donorsApi');
+    const donorsApi = inject('donorsApi');
     const donationsApi = inject('donationsApi');
 
     const searchDonations = async (filter) => {

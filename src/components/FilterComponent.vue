@@ -43,7 +43,6 @@
 
                 const searchFilter = createSearchFilter(filter);
                 const filtersStore = useFiltersStore();
-                console.log('STORING', searchFilter);
                 filtersStore.setFilter(this.apiName, searchFilter);
             }
         }

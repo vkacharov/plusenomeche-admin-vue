@@ -17,11 +17,16 @@ export default {
     },
 
     async setup(props) {
+        const pageSize = 20;
         const table = reactive({
             isLoading: true,
             columns: props.columns,
             rows: [],
-            totalRecordCount: 0
+            totalRecordCount: 0,
+            pageOptions: [{
+                value: pageSize,
+                text: pageSize
+            }]
         });
         
         const apiName = props.apiName;
@@ -29,9 +34,10 @@ export default {
         const api = inject(apiName);
         const filtersStore = useFiltersStore();
         
-        const search = async (filter) => {
+        const search = async (from, limit) => {
             table.isLoading = true;
-            const apiResult = await api.search(filter);
+            const filter = toRaw(filtersStore.filters[apiName]);
+            const apiResult = await api.search(filter, undefined, from, limit);
             const rows = api.parseApiItems(apiResult.items);
             table.rows = rows;
             table.totalRecordCount = apiResult.total;
@@ -46,21 +52,23 @@ export default {
             onError,
         }) => {
             after(async (result) => {
-                console.log('ON ACTION', apiName, result);
                 if(apiName == result) {
-                    const filter = toRaw(filtersStore.filters[result]);
-                    await search(filter);
+                    await search(0, pageSize);
                 }
             });
             
         });
 
+        const onPagination = async (from, limit, order, sort) => {
+            await search(from, limit);
+        }
+
         filtersStore.$reset();
-        await search();
+        await search(0, pageSize);
 
         return {
             table,
-            search
+            onPagination
         };
     }
 }
@@ -74,9 +82,9 @@ export default {
             :columns="table.columns"
             :rows="table.rows"
             :total="table.totalRecordCount"
-
+            @do-search="onPagination"
             @is-finished="table.isLoading = false"
-            :isHidePaging="true"
+            :page-options="table.pageOptions"
         />
   </div>
 </template>
