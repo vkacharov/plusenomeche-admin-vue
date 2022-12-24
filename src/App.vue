@@ -29,6 +29,8 @@ import '@aws-amplify/ui-vue/styles.css';
       
     </template>
   </authenticator>
+
+  <notifications position="bottom left" />
   </template>
 
 

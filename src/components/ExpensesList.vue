@@ -6,6 +6,7 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable },
@@ -71,13 +72,13 @@ export default {
       expensesApi.create(item);
     }
 
-    const componentKey = ref(0);
     const forceUpdate = () => {
-      // Wait 2.5 seconds for OpenSearch to index the new cause.
-      setTimeout(async () => {
-        await loadAggregates();
-        componentKey.value += 1; // Forces a refresh of the components using this key
-      }, 2500);
+      notify({
+          title: 'Успех',
+          text: 'Дарителят беше създаден успешно. Рефрешнете страницата след няколко секунди.',
+          type: 'success',
+          duration: 10000
+      });
     }
     expensesApi.onCreate(forceUpdate);
 
@@ -88,8 +89,7 @@ export default {
       createExpense,
       aggregates,
       filterConfig, 
-      addEditConfig,
-      componentKey
+      addEditConfig
     };
   }
 }
@@ -106,11 +106,10 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'expensesApi'"
-      :key="componentKey"
     />
   </div>
 
-  <AggregatesComponent :aggregates="aggregates" :key="componentKey"/>
+  <AggregatesComponent :aggregates="aggregates"/>
   <AddEditForm
     :config="addEditConfig"
     :title="'Създай нов разход'"

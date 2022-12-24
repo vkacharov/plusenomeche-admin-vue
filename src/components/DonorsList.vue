@@ -3,6 +3,7 @@ import { inject, ref } from 'vue'
 import FilterComponent from './FilterComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import PaginatedTable from './PaginatedTable.vue';
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   components: { PaginatedTable, FilterComponent, AddEditForm },
@@ -46,20 +47,20 @@ export default {
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'}];
 
-    const componentKey = ref(0);
     const forceUpdate = () => {
-      // Wait 2.5 seconds for OpenSearch to index the new cause.
-      setTimeout(() => { 
-        componentKey.value += 1; // Forces a refresh of the components using this key
-      }, 2500);
+      notify({
+          title: 'Успех',
+          text: 'Дарителят беше създаден успешно. Рефрешнете страницата след няколко секунди.',
+          type: 'success',
+          duration: 10000
+      });
     }
     donorsApi.onCreate(forceUpdate);
 
     return {
       columns,
       formConfig,
-      createDonor,
-      componentKey
+      createDonor
     };
   }
 }
@@ -75,7 +76,6 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'donorsApi'"
-      :key = "componentKey"
     />
   </div>
 
