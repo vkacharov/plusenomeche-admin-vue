@@ -1,21 +1,21 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-plushenomecheadmin-staging-121631-authRole",
-      "UnauthRoleArn": "arn:aws:iam::937808942071:role/amplify-plushenomecheadmin-staging-121631-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::937808942071:role/amplify-plushenomecheadmin-staging-121631-authRole",
+      "AuthRoleName": "amplify-plushenomecheadmin-staging-123021-authRole",
+      "UnauthRoleArn": "arn:aws:iam::734523877834:role/amplify-plushenomecheadmin-staging-123021-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::734523877834:role/amplify-plushenomecheadmin-staging-123021-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-plushenomecheadmin-staging-121631-deployment",
-      "UnauthRoleName": "amplify-plushenomecheadmin-staging-121631-unauthRole",
-      "StackName": "amplify-plushenomecheadmin-staging-121631",
-      "StackId": "arn:aws:cloudformation:eu-west-1:937808942071:stack/amplify-plushenomecheadmin-staging-121631/7d0dcde0-73cd-11ed-8d14-0a838f017fb3",
-      "AmplifyAppId": "d2yoh2zwtlh55c"
+      "DeploymentBucketName": "amplify-plushenomecheadmin-staging-123021-deployment",
+      "UnauthRoleName": "amplify-plushenomecheadmin-staging-123021-unauthRole",
+      "StackName": "amplify-plushenomecheadmin-staging-123021",
+      "StackId": "arn:aws:cloudformation:eu-west-1:734523877834:stack/amplify-plushenomecheadmin-staging-123021/bba0d750-8386-11ed-a640-02b055342ee3",
+      "AmplifyAppId": "d2ky9g9t40mi5s"
     },
     "categories": {
-      "api": {
+      "auth": {
         "plushenomecheadmin": {}
       },
-      "auth": {
+      "api": {
         "plushenomecheadmin": {}
       }
     }

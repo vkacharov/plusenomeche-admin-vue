@@ -31,9 +31,15 @@ export async function createSumAggregate(api, field) {
     }
 
     const apiResult = await api.aggregate(sumAggregates);
-    const aggregates = {
-      totalSum: apiResult.aggregateItems.find(agg => agg.name == field).result.value,
-      totalNumber: apiResult.total
+    let aggregates = {
+        totalSum: 0, 
+        totalNumber: 0
+    };
+    if (apiResult.aggregateItems.length > 0) {
+        aggregates = {
+            totalSum: apiResult.aggregateItems.find(agg => agg.name == field).result.value,
+            totalNumber: apiResult.total
+        }
     }
 
     return aggregates;

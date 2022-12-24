@@ -1,11 +1,4 @@
 export type AmplifyDependentResourcesAttributes = {
-    "api": {
-        "plushenomecheadmin": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        }
-    },
     "auth": {
         "plushenomecheadmin": {
             "IdentityPoolId": "string",
@@ -15,6 +8,13 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
             "AppClientID": "string"
+        }
+    },
+    "api": {
+        "plushenomecheadmin": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
         }
     }
 }
