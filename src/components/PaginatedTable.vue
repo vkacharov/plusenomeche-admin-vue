@@ -2,6 +2,7 @@
 import {reactive, inject, toRaw } from 'vue';
 import TableLite from "vue3-table-lite";
 import { useFiltersStore } from '@/stores/filters';
+import { useEditsStore } from '@/stores/edits';
 
 export default {
     components: {TableLite},
@@ -18,9 +19,17 @@ export default {
 
     async setup(props) {
         const pageSize = 20;
+        const editColumn = {
+            label: "",
+            field: "edit",
+            sortable: false,
+            width: "3%",
+        };
+
+        const columns = [... props.columns, editColumn];
         const table = reactive({
             isLoading: true,
-            columns: props.columns,
+            columns: columns,
             rows: [],
             totalRecordCount: 0,
             pageOptions: [{
@@ -63,12 +72,18 @@ export default {
             await search(from, limit);
         }
 
+        const editsStore = useEditsStore();
+        const onEditButtonClicked = (item) => {
+            editsStore.setEdit(apiName, toRaw(item));
+        }
+
         filtersStore.$reset();
         await search(0, pageSize);
 
         return {
             table,
-            onPagination
+            onPagination,
+            onEditButtonClicked
         };
     }
 }
@@ -78,6 +93,8 @@ export default {
 <template>
     <div>
         <table-lite
+            :is-static-mode="true"
+            :is-slot-mode="true"
             :is-loading="table.isLoading"
             :columns="table.columns"
             :rows="table.rows"
@@ -85,6 +102,10 @@ export default {
             @do-search="onPagination"
             @is-finished="table.isLoading = false"
             :page-options="table.pageOptions"
-        />
+        >
+            <template v-slot:edit="item">
+                <button @click="onEditButtonClicked(item)">Промяна</button>
+            </template>
+        </table-lite>
   </div>
 </template>

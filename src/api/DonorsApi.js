@@ -1,11 +1,11 @@
 import { BaseSearchApi } from "./BaseSearchApi";
 import { searchDonors } from '../graphql/queries';
-import { createDonor } from '../graphql/mutations';
+import { createDonor, updateDonor } from '../graphql/mutations';
 import { onCreateDonor } from '../graphql/subscriptions';
 
 export class DonorsApi extends BaseSearchApi {
     constructor() {
-        super('searchDonors', searchDonors, createDonor, onCreateDonor);
+        super('searchDonors', searchDonors, createDonor, onCreateDonor, updateDonor);
     }
 
     parseApiItems(apiDonors) {
@@ -20,6 +20,8 @@ export class DonorsApi extends BaseSearchApi {
               donationsNumber = donor.Donations.items.length;
             }
             return {
+              id: donor.id,
+              version: donor._version,
               name: donor.name, 
               date: donor.date,
               description: donor.description,

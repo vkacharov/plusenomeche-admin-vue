@@ -42,6 +42,10 @@ export default {
       donorsApi.create(item);
     }
 
+    const editDonor = (item) => {
+      donorsApi.update(item);
+    }
+
     const formConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
@@ -60,7 +64,8 @@ export default {
     return {
       columns,
       formConfig,
-      createDonor
+      createDonor,
+      editDonor
     };
   }
 }
@@ -83,5 +88,13 @@ export default {
     :config="formConfig" 
     :title="'Създай нов дарител'"
     @addEditButtonClick="createDonor"
+  />
+
+  <AddEditForm 
+    :config="formConfig" 
+    :title="'Промени дарител'"
+    @addEditButtonClick="editDonor"
+    :apiName="'donorsApi'"
+    :isEdit="true"
   />
 </template>

@@ -5,13 +5,15 @@ export class BaseSearchApi {
     #searchQuery;
     #createMutation;
     #onCreateSubscription;
+    #updateMutation;
 
-    constructor(search, searchQuery, createMutation, onCreateSubscription) {
+    constructor(search, searchQuery, createMutation, onCreateSubscription, updateMutation) {
 
         this.#search = search;
         this.#searchQuery = searchQuery;
         this.#createMutation = createMutation;
         this.#onCreateSubscription = onCreateSubscription;
+        this.#updateMutation = updateMutation;
     }
 
     async search(filter, from, limit) {
@@ -60,6 +62,16 @@ export class BaseSearchApi {
         .subscribe({
           next: next
         });
+    }
+
+    update(item) {
+      API.graphql({
+        query: this.#updateMutation,
+        variables: { 
+          input: item
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+    });      
     }
 
     parseApiItems(apiItems) {

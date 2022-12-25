@@ -1,7 +1,9 @@
 <script>
+    import { reactive, toRaw } from 'vue'
     import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
     import ApiSelectComponent from './ApiSelectComponent.vue';
+    import { useEditsStore } from '@/stores/edits';
     
     export default {
         components: {Datepicker, ApiSelectComponent},
@@ -11,34 +13,60 @@
             },
             title: {
                 type: String
+            },
+            apiName: {
+                type: String
+            },
+            isEdit: {
+                type: Boolean
             }
         },
 
-        data() {
-            const formInputs = {};
-            this.config.forEach(field => {
-                formInputs[field.name] = '';
-            });
+        setup(props, context) {
+            const formInputs = reactive({});
 
-            return {
-                formInputs: formInputs
-            }
-        },  
-    
-        methods: {
-            onAddEditButtonClick() {
+            const onAddEditButtonClick = () => {
                 const item = {};
-                for (let input in this.formInputs) {
-                    if(input == 'date') {
+                for (let input in formInputs) {
+                    if(input == 'date' && typeof formInputs[input] != 'string') {
                         //TODO find a better way to make Datepicker output the ISO date without time
-                        item[input] = this.formInputs[input].toISOString().substring(0, 10);
+                        item[input] = formInputs[input].toISOString().substring(0, 10);
                     } else {
-                        item[input] = this.formInputs[input];
+                        item[input] = formInputs[input];
                     }
                 }
-                this.$emit('addEditButtonClick', item);
+                context.emit('addEditButtonClick', item);
             }
-        }
+
+            if (props.isEdit) {
+                const editsStore = useEditsStore();
+                editsStore.$onAction(({
+                    name,
+                    store,
+                    args,
+                    after,
+                    onError,
+                }) => {
+                    after((result) => {
+                        if(props.apiName == result) {
+                            const edit = toRaw(editsStore.edits[props.apiName]).value;
+                            props.config.forEach(field => {
+                                formInputs[field.name] = edit[field.name];
+                            });
+
+                            formInputs._version = edit.version;
+                            formInputs.id = edit.id;
+                        }
+                        
+                    });
+                });
+            }
+
+            return {
+                formInputs,
+                onAddEditButtonClick
+            }
+        },
     }
 </script>
 
@@ -70,7 +98,7 @@
             </div>
         </div>
         <div class="add-edit-button add-edit-field">
-            <button @click="onAddEditButtonClick">Създаване</button>
+            <button @click="onAddEditButtonClick">Запазване</button>
         </div>
         
     </div>
