@@ -9,6 +9,10 @@
   },
   "dependencies": {
     "@aws-amplify/ui-vue": "^3.0.3",
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/vue-fontawesome": "^3.0.2",
     "@kyvg/vue3-notification": "^2.7.0",
     "@vuepic/vue-datepicker": "^3.6.1",
     "aws-amplify": "^5.0.4",

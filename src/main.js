@@ -13,9 +13,16 @@ import awsExports from './aws-exports';
 
 import Notifications from '@kyvg/vue3-notification';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+
+import './assets/main.css';
+
 Amplify.configure(awsExports);
 
-import './assets/main.css'
+library.add(faPenToSquare, faRightFromBracket);
 
 const app = createApp(App);
 
@@ -27,5 +34,7 @@ app.provide('donorsApi', new DonorsApi());
 app.provide('causesApi', new CausesApi());
 app.provide('donationsApi', new DonationsApi());
 app.provide('expensesApi', new ExpensesApi());
+
+app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.mount('#app');

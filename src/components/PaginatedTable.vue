@@ -105,7 +105,9 @@ export default {
             :page-options="table.pageOptions"
         >
             <template v-slot:edit="item">
-                <button @click="onEditButtonClicked(item)">Промяна</button>
+                <a class='edit-button' @click.stop="onEditButtonClicked(item)">
+                    <font-awesome-icon icon="fa-regular fa-pen-to-square" size="xl"/>
+                </a>
             </template>
         </table-lite>
   </div>

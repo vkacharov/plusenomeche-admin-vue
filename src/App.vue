@@ -11,7 +11,9 @@ import '@aws-amplify/ui-vue/styles.css';
     <template v-slot="{ user, signOut }">
       <div class="top">
         Мечето
-        <button @click="signOut">Sign Out</button>
+        <a @click.stop="signOut">
+          <font-awesome-icon icon="fa-solid fa-right-from-bracket" size="2xl"/>
+        </a>
       </div>
       <header>
         <div class="wrapper">
