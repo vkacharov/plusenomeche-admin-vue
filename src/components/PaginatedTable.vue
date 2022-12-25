@@ -17,7 +17,7 @@ export default {
         }
     },
 
-    async setup(props) {
+    async setup(props, context) {
         const pageSize = 20;
         const editColumn = {
             label: "",
@@ -75,6 +75,7 @@ export default {
         const editsStore = useEditsStore();
         const onEditButtonClicked = (item) => {
             editsStore.setEdit(apiName, toRaw(item));
+            context.emit('tableEditButtonClick');
         }
 
         filtersStore.$reset();

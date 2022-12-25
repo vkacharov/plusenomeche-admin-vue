@@ -3,10 +3,11 @@ import { inject, ref } from 'vue'
 import FilterComponent from './FilterComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import PaginatedTable from './PaginatedTable.vue';
-import { notify } from "@kyvg/vue3-notification";
+import { Modal } from 'usemodal-vue3';
+import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
 
 export default {
-  components: { PaginatedTable, FilterComponent, AddEditForm },
+  components: { PaginatedTable, FilterComponent, AddEditForm, Modal },
 
   async setup() {
     const columns = [
@@ -44,6 +45,7 @@ export default {
 
     const editDonor = (item) => {
       donorsApi.update(item);
+      editModalVisible.value = false;
     }
 
     const formConfig = [
@@ -51,21 +53,15 @@ export default {
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'}];
 
-    const forceUpdate = () => {
-      notify({
-          title: 'Успех',
-          text: 'Дарителят беше създаден успешно. Рефрешнете страницата след няколко секунди.',
-          type: 'success',
-          duration: 10000
-      });
-    }
-    donorsApi.onCreate(forceUpdate);
+    const editModalVisible = ref(false);
+    donorsApi.onCreate(notifyCreateSuccess('дарител'));
 
     return {
       columns,
       formConfig,
       createDonor,
-      editDonor
+      editDonor,
+      editModalVisible
     };
   }
 }
@@ -81,6 +77,7 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'donorsApi'"
+      @tableEditButtonClick="editModalVisible = true"
     />
   </div>
 
@@ -90,11 +87,15 @@ export default {
     @addEditButtonClick="createDonor"
   />
 
-  <AddEditForm 
-    :config="formConfig" 
-    :title="'Промени дарител'"
-    @addEditButtonClick="editDonor"
-    :apiName="'donorsApi'"
-    :isEdit="true"
-  />
+  <Modal 
+    v-model:visible="editModalVisible"
+    :title="'Промени дарител'"  
+  >
+    <AddEditForm 
+      :config="formConfig"
+      @addEditButtonClick="editDonor"
+      :apiName="'donorsApi'"
+      :isEdit="true"
+    />
+  </Modal>
 </template>

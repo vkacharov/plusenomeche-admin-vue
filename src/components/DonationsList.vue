@@ -7,6 +7,7 @@ import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
 import { notify } from "@kyvg/vue3-notification";
+import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
 
 export default {
   components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable },
@@ -82,15 +83,7 @@ export default {
 
     const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
-    const forceUpdate = () => {
-      notify({
-          title: 'Успех',
-          text: 'Дарението беше създаден успешно. Рефрешнете страницата след няколко секунди.',
-          type: 'success',
-          duration: 10000
-      });
-    }
-    donationsApi.onCreate(forceUpdate);
+    donationsApi.onCreate(notifyCreateSuccess('дарение'));
 
     await loadAggregates();
 

@@ -11,9 +11,6 @@
             config: {
                 type: Array
             },
-            title: {
-                type: String
-            },
             apiName: {
                 type: String
             },
@@ -24,6 +21,16 @@
 
         setup(props, context) {
             const formInputs = reactive({});
+            if (props.isEdit) {
+                const editsStore = useEditsStore();
+                const edit = toRaw(editsStore.edits[props.apiName]).value;
+                props.config.forEach(field => {
+                    formInputs[field.name] = edit[field.name];
+                });
+
+                formInputs._version = edit.version;
+                formInputs.id = edit.id;
+            }
 
             const onAddEditButtonClick = () => {
                 const item = {};
@@ -38,30 +45,6 @@
                 context.emit('addEditButtonClick', item);
             }
 
-            if (props.isEdit) {
-                const editsStore = useEditsStore();
-                editsStore.$onAction(({
-                    name,
-                    store,
-                    args,
-                    after,
-                    onError,
-                }) => {
-                    after((result) => {
-                        if(props.apiName == result) {
-                            const edit = toRaw(editsStore.edits[props.apiName]).value;
-                            props.config.forEach(field => {
-                                formInputs[field.name] = edit[field.name];
-                            });
-
-                            formInputs._version = edit.version;
-                            formInputs.id = edit.id;
-                        }
-                        
-                    });
-                });
-            }
-
             return {
                 formInputs,
                 onAddEditButtonClick
@@ -72,8 +55,6 @@
 
 <template>
     <div class="add-edit-form">
-        <h3>{{title}}</h3>
-
         <div v-for="field in config" class="add-edit-field">
             <label>{{field.label}}</label>
 

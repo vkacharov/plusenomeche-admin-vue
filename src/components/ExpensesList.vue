@@ -7,6 +7,7 @@ import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
 import { notify } from "@kyvg/vue3-notification";
+import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
 
 export default {
   components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable },
@@ -72,15 +73,7 @@ export default {
       expensesApi.create(item);
     }
 
-    const forceUpdate = () => {
-      notify({
-          title: 'Успех',
-          text: 'Разходът беше създаден успешно. Рефрешнете страницата след няколко секунди.',
-          type: 'success',
-          duration: 10000
-      });
-    }
-    expensesApi.onCreate(forceUpdate);
+    expensesApi.onCreate(notifyCreateSuccess('разход'));
 
     await loadAggregates();
 
