@@ -101,6 +101,6 @@
 }
 
 .add-edit-field {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 </style>

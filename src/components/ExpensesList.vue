@@ -112,6 +112,8 @@ export default {
   </div>
 
   <AggregatesComponent :aggregates="aggregates"/>
+
+  <h2>Създай нов разход</h2>
   <AddEditForm
     :config="addEditConfig"
     @addEditButtonClick="createExpense"

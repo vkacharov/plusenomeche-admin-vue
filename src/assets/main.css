@@ -60,7 +60,9 @@ button {
 
   #app {
     display: grid;
-    grid-template-columns: 0.3fr 1fr;
+    grid-template-areas:
+        'top top top'
+        'menu main main';
     padding: 0 2rem;
   }
 
@@ -70,5 +72,6 @@ button {
     align-items: center;
     flex-flow: column;
     justify-content: center;
+    grid-area: main;
   }
 }

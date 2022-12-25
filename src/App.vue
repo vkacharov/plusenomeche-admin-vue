@@ -9,9 +9,10 @@ import '@aws-amplify/ui-vue/styles.css';
 <template>
     <authenticator :hide-sign-up="true">
     <template v-slot="{ user, signOut }">
-      <h1>Hello {{ user.username }}!</h1>
-      <button @click="signOut">Sign Out</button>
-
+      <div class="top">
+        Мечето
+        <button @click="signOut">Sign Out</button>
+      </div>
       <header>
         <div class="wrapper">
           <HelloWorld msg="You did it!" />
@@ -70,6 +71,7 @@ nav a:first-of-type {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
+    grid-area: menu;
   }
 
   .logo {
@@ -89,6 +91,17 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+
+  .top {
+    grid-area: top;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+  }
+
+  .top button {
+    width: 150px;
   }
 }
 </style>

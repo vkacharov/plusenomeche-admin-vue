@@ -117,6 +117,7 @@ export default {
   </div>
 
   <AggregatesComponent :aggregates="aggregates" />
+  <h2>Създай нова кауза</h2>
   <AddEditForm
     :config="addEditConfig"
     @addEditButtonClick="createCause"

@@ -121,6 +121,7 @@ export default {
 
   <AggregatesComponent :aggregates="aggregates" />
 
+  <h2>Създай ново дарение</h2>
   <AddEditForm
     :config="addEditConfig"
     @addEditButtonClick="createDonation"
