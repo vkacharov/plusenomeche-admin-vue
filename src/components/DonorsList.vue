@@ -81,9 +81,9 @@ export default {
     />
   </div>
 
+  <h3>Създай нов дарител</h3>
   <AddEditForm 
-    :config="formConfig" 
-    :title="'Създай нов дарител'"
+    :config="formConfig"
     @addEditButtonClick="createDonor"
   />
 

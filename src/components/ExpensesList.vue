@@ -6,11 +6,11 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import { notify } from "@kyvg/vue3-notification";
 import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
+import { Modal } from 'usemodal-vue3';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable },
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable, Modal },
 
   async setup() {
     const columns = [
@@ -73,16 +73,24 @@ export default {
       expensesApi.create(item);
     }
 
+    const editExpense = (item) => {
+      expensesApi.update(item);
+      editModalVisible.value = false;
+    }
+
     expensesApi.onCreate(notifyCreateSuccess('разход'));
+    const editModalVisible = ref(false);
 
     await loadAggregates();
 
     return {
       columns,
       createExpense,
+      editExpense,
       aggregates,
-      filterConfig, 
-      addEditConfig
+      filterConfig,
+      addEditConfig,
+      editModalVisible
     };
   }
 }
@@ -99,13 +107,25 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'expensesApi'"
+      @tableEditButtonClick="editModalVisible = true"
     />
   </div>
 
   <AggregatesComponent :aggregates="aggregates"/>
   <AddEditForm
     :config="addEditConfig"
-    :title="'Създай нов разход'"
     @addEditButtonClick="createExpense"
   />
+
+  <Modal 
+    v-model:visible="editModalVisible"
+    :title="'Промени разход'"  
+  >
+    <AddEditForm 
+      :config="addEditConfig"
+      @addEditButtonClick="editExpense"
+      :apiName="'expensesApi'"
+      :isEdit="true"
+    />
+  </Modal>
 </template>

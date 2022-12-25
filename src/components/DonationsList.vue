@@ -6,11 +6,11 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import { notify } from "@kyvg/vue3-notification";
 import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
+import { Modal } from 'usemodal-vue3';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable },
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable, Modal },
 
   async setup() {
     const columns = [
@@ -73,6 +73,11 @@ export default {
       donationsApi.create(item);
     }
 
+    const editDonation = (item) => {
+      donationsApi.update(item);
+      editModalVisible.value = false;
+    }
+
     const filterConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
@@ -84,15 +89,18 @@ export default {
     const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
     donationsApi.onCreate(notifyCreateSuccess('дарение'));
+    const editModalVisible = ref(false);
 
     await loadAggregates();
 
     return {
       columns,
       createDonation,
+      editDonation,
       aggregates,
       filterConfig,
-      addEditConfig
+      addEditConfig,
+      editModalVisible
     };
   }
 }
@@ -107,6 +115,7 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'donationsApi'"
+      @tableEditButtonClick="editModalVisible = true"
     />
   </div>
 
@@ -114,7 +123,18 @@ export default {
 
   <AddEditForm
     :config="addEditConfig"
-    :title="'Създай ново дарение'"
     @addEditButtonClick="createDonation"
   />
+
+  <Modal 
+    v-model:visible="editModalVisible"
+    :title="'Промени дарение'"  
+  >
+    <AddEditForm 
+      :config="addEditConfig"
+      @addEditButtonClick="editDonation"
+      :apiName="'donationsApi'"
+      :isEdit="true"
+    />
+  </Modal>
 </template>

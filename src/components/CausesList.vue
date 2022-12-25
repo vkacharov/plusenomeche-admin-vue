@@ -6,11 +6,11 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import { notify } from "@kyvg/vue3-notification";
 import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
+import { Modal } from 'usemodal-vue3';
 
 export default {
-  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable},
+  components: { TableLite, FilterComponent, AggregatesComponent, AddEditForm, PaginatedTable, Modal},
 
   async setup() {
     const columns = [
@@ -77,16 +77,24 @@ export default {
       causesApi.create(item);
     }
 
+    const editCause = (item) => {
+      causesApi.update(item);
+      editModalVisible.value = false;
+    }
+
     causesApi.onCreate(notifyCreateSuccess('кауза'));
+    const editModalVisible = ref(false);
 
     await loadAggregates();
 
     return {
       columns,
       createCause,
+      editCause,
       aggregates,
       filterConfig,
-      addEditConfig
+      addEditConfig,
+      editModalVisible
     };
   }
 }
@@ -104,13 +112,25 @@ export default {
     <PaginatedTable
       :columns="columns"
       :apiName="'causesApi'"
+      @tableEditButtonClick="editModalVisible = true"
     />
   </div>
 
   <AggregatesComponent :aggregates="aggregates" />
   <AddEditForm
     :config="addEditConfig"
-    :title="'Създай нова кауза'"
     @addEditButtonClick="createCause"
   />
+
+  <Modal 
+    v-model:visible="editModalVisible"
+    :title="'Промени кауза'"  
+  >
+    <AddEditForm 
+      :config="addEditConfig"
+      @addEditButtonClick="editCause"
+      :apiName="'causesApi'"
+      :isEdit="true"
+    />
+  </Modal>
 </template>
