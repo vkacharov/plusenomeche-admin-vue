@@ -23,7 +23,7 @@ export default {
             label: "",
             field: "edit",
             sortable: false,
-            width: "3%",
+            width: "1%",
         };
 
         const columns = [... props.columns, editColumn];

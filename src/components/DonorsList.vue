@@ -29,7 +29,7 @@ export default {
         {
           label: "Брой дарения",
           field: "donationsNumber",
-          width: "3%",
+          width: "2%",
         },
         {
           label: "Общо дарени",
