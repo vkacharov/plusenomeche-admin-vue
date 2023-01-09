@@ -23,13 +23,9 @@ export const createExpense = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Donation {
         id
@@ -46,25 +42,15 @@ export const createExpense = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -90,13 +76,9 @@ export const updateExpense = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Donation {
         id
@@ -113,25 +95,15 @@ export const updateExpense = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -157,13 +129,9 @@ export const deleteExpense = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Donation {
         id
@@ -180,25 +148,15 @@ export const deleteExpense = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -225,18 +183,11 @@ export const createCause = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -263,18 +214,11 @@ export const updateCause = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -301,18 +245,11 @@ export const deleteCause = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -336,13 +273,9 @@ export const createDonation = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Expenses {
         items {
@@ -355,18 +288,11 @@ export const createDonation = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -390,13 +316,9 @@ export const updateDonation = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Expenses {
         items {
@@ -409,18 +331,11 @@ export const updateDonation = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -444,13 +359,9 @@ export const deleteDonation = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Expenses {
         items {
@@ -463,18 +374,11 @@ export const deleteDonation = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -499,18 +403,11 @@ export const createDonor = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -535,18 +432,11 @@ export const updateDonor = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -571,18 +461,11 @@ export const deleteDonor = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

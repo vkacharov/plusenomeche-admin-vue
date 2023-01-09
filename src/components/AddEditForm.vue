@@ -28,7 +28,6 @@
                     formInputs[field.name] = edit[field.name];
                 });
 
-                formInputs._version = edit.version;
                 formInputs.id = edit.id;
             }
 

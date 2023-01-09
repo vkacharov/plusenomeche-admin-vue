@@ -20,13 +20,9 @@ export const onCreateExpense = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Donation {
         id
@@ -43,25 +39,15 @@ export const onCreateExpense = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -84,13 +70,9 @@ export const onUpdateExpense = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Donation {
         id
@@ -107,25 +89,15 @@ export const onUpdateExpense = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -148,13 +120,9 @@ export const onDeleteExpense = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Donation {
         id
@@ -171,25 +139,15 @@ export const onDeleteExpense = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -213,18 +171,11 @@ export const onCreateCause = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -248,18 +199,11 @@ export const onUpdateCause = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -283,18 +227,11 @@ export const onDeleteCause = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -315,13 +252,9 @@ export const onCreateDonation = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Expenses {
         items {
@@ -334,18 +267,11 @@ export const onCreateDonation = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -366,13 +292,9 @@ export const onUpdateDonation = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Expenses {
         items {
@@ -385,18 +307,11 @@ export const onUpdateDonation = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -417,13 +332,9 @@ export const onDeleteDonation = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Expenses {
         items {
@@ -436,18 +347,11 @@ export const onDeleteDonation = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -469,18 +373,11 @@ export const onCreateDonor = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -502,18 +399,11 @@ export const onUpdateDonor = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -535,18 +425,11 @@ export const onDeleteDonor = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

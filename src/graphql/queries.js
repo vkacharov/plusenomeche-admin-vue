@@ -20,13 +20,9 @@ export const getExpense = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Donation {
         id
@@ -43,25 +39,15 @@ export const getExpense = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -89,9 +75,6 @@ export const listExpenses = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Donation {
           id
@@ -103,77 +86,11 @@ export const listExpenses = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncExpenses = /* GraphQL */ `
-  query SyncExpenses(
-    $filter: ModelExpenseFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncExpenses(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        description
-        date
-        causeID
-        donationID
-        amount
-        Cause {
-          id
-          name
-          description
-          date
-          amount
-          type
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        Donation {
-          id
-          name
-          description
-          amount
-          type
-          date
-          donorID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -209,9 +126,6 @@ export const expensesByCauseID = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Donation {
           id
@@ -223,18 +137,11 @@ export const expensesByCauseID = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -270,9 +177,6 @@ export const expensesByDonationID = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Donation {
           id
@@ -284,18 +188,11 @@ export const expensesByDonationID = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -333,9 +230,6 @@ export const searchExpenses = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Donation {
           id
@@ -347,15 +241,9 @@ export const searchExpenses = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
       total
@@ -396,18 +284,11 @@ export const getCause = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -427,51 +308,11 @@ export const listCauses = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncCauses = /* GraphQL */ `
-  query SyncCauses(
-    $filter: ModelCauseFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncCauses(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        description
-        date
-        amount
-        type
-        Expenses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -501,16 +342,9 @@ export const searchCauses = /* GraphQL */ `
         type
         Expenses {
           nextToken
-          startedAt,
-          items {
-            amount
-          }
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
       total
@@ -548,13 +382,9 @@ export const getDonation = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       Expenses {
         items {
@@ -567,18 +397,11 @@ export const getDonation = /* GraphQL */ `
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -604,69 +427,14 @@ export const listDonations = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncDonations = /* GraphQL */ `
-  query SyncDonations(
-    $filter: ModelDonationFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncDonations(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        description
-        amount
-        type
-        date
-        donorID
-        Donor {
-          id
-          name
-          description
-          date
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        Expenses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -700,22 +468,14 @@ export const donationsByDonorID = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -751,22 +511,12 @@ export const searchDonations = /* GraphQL */ `
           date
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         Expenses {
           nextToken
-          startedAt
-          items {
-            amount
-          }
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
       total
@@ -805,18 +555,11 @@ export const getDonor = /* GraphQL */ `
           donorID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -834,49 +577,11 @@ export const listDonors = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncDonors = /* GraphQL */ `
-  query SyncDonors(
-    $filter: ModelDonorFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncDonors(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        description
-        date
-        Donations {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -904,16 +609,9 @@ export const searchDonors = /* GraphQL */ `
         date
         Donations {
           nextToken
-          startedAt
-          items {
-            amount
-          }
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
       total
