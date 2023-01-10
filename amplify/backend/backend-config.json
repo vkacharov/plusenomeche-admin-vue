@@ -3,22 +3,15 @@
     "plushenomecheadmin": {
       "dependsOn": [
         {
-          "category": "auth",
-          "resourceName": "plushenomecheadmin",
           "attributes": [
             "UserPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "plushenomecheadmin"
         }
       ],
       "output": {
         "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
-            }
-          },
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "AWS_IAM"
@@ -29,7 +22,14 @@
                 "userPoolId": "authplushenomecheadmin"
               }
             }
-          ]
+          ],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            },
+            "authenticationType": "API_KEY"
+          }
         }
       },
       "providerPlugin": "awscloudformation",
