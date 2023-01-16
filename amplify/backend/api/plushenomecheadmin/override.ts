@@ -375,5 +375,17 @@ def lambda_handler(event, context):
 
     resources.opensearch.OpenSearchStreamingLambdaIAMRole.policies = [
         policyProperty
-    ]
+    ];
+
+    resources.models["Donor"]
+        .appsyncFunctions['MutationdeleteDonorpreUpdate0FunctionMutationdeleteDonorpreUpdate0Function.AppSyncFunction']
+        .dataSourceName = 'DonationTable';
+    
+    resources.models["Donation"]
+        .appsyncFunctions['MutationdeleteDonationpreUpdate0FunctionMutationdeleteDonationpreUpdate0Function.AppSyncFunction']
+        .dataSourceName = 'ExpenseTable';
+
+    resources.models["Cause"]
+        .appsyncFunctions['MutationdeleteCausepreUpdate0FunctionMutationdeleteCausepreUpdate0Function.AppSyncFunction']
+        .dataSourceName = 'ExpenseTable';
 }
