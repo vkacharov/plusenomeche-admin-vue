@@ -177,6 +177,7 @@ def _create_update_by_query_action(doc_opensearch_index_name, update_by_index, d
     }
         
 def _load_entity_name(table_name, id):
+    logger.error('TABLE %s, ID %s', table_name, id)
     data = dynamodbClient.get_item(
         TableName=table_name,
         Key={
@@ -282,14 +283,16 @@ def _lambda_handler(event, context):
             # Append OpenSearch Action line with 'index' directive
             
             if event_name == 'INSERT' :
+                foreign_names = {}
                 for field in doc_fields : 
                     #If it's a foreign key- extract the name from the foreign entity
                     if field.endswith('ID') : 
                         foreign_entity = field[:-2]
-                        foreign_table = foreign_entity + '-' + doc_table_name_suffix
+                        foreign_table = foreign_entity.capitalize() + '-' + doc_table_name_suffix
                         logger.error('FOREIGN TABLE %s', foreign_table)
                         foreign_entity_name = _load_entity_name(foreign_table, doc_fields[field])
-                        doc_fields[foreign_entity + 'Name'] = foreign_entity_name
+                        foreign_names[foreign_entity + 'Name'] = foreign_entity_name
+                doc_fields.update(foreign_names)
 
             if event_name == 'MODIFY' :
                 update_by_index = OPENSEARCH_INDEX_DEPENDENCIES[doc_opensearch_index_name]
@@ -348,7 +351,7 @@ def lambda_handler(event, context):
     try:
         return _lambda_handler(event, context)
     except Exception:
-        logger.error(traceback.format_exc())
+        logger.error(traceback.format_exc())        
 `
     };
     
