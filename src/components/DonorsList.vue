@@ -4,7 +4,7 @@ import FilterComponent from './FilterComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import PaginatedTable from './PaginatedTable.vue';
 import { Modal } from 'usemodal-vue3';
-import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
 
 export default {
   components: { PaginatedTable, FilterComponent, AddEditForm, Modal },
@@ -48,6 +48,16 @@ export default {
       editModalVisible.value = false;
     }
 
+    const deleteDonor = async (id) => {
+      try {
+        await donorsApi.delete(id);
+        notifyDeleteSuccess('дарител')();
+      } catch (exception) {
+        console.error('Failed to delete donor', exception);
+        notifyDeleteException('дарител')();
+      }
+    }
+
     const formConfig = [
       {name: 'name', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
@@ -61,6 +71,7 @@ export default {
       formConfig,
       createDonor,
       editDonor,
+      deleteDonor,
       editModalVisible
     };
   }
@@ -78,6 +89,7 @@ export default {
       :columns="columns"
       :apiName="'donorsApi'"
       @tableEditButtonClick="editModalVisible = true"
+      @tableDeleteConfirmed="deleteDonor"
     />
   </div>
 
@@ -87,15 +99,17 @@ export default {
     @addEditButtonClick="createDonor"
   />
 
-  <Modal 
-    v-model:visible="editModalVisible"
-    :title="'Промени дарител'"  
-  >
-    <AddEditForm 
-      :config="formConfig"
-      @addEditButtonClick="editDonor"
-      :apiName="'donorsApi'"
-      :isEdit="true"
-    />
+  <div class="update-modal">
+    <Modal 
+      v-model:visible="editModalVisible"
+      :title="'Промени дарител'"  
+    >
+      <AddEditForm 
+        :config="formConfig"
+        @addEditButtonClick="editDonor"
+        :apiName="'donorsApi'"
+        :isEdit="true"
+      />
   </Modal>
+</div>
 </template>

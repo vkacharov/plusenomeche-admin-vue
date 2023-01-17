@@ -1,11 +1,11 @@
 import { BaseSearchApi } from "./BaseSearchApi";
 import { searchDonors } from '../graphql/queries';
-import { createDonor, updateDonor } from '../graphql/mutations';
+import { createDonor, updateDonor, deleteDonor } from '../graphql/mutations';
 import { onCreateDonor } from '../graphql/subscriptions';
 
 export class DonorsApi extends BaseSearchApi {
     constructor() {
-        super('searchDonors', searchDonors, createDonor, onCreateDonor, updateDonor);
+        super('searchDonors', searchDonors, createDonor, onCreateDonor, updateDonor, deleteDonor);
     }
 
     parseApiItems(apiDonors) {

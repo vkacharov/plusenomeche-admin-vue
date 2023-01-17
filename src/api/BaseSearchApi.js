@@ -6,14 +6,16 @@ export class BaseSearchApi {
     #createMutation;
     #onCreateSubscription;
     #updateMutation;
+    #deleteMutation;
 
-    constructor(search, searchQuery, createMutation, onCreateSubscription, updateMutation) {
+    constructor(search, searchQuery, createMutation, onCreateSubscription, updateMutation, deleteMutation) {
 
         this.#search = search;
         this.#searchQuery = searchQuery;
         this.#createMutation = createMutation;
         this.#onCreateSubscription = onCreateSubscription;
         this.#updateMutation = updateMutation;
+        this.#deleteMutation = deleteMutation;
     }
 
     async search(filter, from, limit) {
@@ -74,6 +76,24 @@ export class BaseSearchApi {
     });      
     }
 
+    async delete(id) {
+      try {
+        const result = await API.graphql({
+          query: this.#deleteMutation,
+          variables: { 
+            input: {
+              id: id
+            }
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
+        
+        return result;
+      } catch (exception) {
+        throw exception.errors[0];
+      }  
+    }
+  
     parseApiItems(apiItems) {
         return [];
     }

@@ -16,13 +16,13 @@ import Notifications from '@kyvg/vue3-notification';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 import './assets/main.css';
 
 Amplify.configure(awsExports);
 
-library.add(faPenToSquare, faRightFromBracket);
+library.add(faPenToSquare, faRightFromBracket, faTrashCan);
 
 const app = createApp(App);
 

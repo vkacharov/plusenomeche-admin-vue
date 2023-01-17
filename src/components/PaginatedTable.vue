@@ -1,11 +1,12 @@
 <script>
-import {reactive, inject, toRaw } from 'vue';
+import {reactive, inject, toRaw, ref } from 'vue';
 import TableLite from "vue3-table-lite";
 import { useFiltersStore } from '@/stores/filters';
 import { useEditsStore } from '@/stores/edits';
+import { Modal } from 'usemodal-vue3';
 
 export default {
-    components: {TableLite},
+    components: {TableLite, Modal},
 
     props: {
         apiName: {
@@ -23,7 +24,7 @@ export default {
             label: "",
             field: "edit",
             sortable: false,
-            width: "1%",
+            width: "3%",
         };
 
         const columns = [... props.columns, editColumn];
@@ -78,13 +79,28 @@ export default {
             context.emit('tableEditButtonClick');
         }
 
+        const deleteModalVisible = ref(false);
+        const idToDelete = ref("");
+        const onDeleteButtonClicked = (item) => {
+            deleteModalVisible.value = true;
+            idToDelete.value = item.value.id;
+        }
+
+        const onDeleteConfirmed = () => {
+            deleteModalVisible.value = false;
+            context.emit('tableDeleteConfirmed', idToDelete.value);
+        }
+
         filtersStore.$reset();
         await search(0, pageSize);
 
         return {
             table,
             onPagination,
-            onEditButtonClicked
+            onEditButtonClicked,
+            onDeleteButtonClicked,
+            onDeleteConfirmed,
+            deleteModalVisible
         };
     }
 }
@@ -105,10 +121,33 @@ export default {
             :page-options="table.pageOptions"
         >
             <template v-slot:edit="item">
-                <a class='edit-button' @click.stop="onEditButtonClicked(item)">
-                    <font-awesome-icon icon="fa-regular fa-pen-to-square" size="xl"/>
+                <a class="edit-button" @click.stop="onEditButtonClicked(item)">
+                    <font-awesome-icon icon="fa-regular fa-pen-to-square" size="1x"></font-awesome-icon>
+                </a>
+                
+                <a class="edit-button" @click.stop="onDeleteButtonClicked(item)">
+                    <font-awesome-icon icon="fa-solid fa-trash-can" size="1x"></font-awesome-icon>
                 </a>
             </template>
         </table-lite>
   </div>
+
+  <Modal 
+    v-model:visible="deleteModalVisible"
+    :title="'Изтриване'"
+    :okButton="{text:'Да', onclick: onDeleteConfirmed}" 
+    :cancelButton="{text: 'Не'}"
+  >
+  Желаете ли да потвърдите изтриването?
+  </Modal>
 </template>
+
+<style>
+.edit-button {
+    margin-right: 10px;
+}
+
+.edit-button:last-child {
+    margin-right: 0px;
+}
+</style>
