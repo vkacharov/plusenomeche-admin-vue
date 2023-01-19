@@ -66,5 +66,15 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
+  },
+  "parameters": {
+    "AMPLIFY_api_plushenomecheadmin_OpenSearchInstanceType": {
+      "usedBy": [
+        {
+          "category": "api",
+          "resourceName": "plushenomecheadmin"
+        }
+      ]
+    }
   }
 }

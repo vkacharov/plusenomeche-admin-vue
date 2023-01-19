@@ -440,4 +440,8 @@ def lambda_handler(event, context):
     };
 
     resources.opensearch.OpenSearchDomain.accessPolicies = opensearchPolicyDocument;
+
+    resources.opensearch.OpenSearchDomain.encryptionAtRestOptions = {
+        enabled: true
+    };
 }

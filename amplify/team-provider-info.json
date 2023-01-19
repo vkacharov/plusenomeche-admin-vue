@@ -16,7 +16,9 @@
         "plushenomecheadmin": {}
       },
       "api": {
-        "plushenomecheadmin": {}
+        "plushenomecheadmin": {
+          "OpenSearchInstanceType": "t3.small.elasticsearch"
+        }
       }
     }
   }
