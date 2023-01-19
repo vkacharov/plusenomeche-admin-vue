@@ -1,11 +1,11 @@
 import { BaseSearchApi } from "./BaseSearchApi";
 import { searchExpenses } from '../graphql/queries';
-import { createExpense, updateExpense } from '../graphql/mutations';
+import { createExpense, updateExpense, deleteExpense } from '../graphql/mutations';
 import { onCreateExpense } from '../graphql/subscriptions';
 
 export class ExpensesApi extends BaseSearchApi {
     constructor() {
-        super('searchExpenses', searchExpenses, createExpense, onCreateExpense, updateExpense);
+        super('searchExpenses', searchExpenses, createExpense, onCreateExpense, updateExpense, deleteExpense);
     }
 
     parseApiItems(apiExpenses) {

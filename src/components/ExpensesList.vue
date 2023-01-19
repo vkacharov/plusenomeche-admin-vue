@@ -6,7 +6,7 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
 import { Modal } from 'usemodal-vue3';
 
 export default {
@@ -81,12 +81,23 @@ export default {
     expensesApi.onCreate(notifyCreateSuccess('разход'));
     const editModalVisible = ref(false);
 
+    const deleteExpense = async (id) => {
+      try {
+        await expensesApi.delete(id);
+        notifyDeleteSuccess('разход')();
+      } catch (exception) {
+        console.error('Failed to delete expense', exception);
+        notifyDeleteException('разход')();
+      }
+    }
+
     await loadAggregates();
 
     return {
       columns,
       createExpense,
       editExpense,
+      deleteExpense,
       aggregates,
       filterConfig,
       addEditConfig,
@@ -108,6 +119,7 @@ export default {
       :columns="columns"
       :apiName="'expensesApi'"
       @tableEditButtonClick="editModalVisible = true"
+      @tableDeleteConfirmed="deleteExpense"
     />
   </div>
 

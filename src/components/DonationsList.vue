@@ -6,7 +6,7 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
 import { Modal } from 'usemodal-vue3';
 
 export default {
@@ -91,12 +91,23 @@ export default {
     donationsApi.onCreate(notifyCreateSuccess('дарение'));
     const editModalVisible = ref(false);
 
+    const deleteDonation = async (id) => {
+      try {
+        await donationsApi.delete(id);
+        notifyDeleteSuccess('дарение')();
+      } catch (exception) {
+        console.error('Failed to delete donation', exception);
+        notifyDeleteException('дарение')();
+      }
+    }
+
     await loadAggregates();
 
     return {
       columns,
       createDonation,
       editDonation,
+      deleteDonation,
       aggregates,
       filterConfig,
       addEditConfig,
@@ -116,6 +127,7 @@ export default {
       :columns="columns"
       :apiName="'donationsApi'"
       @tableEditButtonClick="editModalVisible = true"
+      @tableDeleteConfirmed="deleteDonation"
     />
   </div>
 

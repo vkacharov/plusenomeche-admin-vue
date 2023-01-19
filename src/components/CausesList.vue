@@ -6,7 +6,7 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import {notifyCreateSuccess} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
 import { Modal } from 'usemodal-vue3';
 
 export default {
@@ -84,6 +84,16 @@ export default {
 
     causesApi.onCreate(notifyCreateSuccess('кауза'));
     const editModalVisible = ref(false);
+    
+    const deleteCause = async (id) => {
+      try {
+        await causesApi.delete(id);
+        notifyDeleteSuccess('кауза')();
+      } catch (exception) {
+        console.error('Failed to delete cause', exception);
+        notifyDeleteException('кауза')();
+      }
+    }
 
     await loadAggregates();
 
@@ -91,6 +101,7 @@ export default {
       columns,
       createCause,
       editCause,
+      deleteCause,
       aggregates,
       filterConfig,
       addEditConfig,
@@ -113,6 +124,7 @@ export default {
       :columns="columns"
       :apiName="'causesApi'"
       @tableEditButtonClick="editModalVisible = true"
+      @tableDeleteConfirmed="deleteCause"
     />
   </div>
 
