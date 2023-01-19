@@ -1,6 +1,9 @@
 import { AmplifyApiGraphQlResourceStackTemplate } from '@aws-amplify/cli-extensibility-helper';
 
 export function override(resources: AmplifyApiGraphQlResourceStackTemplate) {
+
+    const amplifyMetaJson = require('../../../amplify-meta.json');
+
     resources.opensearch.OpenSearchStreamingLambdaFunction.handler = 'index.lambda_handler';
     resources.opensearch.OpenSearchStreamingLambdaFunction.code = {
         // TODO: surely there's a better way
@@ -388,4 +391,53 @@ def lambda_handler(event, context):
     resources.models["Cause"]
         .appsyncFunctions['MutationdeleteCausepreUpdate0FunctionMutationdeleteCausepreUpdate0Function.AppSyncFunction']
         .dataSourceName = 'ExpenseTable';
+
+    resources.opensearch.OpenSearchDomain.cognitoOptions = {
+            enabled: true, 
+            userPoolId: amplifyMetaJson.auth.plushenomecheadmin.output.UserPoolId,
+            identityPoolId: amplifyMetaJson.auth.plushenomecheadmin.output.IdentityPoolId,
+            roleArn: 'arn:aws:iam::734523877834:role/service-role/CognitoAccessForAmazonOpenSearch'
+        }
+
+    const opensearchPolicyDocument = {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "es:*",
+                ],
+                "Resource": "arn:aws:es:eu-west-1:734523877834:domain/amplify-opense-gyv58qomosab/*",
+                "Principal": {
+                    "AWS": [
+                        resources.opensearch.OpenSearchStreamingLambdaIAMRole.attrArn,
+                        resources.opensearch.OpenSearchAccessIAMRole.attrArn,
+                        amplifyMetaJson.providers.awscloudformation.AuthRoleArn
+                    ]
+                }
+            },
+
+            {
+                "Effect": "Deny",
+                "Action": [
+                    "es:*",
+                ],
+                "Resource": "arn:aws:es:eu-west-1:734523877834:domain/amplify-opense-gyv58qomosab/*",
+                "Principal": {
+                    "AWS": "*"
+                },
+                "Condition": {
+                    "StringNotLike": {
+                        "aws:PrincipalArn": [
+                            resources.opensearch.OpenSearchStreamingLambdaIAMRole.attrArn,
+                            resources.opensearch.OpenSearchAccessIAMRole.attrArn,
+                            amplifyMetaJson.providers.awscloudformation.AuthRoleArn
+                        ]
+                    }
+                }
+            }
+        ]
+    };
+
+    resources.opensearch.OpenSearchDomain.accessPolicies = opensearchPolicyDocument;
 }
