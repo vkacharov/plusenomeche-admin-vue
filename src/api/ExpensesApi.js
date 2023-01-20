@@ -5,7 +5,14 @@ import { onCreateExpense } from '../graphql/subscriptions';
 
 export class ExpensesApi extends BaseSearchApi {
     constructor() {
-        super('searchExpenses', searchExpenses, createExpense, onCreateExpense, updateExpense, deleteExpense);
+        super({
+            search: 'searchExpenses', 
+            searchQuery: searchExpenses, 
+            createMutation: createExpense, 
+            onCreateSubscription: onCreateExpense, 
+            updateMutation: updateExpense, 
+            deleteMutation: deleteExpense
+          });
     }
 
     parseApiItems(apiExpenses) {

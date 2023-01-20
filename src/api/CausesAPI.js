@@ -5,7 +5,14 @@ import { onCreateCause } from '../graphql/subscriptions';
 
 export class CausesApi extends BaseSearchApi {
     constructor() {
-        super('searchCauses', searchCauses, createCause, onCreateCause, updateCause, deleteCause);
+        super({
+              search: 'searchCauses', 
+              searchQuery: searchCauses, 
+              createMutation: createCause, 
+              onCreateSubscription: onCreateCause, 
+              updateMutation: updateCause, 
+              deleteMutation: deleteCause
+            });
     }
 
     parseApiItems(apiCauses) {

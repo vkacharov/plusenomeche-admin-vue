@@ -19,6 +19,12 @@
         "plushenomecheadmin": {
           "OpenSearchInstanceType": "t3.small.elasticsearch"
         }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2ky9g9t40mi5s",
+          "type": "manual"
+        }
       }
     }
   }

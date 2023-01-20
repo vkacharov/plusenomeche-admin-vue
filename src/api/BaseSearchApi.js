@@ -8,14 +8,13 @@ export class BaseSearchApi {
     #updateMutation;
     #deleteMutation;
 
-    constructor(search, searchQuery, createMutation, onCreateSubscription, updateMutation, deleteMutation) {
-
-        this.#search = search;
-        this.#searchQuery = searchQuery;
-        this.#createMutation = createMutation;
-        this.#onCreateSubscription = onCreateSubscription;
-        this.#updateMutation = updateMutation;
-        this.#deleteMutation = deleteMutation;
+    constructor(props) {
+        this.#search = props.search;
+        this.#searchQuery = props.searchQuery;
+        this.#createMutation = props.createMutation;
+        this.#onCreateSubscription = props.onCreateSubscription;
+        this.#updateMutation = props.updateMutation;
+        this.#deleteMutation = props.deleteMutation;
     }
 
     async search(filter, from, limit) {

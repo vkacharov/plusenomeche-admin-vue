@@ -5,7 +5,14 @@ import { onCreateDonation } from '../graphql/subscriptions';
 
 export class DonationsApi extends BaseSearchApi {
     constructor() {
-        super('searchDonations', searchDonations, createDonation, onCreateDonation, updateDonation, deleteDonation);
+        super({
+          search: 'searchDonations', 
+          searchQuery: searchDonations, 
+          createMutation: createDonation, 
+          onCreateSubscription: onCreateDonation, 
+          updateMutation: updateDonation, 
+          deleteMutation: deleteDonation
+        });
     }
 
     parseApiItems(apiDonations) {
