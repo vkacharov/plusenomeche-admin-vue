@@ -4,6 +4,10 @@ export function override(resources: AmplifyApiGraphQlResourceStackTemplate) {
 
     const amplifyMetaJson = require('../../../amplify-meta.json');
 
+    const accountId = amplifyMetaJson.providers.awscloudformation.AuthRoleArn.split(":")[4];
+    const region = amplifyMetaJson.providers.awscloudformation.Region;
+    const opensearchDomainName = 'plushenomecheadmin-domain';
+
     resources.opensearch.OpenSearchStreamingLambdaFunction.handler = 'index.lambda_handler';
     resources.opensearch.OpenSearchStreamingLambdaFunction.code = {
         // TODO: surely there's a better way
@@ -392,11 +396,17 @@ def lambda_handler(event, context):
         .appsyncFunctions['MutationdeleteCausepreUpdate0FunctionMutationdeleteCausepreUpdate0Function.AppSyncFunction']
         .dataSourceName = 'ExpenseTable';
 
+    ["Donor", "Donation", "Cause", "Expense"].forEach(table => {
+        resources.models[table].modelDDBTable.pointInTimeRecoverySpecification = {
+            pointInTimeRecoveryEnabled: true
+        };
+    });
+
     resources.opensearch.OpenSearchDomain.cognitoOptions = {
             enabled: true, 
             userPoolId: amplifyMetaJson.auth.plushenomecheadmin.output.UserPoolId,
             identityPoolId: amplifyMetaJson.auth.plushenomecheadmin.output.IdentityPoolId,
-            roleArn: 'arn:aws:iam::734523877834:role/service-role/CognitoAccessForAmazonOpenSearch'
+            roleArn: `arn:aws:iam::${accountId}:role/service-role/CognitoAccessForAmazonOpenSearch`
         }
 
     const opensearchPolicyDocument = {
@@ -407,7 +417,7 @@ def lambda_handler(event, context):
                 "Action": [
                     "es:*",
                 ],
-                "Resource": "arn:aws:es:eu-west-1:734523877834:domain/amplify-opense-gyv58qomosab/*",
+                "Resource": `arn:aws:es:${region}:${accountId}:domain/${opensearchDomainName}/*`,
                 "Principal": {
                     "AWS": [
                         resources.opensearch.OpenSearchStreamingLambdaIAMRole.attrArn,
@@ -422,7 +432,7 @@ def lambda_handler(event, context):
                 "Action": [
                     "es:*",
                 ],
-                "Resource": "arn:aws:es:eu-west-1:734523877834:domain/amplify-opense-gyv58qomosab/*",
+                "Resource": `arn:aws:es:${region}:${accountId}:domain/${opensearchDomainName}/*`,
                 "Principal": {
                     "AWS": "*"
                 },
@@ -444,4 +454,6 @@ def lambda_handler(event, context):
     resources.opensearch.OpenSearchDomain.encryptionAtRestOptions = {
         enabled: true
     };
+
+    resources.opensearch.OpenSearchDomain.domainName = opensearchDomainName;
 }
