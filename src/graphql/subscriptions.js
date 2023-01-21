@@ -5,7 +5,7 @@ export const onCreateExpense = /* GraphQL */ `
   subscription OnCreateExpense($filter: ModelSubscriptionExpenseFilterInput) {
     onCreateExpense(filter: $filter) {
       id
-      name
+      expenseName
       description
       date
       causeID
@@ -13,7 +13,7 @@ export const onCreateExpense = /* GraphQL */ `
       amount
       Cause {
         id
-        name
+        causeName
         description
         date
         amount
@@ -26,7 +26,7 @@ export const onCreateExpense = /* GraphQL */ `
       }
       Donation {
         id
-        name
+        donationName
         description
         amount
         type
@@ -34,7 +34,7 @@ export const onCreateExpense = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -55,7 +55,7 @@ export const onUpdateExpense = /* GraphQL */ `
   subscription OnUpdateExpense($filter: ModelSubscriptionExpenseFilterInput) {
     onUpdateExpense(filter: $filter) {
       id
-      name
+      expenseName
       description
       date
       causeID
@@ -63,7 +63,7 @@ export const onUpdateExpense = /* GraphQL */ `
       amount
       Cause {
         id
-        name
+        causeName
         description
         date
         amount
@@ -76,7 +76,7 @@ export const onUpdateExpense = /* GraphQL */ `
       }
       Donation {
         id
-        name
+        donationName
         description
         amount
         type
@@ -84,7 +84,7 @@ export const onUpdateExpense = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -105,7 +105,7 @@ export const onDeleteExpense = /* GraphQL */ `
   subscription OnDeleteExpense($filter: ModelSubscriptionExpenseFilterInput) {
     onDeleteExpense(filter: $filter) {
       id
-      name
+      expenseName
       description
       date
       causeID
@@ -113,7 +113,7 @@ export const onDeleteExpense = /* GraphQL */ `
       amount
       Cause {
         id
-        name
+        causeName
         description
         date
         amount
@@ -126,7 +126,7 @@ export const onDeleteExpense = /* GraphQL */ `
       }
       Donation {
         id
-        name
+        donationName
         description
         amount
         type
@@ -134,7 +134,7 @@ export const onDeleteExpense = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -155,7 +155,7 @@ export const onCreateCause = /* GraphQL */ `
   subscription OnCreateCause($filter: ModelSubscriptionCauseFilterInput) {
     onCreateCause(filter: $filter) {
       id
-      name
+      causeName
       description
       date
       amount
@@ -163,7 +163,7 @@ export const onCreateCause = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -183,7 +183,7 @@ export const onUpdateCause = /* GraphQL */ `
   subscription OnUpdateCause($filter: ModelSubscriptionCauseFilterInput) {
     onUpdateCause(filter: $filter) {
       id
-      name
+      causeName
       description
       date
       amount
@@ -191,7 +191,7 @@ export const onUpdateCause = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -211,7 +211,7 @@ export const onDeleteCause = /* GraphQL */ `
   subscription OnDeleteCause($filter: ModelSubscriptionCauseFilterInput) {
     onDeleteCause(filter: $filter) {
       id
-      name
+      causeName
       description
       date
       amount
@@ -219,7 +219,7 @@ export const onDeleteCause = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -239,7 +239,7 @@ export const onCreateDonation = /* GraphQL */ `
   subscription OnCreateDonation($filter: ModelSubscriptionDonationFilterInput) {
     onCreateDonation(filter: $filter) {
       id
-      name
+      donationName
       description
       amount
       type
@@ -247,7 +247,7 @@ export const onCreateDonation = /* GraphQL */ `
       donorID
       Donor {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -259,7 +259,7 @@ export const onCreateDonation = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -279,7 +279,7 @@ export const onUpdateDonation = /* GraphQL */ `
   subscription OnUpdateDonation($filter: ModelSubscriptionDonationFilterInput) {
     onUpdateDonation(filter: $filter) {
       id
-      name
+      donationName
       description
       amount
       type
@@ -287,7 +287,7 @@ export const onUpdateDonation = /* GraphQL */ `
       donorID
       Donor {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -299,7 +299,7 @@ export const onUpdateDonation = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -319,7 +319,7 @@ export const onDeleteDonation = /* GraphQL */ `
   subscription OnDeleteDonation($filter: ModelSubscriptionDonationFilterInput) {
     onDeleteDonation(filter: $filter) {
       id
-      name
+      donationName
       description
       amount
       type
@@ -327,7 +327,7 @@ export const onDeleteDonation = /* GraphQL */ `
       donorID
       Donor {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -339,7 +339,7 @@ export const onDeleteDonation = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -359,13 +359,13 @@ export const onCreateDonor = /* GraphQL */ `
   subscription OnCreateDonor($filter: ModelSubscriptionDonorFilterInput) {
     onCreateDonor(filter: $filter) {
       id
-      name
+      donorName
       description
       date
       Donations {
         items {
           id
-          name
+          donationName
           description
           amount
           type
@@ -385,13 +385,13 @@ export const onUpdateDonor = /* GraphQL */ `
   subscription OnUpdateDonor($filter: ModelSubscriptionDonorFilterInput) {
     onUpdateDonor(filter: $filter) {
       id
-      name
+      donorName
       description
       date
       Donations {
         items {
           id
-          name
+          donationName
           description
           amount
           type
@@ -411,13 +411,13 @@ export const onDeleteDonor = /* GraphQL */ `
   subscription OnDeleteDonor($filter: ModelSubscriptionDonorFilterInput) {
     onDeleteDonor(filter: $filter) {
       id
-      name
+      donorName
       description
       date
       Donations {
         items {
           id
-          name
+          donationName
           description
           amount
           type

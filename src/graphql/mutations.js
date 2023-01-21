@@ -8,7 +8,7 @@ export const createExpense = /* GraphQL */ `
   ) {
     createExpense(input: $input, condition: $condition) {
       id
-      name
+      expenseName
       description
       date
       causeID
@@ -16,7 +16,7 @@ export const createExpense = /* GraphQL */ `
       amount
       Cause {
         id
-        name
+        causeName
         description
         date
         amount
@@ -29,7 +29,7 @@ export const createExpense = /* GraphQL */ `
       }
       Donation {
         id
-        name
+        donationName
         description
         amount
         type
@@ -37,7 +37,7 @@ export const createExpense = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -61,7 +61,7 @@ export const updateExpense = /* GraphQL */ `
   ) {
     updateExpense(input: $input, condition: $condition) {
       id
-      name
+      expenseName
       description
       date
       causeID
@@ -69,7 +69,7 @@ export const updateExpense = /* GraphQL */ `
       amount
       Cause {
         id
-        name
+        causeName
         description
         date
         amount
@@ -82,7 +82,7 @@ export const updateExpense = /* GraphQL */ `
       }
       Donation {
         id
-        name
+        donationName
         description
         amount
         type
@@ -90,7 +90,7 @@ export const updateExpense = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -114,7 +114,7 @@ export const deleteExpense = /* GraphQL */ `
   ) {
     deleteExpense(input: $input, condition: $condition) {
       id
-      name
+      expenseName
       description
       date
       causeID
@@ -122,7 +122,7 @@ export const deleteExpense = /* GraphQL */ `
       amount
       Cause {
         id
-        name
+        causeName
         description
         date
         amount
@@ -135,7 +135,7 @@ export const deleteExpense = /* GraphQL */ `
       }
       Donation {
         id
-        name
+        donationName
         description
         amount
         type
@@ -143,7 +143,7 @@ export const deleteExpense = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -167,7 +167,7 @@ export const createCause = /* GraphQL */ `
   ) {
     createCause(input: $input, condition: $condition) {
       id
-      name
+      causeName
       description
       date
       amount
@@ -175,7 +175,7 @@ export const createCause = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -198,7 +198,7 @@ export const updateCause = /* GraphQL */ `
   ) {
     updateCause(input: $input, condition: $condition) {
       id
-      name
+      causeName
       description
       date
       amount
@@ -206,7 +206,7 @@ export const updateCause = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -229,7 +229,7 @@ export const deleteCause = /* GraphQL */ `
   ) {
     deleteCause(input: $input, condition: $condition) {
       id
-      name
+      causeName
       description
       date
       amount
@@ -237,7 +237,7 @@ export const deleteCause = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -260,7 +260,7 @@ export const createDonation = /* GraphQL */ `
   ) {
     createDonation(input: $input, condition: $condition) {
       id
-      name
+      donationName
       description
       amount
       type
@@ -268,7 +268,7 @@ export const createDonation = /* GraphQL */ `
       donorID
       Donor {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -280,7 +280,7 @@ export const createDonation = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -303,7 +303,7 @@ export const updateDonation = /* GraphQL */ `
   ) {
     updateDonation(input: $input, condition: $condition) {
       id
-      name
+      donationName
       description
       amount
       type
@@ -311,7 +311,7 @@ export const updateDonation = /* GraphQL */ `
       donorID
       Donor {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -323,7 +323,7 @@ export const updateDonation = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -346,7 +346,7 @@ export const deleteDonation = /* GraphQL */ `
   ) {
     deleteDonation(input: $input, condition: $condition) {
       id
-      name
+      donationName
       description
       amount
       type
@@ -354,7 +354,7 @@ export const deleteDonation = /* GraphQL */ `
       donorID
       Donor {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -366,7 +366,7 @@ export const deleteDonation = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -389,13 +389,13 @@ export const createDonor = /* GraphQL */ `
   ) {
     createDonor(input: $input, condition: $condition) {
       id
-      name
+      donorName
       description
       date
       Donations {
         items {
           id
-          name
+          donationName
           description
           amount
           type
@@ -418,13 +418,13 @@ export const updateDonor = /* GraphQL */ `
   ) {
     updateDonor(input: $input, condition: $condition) {
       id
-      name
+      donorName
       description
       date
       Donations {
         items {
           id
-          name
+          donationName
           description
           amount
           type
@@ -447,13 +447,13 @@ export const deleteDonor = /* GraphQL */ `
   ) {
     deleteDonor(input: $input, condition: $condition) {
       id
-      name
+      donorName
       description
       date
       Donations {
         items {
           id
-          name
+          donationName
           description
           amount
           type

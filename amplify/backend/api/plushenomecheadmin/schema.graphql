@@ -1,6 +1,6 @@
-type Expense @searchable @model @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
+type Expense @model @searchable @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
   id: ID!
-  name: String
+  expenseName: String
   description: String
   date: AWSDate
   causeID: ID! @index(name: "byCause")
@@ -10,9 +10,9 @@ type Expense @searchable @model @auth(rules: [{ allow: groups, groups: ["Admin"]
   Donation: Donation @belongsTo(fields: ["causeID"])
 }
 
-type Cause @searchable @model @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
+type Cause @model @searchable @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
   id: ID!
-  name: String
+  causeName: String
   description: String
   date: AWSDate
   amount: Int
@@ -20,9 +20,9 @@ type Cause @searchable @model @auth(rules: [{ allow: groups, groups: ["Admin"], 
   Expenses: [Expense] @hasMany(indexName: "byCause", fields: ["id"])
 }
 
-type Donation @searchable @model @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
+type Donation @model @searchable @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
   id: ID!
-  name: String
+  donationName: String
   description: String
   amount: Int
   type: String
@@ -32,9 +32,9 @@ type Donation @searchable @model @auth(rules: [{ allow: groups, groups: ["Admin"
   Expenses: [Expense] @hasMany(indexName: "byDonation", fields: ["id"])
 }
 
-type Donor @searchable @model @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
+type Donor @model @searchable @auth(rules: [{ allow: groups, groups: ["Admin"], provider: userPools }]) {
   id: ID!
-  name: String
+  donorName: String
   description: String
   date: AWSDate
   Donations: [Donation] @hasMany(indexName: "byDonor", fields: ["id"])

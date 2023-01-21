@@ -16,7 +16,7 @@ export default {
     const columns = [
         {
           label: "Име",
-          field: "name",
+          field: "expenseName",
           width: "5%",
         },
         {
@@ -60,7 +60,7 @@ export default {
     });
 
     const filterConfig = [
-      {name: 'name', label: 'име', type: 'string'}, 
+      {name: 'expenseName', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'donationID', label: 'дарение', type: 'select', api: 'donationsApi'},

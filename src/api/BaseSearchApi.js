@@ -27,7 +27,7 @@ export class BaseSearchApi {
               },
               authMode: 'AMAZON_COGNITO_USER_POOLS'
             });
-    
+        console.log('RESULT', result)
         const rows = result.data[this.#search];
         return rows;
     }

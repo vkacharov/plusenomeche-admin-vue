@@ -13,7 +13,7 @@ export default {
     const columns = [
         {
           label: "Име",
-          field: "name",
+          field: "donorName",
           width: "5%",
         },
         {
@@ -59,7 +59,7 @@ export default {
     }
 
     const formConfig = [
-      {name: 'name', label: 'име', type: 'string'}, 
+      {name: 'donorName', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'}];
 

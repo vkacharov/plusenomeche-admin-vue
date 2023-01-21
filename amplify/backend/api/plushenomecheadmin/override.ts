@@ -165,7 +165,7 @@ def _create_update_by_query_action(doc_opensearch_index_name, update_by_index, d
     match_phrase = {}
     match_phrase[foreign_key_id] = doc_fields['id']
     update_by_query_params = {}
-    update_by_query_params[foreign_key_name] = doc_fields['name']
+    update_by_query_params[foreign_key_name] = doc_fields[doc_opensearch_index_name + 'Name']
     update_by_query = {
         'query': {
             'match_phrase': match_phrase
@@ -183,8 +183,8 @@ def _create_update_by_query_action(doc_opensearch_index_name, update_by_index, d
         'index': update_by_index
     }
         
-def _load_entity_name(table_name, id):
-    logger.error('TABLE %s, ID %s', table_name, id)
+def _load_entity_name(table_name, entity, id):
+    logger.info('TABLE %s, ID %s', table_name, id)
     data = dynamodbClient.get_item(
         TableName=table_name,
         Key={
@@ -194,11 +194,12 @@ def _load_entity_name(table_name, id):
         }
     )
     
-    if data and 'Item' in data : 
-        return data['Item']['name']['S']
+    if data and 'Item' in data :
+        name_field = entity + 'Name'
+        return data['Item'][name_field]['S']
     
 def _lambda_handler(event, context):
-    logger.debug('Event: %s', event)
+    logger.error('Event: %s', event)
     records = event['Records']
 
     ddb_deserializer = StreamTypeDeserializer()
@@ -228,7 +229,6 @@ def _lambda_handler(event, context):
         doc_table_parts = doc_table.split('-')
         doc_opensearch_index_name = doc_table_parts[0] if len(doc_table_parts) > 0  else doc_table
         doc_table_name_suffix = '-'.join(doc_table_parts[1:]) if len(doc_table_parts) > 1 else ''
-        logger.error('TABLE NAME SUFFIX %s', doc_table_name_suffix)
 
         # Dispatch according to event TYPE
         event_name = record['eventName'].upper()  # INSERT, MODIFY, REMOVE
@@ -296,19 +296,15 @@ def _lambda_handler(event, context):
                     if field.endswith('ID') : 
                         foreign_entity = field[:-2]
                         foreign_table = foreign_entity.capitalize() + '-' + doc_table_name_suffix
-                        logger.error('FOREIGN TABLE %s', foreign_table)
-                        foreign_entity_name = _load_entity_name(foreign_table, doc_fields[field])
+                        foreign_entity_name = _load_entity_name(foreign_table, foreign_entity, doc_fields[field])
                         foreign_names[foreign_entity + 'Name'] = foreign_entity_name
                 doc_fields.update(foreign_names)
 
             if event_name == 'MODIFY' :
-                update_by_index = OPENSEARCH_INDEX_DEPENDENCIES[doc_opensearch_index_name]
-                if update_by_index :
+                if doc_opensearch_index_name in OPENSEARCH_INDEX_DEPENDENCIES:
+                    update_by_index = OPENSEARCH_INDEX_DEPENDENCIES[doc_opensearch_index_name]
                     update_by_query_action = _create_update_by_query_action(doc_opensearch_index_name, update_by_index, doc_fields)
                     update_by_query_actions.append(update_by_query_action)
-                    
-            # Add an alias for the Name field to facilitate joining with foreign entities
-            doc_fields[doc_opensearch_index_name + 'Name'] = doc_fields['name']
                 
             opensearch_actions.append(json.dumps(action))
             # Append JSON payload

@@ -19,12 +19,12 @@ export class ExpensesApi extends BaseSearchApi {
         return apiExpenses.map(expense => {
             return {
                 id: expense.id,
-                name: expense.name, 
+                expenseName: expense.expenseName, 
                 date: expense.date,
                 description: expense.description,
                 amount: expense.amount,
-                donation: expense.Donation.name,
-                cause: expense.Cause.name
+                donation: expense.Donation.donationName,
+                cause: expense.Cause.causeName
             }
         });
     }

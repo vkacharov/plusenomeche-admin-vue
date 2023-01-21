@@ -5,7 +5,7 @@ export const getExpense = /* GraphQL */ `
   query GetExpense($id: ID!) {
     getExpense(id: $id) {
       id
-      name
+      expenseName
       description
       date
       causeID
@@ -13,7 +13,7 @@ export const getExpense = /* GraphQL */ `
       amount
       Cause {
         id
-        name
+        causeName
         description
         date
         amount
@@ -26,7 +26,7 @@ export const getExpense = /* GraphQL */ `
       }
       Donation {
         id
-        name
+        donationName
         description
         amount
         type
@@ -34,7 +34,7 @@ export const getExpense = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -60,7 +60,7 @@ export const listExpenses = /* GraphQL */ `
     listExpenses(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
+        expenseName
         description
         date
         causeID
@@ -68,7 +68,7 @@ export const listExpenses = /* GraphQL */ `
         amount
         Cause {
           id
-          name
+          causeName
           description
           date
           amount
@@ -78,7 +78,7 @@ export const listExpenses = /* GraphQL */ `
         }
         Donation {
           id
-          name
+          donationName
           description
           amount
           type
@@ -111,7 +111,7 @@ export const expensesByCauseID = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        expenseName
         description
         date
         causeID
@@ -119,7 +119,7 @@ export const expensesByCauseID = /* GraphQL */ `
         amount
         Cause {
           id
-          name
+          causeName
           description
           date
           amount
@@ -129,7 +129,7 @@ export const expensesByCauseID = /* GraphQL */ `
         }
         Donation {
           id
-          name
+          donationName
           description
           amount
           type
@@ -162,7 +162,7 @@ export const expensesByDonationID = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        expenseName
         description
         date
         causeID
@@ -170,7 +170,7 @@ export const expensesByDonationID = /* GraphQL */ `
         amount
         Cause {
           id
-          name
+          causeName
           description
           date
           amount
@@ -180,7 +180,7 @@ export const expensesByDonationID = /* GraphQL */ `
         }
         Donation {
           id
-          name
+          donationName
           description
           amount
           type
@@ -215,7 +215,7 @@ export const searchExpenses = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        expenseName
         description
         date
         causeID
@@ -223,7 +223,7 @@ export const searchExpenses = /* GraphQL */ `
         amount
         Cause {
           id
-          name
+          causeName
           description
           date
           amount
@@ -233,7 +233,7 @@ export const searchExpenses = /* GraphQL */ `
         }
         Donation {
           id
-          name
+          donationName
           description
           amount
           type
@@ -268,7 +268,7 @@ export const getCause = /* GraphQL */ `
   query GetCause($id: ID!) {
     getCause(id: $id) {
       id
-      name
+      causeName
       description
       date
       amount
@@ -276,7 +276,7 @@ export const getCause = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -301,7 +301,7 @@ export const listCauses = /* GraphQL */ `
     listCauses(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
+        causeName
         description
         date
         amount
@@ -335,7 +335,7 @@ export const searchCauses = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        causeName
         description
         date
         amount
@@ -369,7 +369,7 @@ export const getDonation = /* GraphQL */ `
   query GetDonation($id: ID!) {
     getDonation(id: $id) {
       id
-      name
+      donationName
       description
       amount
       type
@@ -377,7 +377,7 @@ export const getDonation = /* GraphQL */ `
       donorID
       Donor {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -389,7 +389,7 @@ export const getDonation = /* GraphQL */ `
       Expenses {
         items {
           id
-          name
+          expenseName
           description
           date
           causeID
@@ -414,7 +414,7 @@ export const listDonations = /* GraphQL */ `
     listDonations(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
+        donationName
         description
         amount
         type
@@ -422,7 +422,7 @@ export const listDonations = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -455,7 +455,7 @@ export const donationsByDonorID = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        donationName
         description
         amount
         type
@@ -463,7 +463,7 @@ export const donationsByDonorID = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -498,7 +498,7 @@ export const searchDonations = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        donationName
         description
         amount
         type
@@ -506,7 +506,7 @@ export const searchDonations = /* GraphQL */ `
         donorID
         Donor {
           id
-          name
+          donorName
           description
           date
           createdAt
@@ -541,13 +541,13 @@ export const getDonor = /* GraphQL */ `
   query GetDonor($id: ID!) {
     getDonor(id: $id) {
       id
-      name
+      donorName
       description
       date
       Donations {
         items {
           id
-          name
+          donationName
           description
           amount
           type
@@ -572,7 +572,7 @@ export const listDonors = /* GraphQL */ `
     listDonors(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
+        donorName
         description
         date
         Donations {
@@ -604,7 +604,7 @@ export const searchDonors = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        donorName
         description
         date
         Donations {
