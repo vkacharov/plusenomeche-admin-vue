@@ -6,7 +6,7 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyUpdateSuccess, notifyDeleteException, notifyUpdateException} from '../helpers/notification-helpers.js';
 import { Modal } from 'usemodal-vue3';
 
 export default {
@@ -73,9 +73,15 @@ export default {
       expensesApi.create(item);
     }
 
-    const editExpense = (item) => {
-      expensesApi.update(item);
-      editModalVisible.value = false;
+    const editExpense = async (item) => {
+        editModalVisible.value = false;
+      try {
+        await expensesApi.update(item);
+        notifyUpdateSuccess('разход')();
+      } catch (exception) {
+        console.error('Failed to update Expense', exception);
+        notifyUpdateException('разход')();
+      }
     }
 
     expensesApi.onCreate(notifyCreateSuccess('разход'));

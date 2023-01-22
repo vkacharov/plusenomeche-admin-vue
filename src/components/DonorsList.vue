@@ -4,7 +4,7 @@ import FilterComponent from './FilterComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import PaginatedTable from './PaginatedTable.vue';
 import { Modal } from 'usemodal-vue3';
-import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyUpdateSuccess, notifyDeleteException, notifyUpdateException} from '../helpers/notification-helpers.js';
 
 export default {
   components: { PaginatedTable, FilterComponent, AddEditForm, Modal },
@@ -33,9 +33,15 @@ export default {
       donorsApi.create(item);
     }
 
-    const editDonor = (item) => {
-      donorsApi.update(item);
+    const editDonor = async (item) => {
       editModalVisible.value = false;
+      try {
+        await donorsApi.update(item);
+        notifyUpdateSuccess('дарител')();
+      } catch (exception) {
+        console.error('Failed to update Donor', exception);
+        notifyUpdateException('дарител')();
+      }
     }
 
     const deleteDonor = async (id) => {
@@ -43,7 +49,7 @@ export default {
         await donorsApi.delete(id);
         notifyDeleteSuccess('дарител')();
       } catch (exception) {
-        console.error('Failed to delete donor', exception);
+        console.error('Failed to delete Donor', exception);
         notifyDeleteException('дарител')();
       }
     }

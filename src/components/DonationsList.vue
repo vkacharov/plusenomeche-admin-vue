@@ -6,7 +6,7 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyUpdateSuccess, notifyDeleteException, notifyUpdateException} from '../helpers/notification-helpers.js';
 import { Modal } from 'usemodal-vue3';
 
 export default {
@@ -63,9 +63,15 @@ export default {
       donationsApi.create(item);
     }
 
-    const editDonation = (item) => {
-      donationsApi.update(item);
+    const editDonation = async (item) => {
       editModalVisible.value = false;
+      try {
+        await donationsApi.update(item);
+        notifyUpdateSuccess('дарение')();
+      } catch (exception) {
+        console.error('Failed to update Donation', exception);
+        notifyUpdateException('дарение')();
+      }
     }
 
     const filterConfig = [

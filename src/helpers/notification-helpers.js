@@ -18,10 +18,28 @@ export function notifyDeleteSuccess(model) {
     });    
 }
 
+export function notifyUpdateSuccess(model) {
+    return () => notify({
+        title: 'Успех',
+        text: `Успешно променен ${model}. Рефрешнете страницата след няколко секунди.`,
+        type: 'success',
+        duration: 10000
+    });
+}
+
 export function notifyDeleteException(model) {
     return () => notify({
         title: 'Грешка',
         text: `Неуспешно изтриване на ${model}. Проверете дали този ${model} не е рефериран от други записи.`,
+        type: 'error',
+        duration: 10000
+    });    
+}
+
+export function notifyUpdateException(model) {
+    return () => notify({
+        title: 'Грешка',
+        text: `Неуспешна промяна на на ${model}.`,
         type: 'error',
         duration: 10000
     });    

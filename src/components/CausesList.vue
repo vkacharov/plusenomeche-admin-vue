@@ -6,7 +6,7 @@ import AggregatesComponent from './AggregatesComponent.vue';
 import AddEditForm from './AddEditForm.vue';
 import {createSumAggregate} from '../helpers/filter-helpers.js';
 import PaginatedTable from './PaginatedTable.vue';
-import {notifyCreateSuccess, notifyDeleteSuccess, notifyDeleteException} from '../helpers/notification-helpers.js';
+import {notifyCreateSuccess, notifyDeleteSuccess, notifyUpdateSuccess, notifyDeleteException, notifyUpdateException} from '../helpers/notification-helpers.js';
 import { Modal } from 'usemodal-vue3';
 
 export default {
@@ -67,9 +67,15 @@ export default {
       causesApi.create(item);
     }
 
-    const editCause = (item) => {
-      causesApi.update(item);
+    const editCause = async (item) => {
       editModalVisible.value = false;
+      try {
+        await causesApi.update(item);
+        notifyUpdateSuccess('кауза')();
+      } catch (exception) {
+        console.error('Failed to update Cause', exception);
+        notifyUpdateException('кауза')();
+      }
     }
 
     causesApi.onCreate(notifyCreateSuccess('кауза'));

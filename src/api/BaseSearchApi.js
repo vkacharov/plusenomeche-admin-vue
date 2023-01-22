@@ -27,7 +27,6 @@ export class BaseSearchApi {
               },
               authMode: 'AMAZON_COGNITO_USER_POOLS'
             });
-        console.log('RESULT', result)
         const rows = result.data[this.#search];
         return rows;
     }
@@ -65,14 +64,20 @@ export class BaseSearchApi {
         });
     }
 
-    update(item) {
-      API.graphql({
-        query: this.#updateMutation,
-        variables: { 
-          input: item
-        },
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
-    });      
+    async update(item) {
+      try {
+        const result = API.graphql({
+          query: this.#updateMutation,
+          variables: { 
+            input: item
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
+        
+        return result;
+      } catch (exception) {
+        throw exception.errors[0];
+      }
     }
 
     async delete(id) {
