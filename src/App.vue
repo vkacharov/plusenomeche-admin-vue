@@ -24,6 +24,7 @@ import '@aws-amplify/ui-vue/styles.css';
             <RouterLink to="/donations">Дарения</RouterLink>
             <RouterLink to="/causes">Каузи</RouterLink>
             <RouterLink to="/expenses">Разходи</RouterLink>
+            <RouterLink to="/statistics">Статистики</RouterLink>
           </nav>
         </div>
       </header>
