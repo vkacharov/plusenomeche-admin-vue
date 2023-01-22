@@ -138,16 +138,17 @@ export default {
     :config="addEditConfig"
     @addEditButtonClick="createDonation"
   />
-
-  <Modal 
-    v-model:visible="editModalVisible"
-    :title="'Промени дарение'"  
-  >
-    <AddEditForm 
-      :config="addEditConfig"
-      @addEditButtonClick="editDonation"
-      :apiName="'donationsApi'"
-      :isEdit="true"
-    />
-  </Modal>
+  <div class="update-modal">
+    <Modal 
+      v-model:visible="editModalVisible"
+      :title="'Промени дарение'"  
+    >
+      <AddEditForm 
+        :config="addEditConfig"
+        @addEditButtonClick="editDonation"
+        :apiName="'donationsApi'"
+        :isEdit="true"
+      />
+    </Modal>
+  </div>
 </template>

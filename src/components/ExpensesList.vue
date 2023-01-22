@@ -131,15 +131,17 @@ export default {
     @addEditButtonClick="createExpense"
   />
 
-  <Modal 
-    v-model:visible="editModalVisible"
-    :title="'Промени разход'"  
-  >
-    <AddEditForm 
-      :config="addEditConfig"
-      @addEditButtonClick="editExpense"
-      :apiName="'expensesApi'"
-      :isEdit="true"
-    />
-  </Modal>
+  <div class="update-modal">
+    <Modal
+      v-model:visible="editModalVisible"
+      :title="'Промени разход'"  
+    >
+      <AddEditForm 
+        :config="addEditConfig"
+        @addEditButtonClick="editExpense"
+        :apiName="'expensesApi'"
+        :isEdit="true"
+      />
+    </Modal>
+  </div>
 </template>

@@ -135,15 +135,17 @@ export default {
     @addEditButtonClick="createCause"
   />
 
-  <Modal 
-    v-model:visible="editModalVisible"
-    :title="'Промени кауза'"  
-  >
-    <AddEditForm 
-      :config="addEditConfig"
-      @addEditButtonClick="editCause"
-      :apiName="'causesApi'"
-      :isEdit="true"
-    />
-  </Modal>
+  <div class="update-modal">
+    <Modal 
+      v-model:visible="editModalVisible"
+      :title="'Промени кауза'"  
+    >
+      <AddEditForm 
+        :config="addEditConfig"
+        @addEditButtonClick="editCause"
+        :apiName="'causesApi'"
+        :isEdit="true"
+      />
+    </Modal>
+</div>
 </template>
