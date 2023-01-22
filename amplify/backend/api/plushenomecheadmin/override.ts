@@ -289,16 +289,15 @@ def _lambda_handler(event, context):
                 doc_fields.pop('_version', None)
             # Append OpenSearch Action line with 'index' directive
             
-            if event_name == 'INSERT' :
-                foreign_names = {}
-                for field in doc_fields : 
-                    #If it's a foreign key- extract the name from the foreign entity
-                    if field.endswith('ID') : 
-                        foreign_entity = field[:-2]
-                        foreign_table = foreign_entity.capitalize() + '-' + doc_table_name_suffix
-                        foreign_entity_name = _load_entity_name(foreign_table, foreign_entity, doc_fields[field])
-                        foreign_names[foreign_entity + 'Name'] = foreign_entity_name
-                doc_fields.update(foreign_names)
+            foreign_names = {}
+            for field in doc_fields : 
+                #If it's a foreign key- extract the name from the foreign entity
+                if field.endswith('ID') : 
+                    foreign_entity = field[:-2]
+                    foreign_table = foreign_entity.capitalize() + '-' + doc_table_name_suffix
+                    foreign_entity_name = _load_entity_name(foreign_table, foreign_entity, doc_fields[field])
+                    foreign_names[foreign_entity + 'Name'] = foreign_entity_name
+            doc_fields.update(foreign_names)
 
             if event_name == 'MODIFY' :
                 if doc_opensearch_index_name in OPENSEARCH_INDEX_DEPENDENCIES:
