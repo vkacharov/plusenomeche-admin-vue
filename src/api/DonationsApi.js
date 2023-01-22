@@ -16,18 +16,7 @@ export class DonationsApi extends BaseSearchApi {
     }
 
     parseApiItems(apiDonations) {
-        return apiDonations.map(donation => {
-          let expensesSum, remaining;
-          
-          if (donation.Expenses && donation.Expenses.items) {
-            expensesSum = 0;
-            donation.Expenses.items.forEach(expense => {
-              expensesSum += expense.amount;
-            });
-      
-            remaining = donation.amount - expensesSum;
-          }
-      
+        return apiDonations.map(donation => {      
           return {
             id: donation.id,
             donationName: donation.donationName, 
@@ -35,9 +24,7 @@ export class DonationsApi extends BaseSearchApi {
             description: donation.description,
             amount: donation.amount,
             type: donation.type,
-            donor: donation.Donor.donorName,
-            expensesSum: expensesSum,
-            remaining: remaining
+            donor: donation.Donor.donorName
           }
         });
     }

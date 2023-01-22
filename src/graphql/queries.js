@@ -340,9 +340,6 @@ export const searchCauses = /* GraphQL */ `
         date
         amount
         type
-        Expenses {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -512,9 +509,6 @@ export const searchDonations = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        Expenses {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -607,9 +601,6 @@ export const searchDonors = /* GraphQL */ `
         donorName
         description
         date
-        Donations {
-          nextToken
-        }
         createdAt
         updatedAt
       }

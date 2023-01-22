@@ -17,24 +17,14 @@ export class CausesApi extends BaseSearchApi {
 
     parseApiItems(apiCauses) {
         return apiCauses.map(cause => {
-            let expensesSum;
-        
-            if (cause.Expenses && cause.Expenses.items) {
-              expensesSum = 0;
-              cause.Expenses.items.forEach(expense => {
-                expensesSum += expense.amount;
-              });
-        
-            }
+
             return {
               id: cause.id,
               causeName: cause.causeName, 
               date: cause.date,
               description: cause.description,
               amount: cause.amount,
-              type: cause.type,
-              expensesSum: expensesSum, 
-              remaining: cause.amount - expensesSum
+              type: cause.type
             }
           });
     }

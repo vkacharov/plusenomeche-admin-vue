@@ -26,16 +26,6 @@ export default {
           field: "date",
           width: "3%",
         },
-        {
-          label: "Брой дарения",
-          field: "donationsNumber",
-          width: "2%",
-        },
-        {
-          label: "Общо дарени",
-          field: "donationsSum",
-          width: "3%",
-        },
       ];
       
     const donorsApi = inject('donorsApi');

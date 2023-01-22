@@ -38,17 +38,7 @@ export default {
           label: "Вид",
           field: "type",
           width: "3%",
-        },
-        {
-          label: "Използвани",
-          field: "expensesSum",
-          width: "3%",
-        },
-        {
-          label: "Оставащи",
-          field: "remaining",
-          width: "3%",
-        },
+        }
     ];
 
     const causesApi = inject('causesApi');
