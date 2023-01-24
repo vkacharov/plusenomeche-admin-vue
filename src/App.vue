@@ -17,7 +17,7 @@ import '@aws-amplify/ui-vue/styles.css';
       </div>
       <header>
         <div class="wrapper">
-          <HelloWorld msg="You did it!" />
+          <HelloWorld />
 
           <nav>
             <RouterLink to="/">Дарители</RouterLink>
