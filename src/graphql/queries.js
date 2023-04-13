@@ -196,74 +196,6 @@ export const expensesByDonationID = /* GraphQL */ `
     }
   }
 `;
-export const searchExpenses = /* GraphQL */ `
-  query SearchExpenses(
-    $filter: SearchableExpenseFilterInput
-    $sort: [SearchableExpenseSortInput]
-    $limit: Int
-    $nextToken: String
-    $from: Int
-    $aggregates: [SearchableExpenseAggregationInput]
-  ) {
-    searchExpenses(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-      aggregates: $aggregates
-    ) {
-      items {
-        id
-        expenseName
-        description
-        date
-        causeID
-        donationID
-        amount
-        Cause {
-          id
-          causeName
-          description
-          date
-          amount
-          type
-          createdAt
-          updatedAt
-        }
-        Donation {
-          id
-          donationName
-          description
-          amount
-          type
-          date
-          donorID
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-      total
-      aggregateItems {
-        name
-        result {
-          ... on SearchableAggregateScalarResult {
-            value
-          }
-          ... on SearchableAggregateBucketResult {
-            buckets {
-              key
-              doc_count
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 export const getCause = /* GraphQL */ `
   query GetCause($id: ID!) {
     getCause(id: $id) {
@@ -313,52 +245,6 @@ export const listCauses = /* GraphQL */ `
         updatedAt
       }
       nextToken
-    }
-  }
-`;
-export const searchCauses = /* GraphQL */ `
-  query SearchCauses(
-    $filter: SearchableCauseFilterInput
-    $sort: [SearchableCauseSortInput]
-    $limit: Int
-    $nextToken: String
-    $from: Int
-    $aggregates: [SearchableCauseAggregationInput]
-  ) {
-    searchCauses(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-      aggregates: $aggregates
-    ) {
-      items {
-        id
-        causeName
-        description
-        date
-        amount
-        type
-        createdAt
-        updatedAt
-      }
-      nextToken
-      total
-      aggregateItems {
-        name
-        result {
-          ... on SearchableAggregateScalarResult {
-            value
-          }
-          ... on SearchableAggregateBucketResult {
-            buckets {
-              key
-              doc_count
-            }
-          }
-        }
-      }
     }
   }
 `;
@@ -476,61 +362,6 @@ export const donationsByDonorID = /* GraphQL */ `
     }
   }
 `;
-export const searchDonations = /* GraphQL */ `
-  query SearchDonations(
-    $filter: SearchableDonationFilterInput
-    $sort: [SearchableDonationSortInput]
-    $limit: Int
-    $nextToken: String
-    $from: Int
-    $aggregates: [SearchableDonationAggregationInput]
-  ) {
-    searchDonations(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-      aggregates: $aggregates
-    ) {
-      items {
-        id
-        donationName
-        description
-        amount
-        type
-        date
-        donorID
-        Donor {
-          id
-          donorName
-          description
-          date
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-      total
-      aggregateItems {
-        name
-        result {
-          ... on SearchableAggregateScalarResult {
-            value
-          }
-          ... on SearchableAggregateBucketResult {
-            buckets {
-              key
-              doc_count
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 export const getDonor = /* GraphQL */ `
   query GetDonor($id: ID!) {
     getDonor(id: $id) {
@@ -576,50 +407,6 @@ export const listDonors = /* GraphQL */ `
         updatedAt
       }
       nextToken
-    }
-  }
-`;
-export const searchDonors = /* GraphQL */ `
-  query SearchDonors(
-    $filter: SearchableDonorFilterInput
-    $sort: [SearchableDonorSortInput]
-    $limit: Int
-    $nextToken: String
-    $from: Int
-    $aggregates: [SearchableDonorAggregationInput]
-  ) {
-    searchDonors(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-      aggregates: $aggregates
-    ) {
-      items {
-        id
-        donorName
-        description
-        date
-        createdAt
-        updatedAt
-      }
-      nextToken
-      total
-      aggregateItems {
-        name
-        result {
-          ... on SearchableAggregateScalarResult {
-            value
-          }
-          ... on SearchableAggregateBucketResult {
-            buckets {
-              key
-              doc_count
-            }
-          }
-        }
-      }
     }
   }
 `;
