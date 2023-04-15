@@ -4,10 +4,11 @@ import { schema } from './schema';
 
 
 
-const { Expense, Cause, Donation, Donor } = initSchema(schema);
+const { Expense, Allocation, Cause, Donation, Donor } = initSchema(schema);
 
 export {
   Expense,
+  Allocation,
   Cause,
   Donation,
   Donor

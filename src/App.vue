@@ -23,6 +23,7 @@ import '@aws-amplify/ui-vue/styles.css';
             <RouterLink to="/">Дарители</RouterLink>
             <RouterLink to="/donations">Дарения</RouterLink>
             <RouterLink to="/causes">Каузи</RouterLink>
+            <RouterLink to="/allocations">Заделени суми</RouterLink>
             <RouterLink to="/expenses">Разходи</RouterLink>
             <RouterLink to="/statistics">Статистики</RouterLink>
           </nav>

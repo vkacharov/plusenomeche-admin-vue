@@ -1,5 +1,5 @@
 import { BaseSearchApi } from "./BaseSearchApi";
-import { searchExpenses } from '../graphql/queries';
+import { searchExpenses, getAllocation } from '../graphql/queries';
 import { createExpense, updateExpense, deleteExpense } from '../graphql/mutations';
 import { onCreateExpense } from '../graphql/subscriptions';
 
@@ -23,8 +23,9 @@ export class ExpensesApi extends BaseSearchApi {
                 date: expense.date,
                 description: expense.description,
                 amount: expense.amount,
-                donation: expense.Donation.donationName,
-                cause: expense.Cause.causeName
+                allocation: expense.allocationName,
+                donation: expense.donationName,
+                cause: expense.causeName
             }
         });
     }

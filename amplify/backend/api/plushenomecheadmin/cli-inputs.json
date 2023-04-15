@@ -17,6 +17,10 @@
         "cognitoUserPoolId": "authplushenomecheadmin"
       }
     ],
-    "conflictResolution": {}
+    "conflictResolution": {
+      "defaultResolutionStrategy": {
+        "type": "AUTOMERGE"
+      }
+    }
   }
 }

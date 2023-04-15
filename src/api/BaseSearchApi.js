@@ -97,6 +97,23 @@ export class BaseSearchApi {
         throw exception.errors[0];
       }  
     }
+
+    async get(query, id) {
+      try {
+        const result = await API.graphql({
+          query: query, 
+          variables: {
+            id: id
+          }, 
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
+        
+        return result; 
+      } catch (exception) {
+        console.error(exception);
+        throw exception;
+      }
+    }
   
     parseApiItems(apiItems) {
         return [];

@@ -24,7 +24,7 @@ export class DonationsApi extends BaseSearchApi {
             description: donation.description,
             amount: donation.amount,
             type: donation.type,
-            donor: donation.Donor.donorName
+            donor: donation.donorName
           }
         });
     }

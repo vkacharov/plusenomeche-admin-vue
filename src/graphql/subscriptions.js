@@ -7,47 +7,19 @@ export const onCreateExpense = /* GraphQL */ `
       id
       expenseName
       description
+      amount
       date
       causeID
+      causeName
       donationID
-      amount
-      Cause {
-        id
-        causeName
-        description
-        date
-        amount
-        type
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Donation {
-        id
-        donationName
-        description
-        amount
-        type
-        date
-        donorID
-        Donor {
-          id
-          donorName
-          description
-          date
-          createdAt
-          updatedAt
-        }
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      donationName
+      allocationID
+      allocationName
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -57,47 +29,19 @@ export const onUpdateExpense = /* GraphQL */ `
       id
       expenseName
       description
+      amount
       date
       causeID
+      causeName
       donationID
-      amount
-      Cause {
-        id
-        causeName
-        description
-        date
-        amount
-        type
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Donation {
-        id
-        donationName
-        description
-        amount
-        type
-        date
-        donorID
-        Donor {
-          id
-          donorName
-          description
-          date
-          createdAt
-          updatedAt
-        }
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      donationName
+      allocationID
+      allocationName
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -107,47 +51,151 @@ export const onDeleteExpense = /* GraphQL */ `
       id
       expenseName
       description
+      amount
       date
       causeID
+      causeName
       donationID
+      donationName
+      allocationID
+      allocationName
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateAllocation = /* GraphQL */ `
+  subscription OnCreateAllocation(
+    $filter: ModelSubscriptionAllocationFilterInput
+  ) {
+    onCreateAllocation(filter: $filter) {
+      id
+      allocationName
+      description
+      date
+      causeID
+      causeName
+      donationID
+      donationName
       amount
-      Cause {
-        id
-        causeName
-        description
-        date
-        amount
-        type
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Donation {
-        id
-        donationName
-        description
-        amount
-        type
-        date
-        donorID
-        Donor {
+      Expenses {
+        items {
           id
-          donorName
+          expenseName
           description
+          amount
           date
+          causeID
+          causeName
+          donationID
+          donationName
+          allocationID
+          allocationName
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateAllocation = /* GraphQL */ `
+  subscription OnUpdateAllocation(
+    $filter: ModelSubscriptionAllocationFilterInput
+  ) {
+    onUpdateAllocation(filter: $filter) {
+      id
+      allocationName
+      description
+      date
+      causeID
+      causeName
+      donationID
+      donationName
+      amount
+      Expenses {
+        items {
+          id
+          expenseName
+          description
+          amount
+          date
+          causeID
+          causeName
+          donationID
+          donationName
+          allocationID
+          allocationName
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteAllocation = /* GraphQL */ `
+  subscription OnDeleteAllocation(
+    $filter: ModelSubscriptionAllocationFilterInput
+  ) {
+    onDeleteAllocation(filter: $filter) {
+      id
+      allocationName
+      description
+      date
+      causeID
+      causeName
+      donationID
+      donationName
+      amount
+      Expenses {
+        items {
+          id
+          expenseName
+          description
+          amount
+          date
+          causeID
+          causeName
+          donationID
+          donationName
+          allocationID
+          allocationName
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -160,22 +208,31 @@ export const onCreateCause = /* GraphQL */ `
       date
       amount
       type
-      Expenses {
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -188,22 +245,31 @@ export const onUpdateCause = /* GraphQL */ `
       date
       amount
       type
-      Expenses {
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -216,22 +282,31 @@ export const onDeleteCause = /* GraphQL */ `
       date
       amount
       type
-      Expenses {
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -245,33 +320,32 @@ export const onCreateDonation = /* GraphQL */ `
       type
       date
       donorID
-      Donor {
-        id
-        donorName
-        description
-        date
-        Donations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Expenses {
+      donorName
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -285,33 +359,32 @@ export const onUpdateDonation = /* GraphQL */ `
       type
       date
       donorID
-      Donor {
-        id
-        donorName
-        description
-        date
-        Donations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Expenses {
+      donorName
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -325,33 +398,32 @@ export const onDeleteDonation = /* GraphQL */ `
       type
       date
       donorID
-      Donor {
-        id
-        donorName
-        description
-        date
-        Donations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Expenses {
+      donorName
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -371,13 +443,21 @@ export const onCreateDonor = /* GraphQL */ `
           type
           date
           donorID
+          donorName
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -397,13 +477,21 @@ export const onUpdateDonor = /* GraphQL */ `
           type
           date
           donorID
+          donorName
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -423,13 +511,21 @@ export const onDeleteDonor = /* GraphQL */ `
           type
           date
           donorID
+          donorName
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;

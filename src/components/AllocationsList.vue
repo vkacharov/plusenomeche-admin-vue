@@ -16,7 +16,7 @@ export default {
     const columns = [
         {
           label: "Име",
-          field: "expenseName",
+          field: "allocationName",
           width: "5%",
         },
         {
@@ -30,18 +30,13 @@ export default {
           width: "3%",
         },
         {
-          label: "Заделена сума",
-          field: "allocation",
+          label: "Дарение",
+          field: "donation",
           width: "5%",
         },
         {
           label: "Кауза",
           field: "cause",
-          width: "5%",
-        },
-        {
-          label: "Дарение",
-          field: "donation",
           width: "5%",
         },
         {
@@ -51,10 +46,10 @@ export default {
         }
     ];
 
-    const expensesApi = inject('expensesApi');
+    const allocationsApi = inject('allocationsApi');
 
     const loadAggregates = async () => {
-      const aggr = await createSumAggregate(expensesApi, 'amount');
+      const aggr = await createSumAggregate(allocationsApi, 'amount');
       aggregates.totalSum = aggr.totalSum;
       aggregates.totalNumber = aggr.totalNumber;
     } 
@@ -65,46 +60,40 @@ export default {
     });
 
     const filterConfig = [
-      {name: 'expenseName', label: 'име', type: 'string'}, 
+      {name: 'allocationName', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'donationID', label: 'дарение', type: 'select', api: 'donationsApi'},
       {name: 'causeID', label: 'кауза', type: 'select', api: 'causesApi'},
-      {name: 'allocationID', label: 'заделена сума', type: 'select', api: 'allocationsApi'},
     ];
 
-    const addEditConfig = [
-      {name: 'expenseName', label: 'име', type: 'string'}, 
-      {name: 'description', label: 'описание', type: 'string'}, 
-      {name: 'date', label: 'дата', type: 'date'},
-      {name: 'allocationID', label: 'заделена сума', type: 'select', api: 'allocationsApi'},
-      {name: 'amount', label: 'сума', type: 'number'}];
+    const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
 
-    const createExpense = (item) => {
-      expensesApi.create(item);
+    const createAllocation = (item) => {
+      allocationsApi.create(item);
     }
 
-    const editExpense = async (item) => {
+    const editAllocation = async (item) => {
         editModalVisible.value = false;
       try {
-        await expensesApi.update(item);
-        notifyUpdateSuccess('разход')();
+        await allocationsApi.update(item);
+        notifyUpdateSuccess('заделена сума')();
       } catch (exception) {
-        console.error('Failed to update Expense', exception);
-        notifyUpdateException('разход')();
+        console.error('Failed to update Allocated Amount', exception);
+        notifyUpdateException('заделена сума')();
       }
     }
 
-    expensesApi.onCreate(notifyCreateSuccess('разход'));
+    allocationsApi.onCreate(notifyCreateSuccess('заделена сума'));
     const editModalVisible = ref(false);
 
-    const deleteExpense = async (id) => {
+    const deleteAllocation = async (id) => {
       try {
-        await expensesApi.delete(id);
-        notifyDeleteSuccess('разход')();
+        await allocationsApi.delete(id);
+        notifyDeleteSuccess('заделена сума')();
       } catch (exception) {
-        console.error('Failed to delete expense', exception);
-        notifyDeleteException('разход')();
+        console.error('Failed to delete Allocated Amount', exception);
+        notifyDeleteException('заделена сума')();
       }
     }
 
@@ -112,9 +101,9 @@ export default {
 
     return {
       columns,
-      createExpense,
-      editExpense,
-      deleteExpense,
+      createAllocation,
+      editAllocation,
+      deleteAllocation,
       aggregates,
       filterConfig,
       addEditConfig,
@@ -128,35 +117,35 @@ export default {
 
 <FilterComponent 
   :config="filterConfig"
-  :apiName="'expensesApi'" 
+  :apiName="'allocationsApi'" 
 />
 
   <div>
     <PaginatedTable
       :columns="columns"
-      :apiName="'expensesApi'"
+      :apiName="'allocationsApi'"
       @tableEditButtonClick="editModalVisible = true"
-      @tableDeleteConfirmed="deleteExpense"
+      @tableDeleteConfirmed="deleteAllocation"
     />
   </div>
 
   <AggregatesComponent :aggregates="aggregates"/>
 
-  <h2>Създай нов разход</h2>
+  <h2>Създай нова заделена сума</h2>
   <AddEditForm
     :config="addEditConfig"
-    @addEditButtonClick="createExpense"
+    @addEditButtonClick="createAllocation"
   />
 
   <div class="update-modal">
     <Modal
       v-model:visible="editModalVisible"
-      :title="'Промени разход'"  
+      :title="'Промени заделена сума'"  
     >
       <AddEditForm 
         :config="addEditConfig"
-        @addEditButtonClick="editExpense"
-        :apiName="'expensesApi'"
+        @addEditButtonClick="editAllocation"
+        :apiName="'allocationsApi'"
         :isEdit="true"
       />
     </Modal>

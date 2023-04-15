@@ -5,6 +5,7 @@ import { DonorsApi } from './api/DonorsApi';
 import { CausesApi } from './api/CausesApi';
 import { DonationsApi } from './api/DonationsApi';
 import { ExpensesApi } from './api/ExpensesApi';
+import { AllocationsApi } from './api/AllocationsApi';
 
 import App from './App.vue'
 import router from './router'
@@ -34,6 +35,7 @@ app.provide('donorsApi', new DonorsApi());
 app.provide('causesApi', new CausesApi());
 app.provide('donationsApi', new DonationsApi());
 app.provide('expensesApi', new ExpensesApi());
+app.provide('allocationsApi', new AllocationsApi())
 
 app.component('font-awesome-icon', FontAwesomeIcon);
 

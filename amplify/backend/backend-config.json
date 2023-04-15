@@ -75,6 +75,14 @@
     }
   },
   "parameters": {
+    "AMPLIFY_api_plushenomecheadmin_OpenSearchInstanceType": {
+      "usedBy": [
+        {
+          "category": "api",
+          "resourceName": "plushenomecheadmin"
+        }
+      ]
+    },
     "AMPLIFY_hosting_amplifyhosting_appId": {
       "usedBy": [
         {

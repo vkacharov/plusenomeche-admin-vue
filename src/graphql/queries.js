@@ -7,47 +7,19 @@ export const getExpense = /* GraphQL */ `
       id
       expenseName
       description
+      amount
       date
       causeID
+      causeName
       donationID
-      amount
-      Cause {
-        id
-        causeName
-        description
-        date
-        amount
-        type
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Donation {
-        id
-        donationName
-        description
-        amount
-        type
-        date
-        donorID
-        Donor {
-          id
-          donorName
-          description
-          date
-          createdAt
-          updatedAt
-        }
-        Expenses {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      donationName
+      allocationID
+      allocationName
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -62,47 +34,274 @@ export const listExpenses = /* GraphQL */ `
         id
         expenseName
         description
+        amount
         date
         causeID
+        causeName
         donationID
-        amount
-        Cause {
-          id
-          causeName
-          description
-          date
-          amount
-          type
-          createdAt
-          updatedAt
-        }
-        Donation {
-          id
-          donationName
-          description
-          amount
-          type
-          date
-          donorID
-          createdAt
-          updatedAt
-        }
+        donationName
+        allocationID
+        allocationName
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
     }
   }
 `;
-export const expensesByCauseID = /* GraphQL */ `
-  query ExpensesByCauseID(
-    $causeID: ID!
+export const syncExpenses = /* GraphQL */ `
+  query SyncExpenses(
+    $filter: ModelExpenseFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncExpenses(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        expenseName
+        description
+        amount
+        date
+        causeID
+        causeName
+        donationID
+        donationName
+        allocationID
+        allocationName
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const expensesByAllocationID = /* GraphQL */ `
+  query ExpensesByAllocationID(
+    $allocationID: ID!
     $sortDirection: ModelSortDirection
     $filter: ModelExpenseFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    expensesByCauseID(
+    expensesByAllocationID(
+      allocationID: $allocationID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        expenseName
+        description
+        amount
+        date
+        causeID
+        causeName
+        donationID
+        donationName
+        allocationID
+        allocationName
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const searchExpenses = /* GraphQL */ `
+  query SearchExpenses(
+    $filter: SearchableExpenseFilterInput
+    $sort: [SearchableExpenseSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableExpenseAggregationInput]
+  ) {
+    searchExpenses(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        expenseName
+        description
+        amount
+        date
+        causeID
+        causeName
+        donationID
+        donationName
+        allocationID
+        allocationName
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const getAllocation = /* GraphQL */ `
+  query GetAllocation($id: ID!) {
+    getAllocation(id: $id) {
+      id
+      allocationName
+      description
+      date
+      causeID
+      causeName
+      donationID
+      donationName
+      amount
+      Expenses {
+        items {
+          id
+          expenseName
+          description
+          amount
+          date
+          causeID
+          causeName
+          donationID
+          donationName
+          allocationID
+          allocationName
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listAllocations = /* GraphQL */ `
+  query ListAllocations(
+    $filter: ModelAllocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAllocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        allocationName
+        description
+        date
+        causeID
+        causeName
+        donationID
+        donationName
+        amount
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncAllocations = /* GraphQL */ `
+  query SyncAllocations(
+    $filter: ModelAllocationFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncAllocations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        allocationName
+        description
+        date
+        causeID
+        causeName
+        donationID
+        donationName
+        amount
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const allocationsByCauseID = /* GraphQL */ `
+  query AllocationsByCauseID(
+    $causeID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelAllocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    allocationsByCauseID(
       causeID: $causeID
       sortDirection: $sortDirection
       filter: $filter
@@ -111,49 +310,38 @@ export const expensesByCauseID = /* GraphQL */ `
     ) {
       items {
         id
-        expenseName
+        allocationName
         description
         date
         causeID
+        causeName
         donationID
+        donationName
         amount
-        Cause {
-          id
-          causeName
-          description
-          date
-          amount
-          type
-          createdAt
-          updatedAt
-        }
-        Donation {
-          id
-          donationName
-          description
-          amount
-          type
-          date
-          donorID
-          createdAt
-          updatedAt
+        Expenses {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
     }
   }
 `;
-export const expensesByDonationID = /* GraphQL */ `
-  query ExpensesByDonationID(
+export const allocationsByDonationID = /* GraphQL */ `
+  query AllocationsByDonationID(
     $donationID: ID!
     $sortDirection: ModelSortDirection
-    $filter: ModelExpenseFilterInput
+    $filter: ModelAllocationFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    expensesByDonationID(
+    allocationsByDonationID(
       donationID: $donationID
       sortDirection: $sortDirection
       filter: $filter
@@ -162,37 +350,82 @@ export const expensesByDonationID = /* GraphQL */ `
     ) {
       items {
         id
-        expenseName
+        allocationName
         description
         date
         causeID
+        causeName
         donationID
+        donationName
         amount
-        Cause {
-          id
-          causeName
-          description
-          date
-          amount
-          type
-          createdAt
-          updatedAt
-        }
-        Donation {
-          id
-          donationName
-          description
-          amount
-          type
-          date
-          donorID
-          createdAt
-          updatedAt
+        Expenses {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const searchAllocations = /* GraphQL */ `
+  query SearchAllocations(
+    $filter: SearchableAllocationFilterInput
+    $sort: [SearchableAllocationSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableAllocationAggregationInput]
+  ) {
+    searchAllocations(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        allocationName
+        description
+        date
+        causeID
+        causeName
+        donationID
+        donationName
+        amount
+        Expenses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -205,22 +438,31 @@ export const getCause = /* GraphQL */ `
       date
       amount
       type
-      Expenses {
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -238,13 +480,106 @@ export const listCauses = /* GraphQL */ `
         date
         amount
         type
-        Expenses {
+        Allocations {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCauses = /* GraphQL */ `
+  query SyncCauses(
+    $filter: ModelCauseFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCauses(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        causeName
+        description
+        date
+        amount
+        type
+        Allocations {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const searchCauses = /* GraphQL */ `
+  query SearchCauses(
+    $filter: SearchableCauseFilterInput
+    $sort: [SearchableCauseSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableCauseAggregationInput]
+  ) {
+    searchCauses(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        causeName
+        description
+        date
+        amount
+        type
+        Allocations {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -258,33 +593,32 @@ export const getDonation = /* GraphQL */ `
       type
       date
       donorID
-      Donor {
-        id
-        donorName
-        description
-        date
-        Donations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      Expenses {
+      donorName
+      Allocations {
         items {
           id
-          expenseName
+          allocationName
           description
           date
           causeID
+          causeName
           donationID
+          donationName
           amount
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -303,21 +637,56 @@ export const listDonations = /* GraphQL */ `
         type
         date
         donorID
-        Donor {
-          id
-          donorName
-          description
-          date
-          createdAt
-          updatedAt
-        }
-        Expenses {
+        donorName
+        Allocations {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncDonations = /* GraphQL */ `
+  query SyncDonations(
+    $filter: ModelDonationFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncDonations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        donationName
+        description
+        amount
+        type
+        date
+        donorID
+        donorName
+        Allocations {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -344,21 +713,74 @@ export const donationsByDonorID = /* GraphQL */ `
         type
         date
         donorID
-        Donor {
-          id
-          donorName
-          description
-          date
-          createdAt
-          updatedAt
-        }
-        Expenses {
+        donorName
+        Allocations {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const searchDonations = /* GraphQL */ `
+  query SearchDonations(
+    $filter: SearchableDonationFilterInput
+    $sort: [SearchableDonationSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableDonationAggregationInput]
+  ) {
+    searchDonations(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        donationName
+        description
+        amount
+        type
+        date
+        donorID
+        donorName
+        Allocations {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -378,13 +800,21 @@ export const getDonor = /* GraphQL */ `
           type
           date
           donorID
+          donorName
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -402,11 +832,100 @@ export const listDonors = /* GraphQL */ `
         date
         Donations {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncDonors = /* GraphQL */ `
+  query SyncDonors(
+    $filter: ModelDonorFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncDonors(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        donorName
+        description
+        date
+        Donations {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const searchDonors = /* GraphQL */ `
+  query SearchDonors(
+    $filter: SearchableDonorFilterInput
+    $sort: [SearchableDonorSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableDonorAggregationInput]
+  ) {
+    searchDonors(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        donorName
+        description
+        date
+        Donations {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
     }
   }
 `;
