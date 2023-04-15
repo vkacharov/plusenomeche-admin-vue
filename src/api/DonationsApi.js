@@ -19,6 +19,7 @@ export class DonationsApi extends BaseSearchApi {
         return apiDonations.map(donation => {      
           return {
             id: donation.id,
+            _version: donation._version,
             donationName: donation.donationName, 
             date: donation.date,
             description: donation.description,

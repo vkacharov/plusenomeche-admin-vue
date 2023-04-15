@@ -81,14 +81,20 @@ export default {
 
         const deleteModalVisible = ref(false);
         const idToDelete = ref("");
+        const versionToDelete = ref(0);
+
         const onDeleteButtonClicked = (item) => {
             deleteModalVisible.value = true;
             idToDelete.value = item.value.id;
+            versionToDelete.value = item.value._version;
         }
 
         const onDeleteConfirmed = () => {
             deleteModalVisible.value = false;
-            context.emit('tableDeleteConfirmed', idToDelete.value);
+            context.emit('tableDeleteConfirmed', {
+                id: idToDelete.value,
+                _version: versionToDelete.value
+            });
         }
 
         filtersStore.$reset();

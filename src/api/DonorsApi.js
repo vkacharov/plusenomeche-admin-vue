@@ -28,6 +28,7 @@ export class DonorsApi extends BaseSearchApi {
             }
             return {
               id: donor.id,
+              _version: donor._version,
               donorName: donor.donorName, 
               date: donor.date,
               description: donor.description,

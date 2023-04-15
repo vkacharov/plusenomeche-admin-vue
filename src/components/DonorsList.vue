@@ -44,9 +44,9 @@ export default {
       }
     }
 
-    const deleteDonor = async (id) => {
+    const deleteDonor = async (item) => {
       try {
-        await donorsApi.delete(id);
+        await donorsApi.delete(item.id, item._version);
         notifyDeleteSuccess('дарител')();
       } catch (exception) {
         console.error('Failed to delete Donor', exception);

@@ -20,6 +20,7 @@ export class AllocationsApi extends BaseSearchApi {
 
             return {
               id: allocation.id,
+              _version: allocation._version,
               allocationName: allocation.allocationName, 
               date: allocation.date,
               description: allocation.description,

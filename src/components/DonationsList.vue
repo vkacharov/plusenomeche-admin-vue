@@ -87,9 +87,9 @@ export default {
     donationsApi.onCreate(notifyCreateSuccess('дарение'));
     const editModalVisible = ref(false);
 
-    const deleteDonation = async (id) => {
+    const deleteDonation = async (item) => {
       try {
-        await donationsApi.delete(id);
+        await donationsApi.delete(item.id, item._version);
         notifyDeleteSuccess('дарение')();
       } catch (exception) {
         console.error('Failed to delete donation', exception);

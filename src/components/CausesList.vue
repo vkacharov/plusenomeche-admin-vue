@@ -81,9 +81,9 @@ export default {
     causesApi.onCreate(notifyCreateSuccess('кауза'));
     const editModalVisible = ref(false);
     
-    const deleteCause = async (id) => {
+    const deleteCause = async (item) => {
       try {
-        await causesApi.delete(id);
+        await causesApi.delete(item.id, item._version);
         notifyDeleteSuccess('кауза')();
       } catch (exception) {
         console.error('Failed to delete cause', exception);

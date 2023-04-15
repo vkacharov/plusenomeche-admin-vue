@@ -98,9 +98,9 @@ export default {
     expensesApi.onCreate(notifyCreateSuccess('разход'));
     const editModalVisible = ref(false);
 
-    const deleteExpense = async (id) => {
+    const deleteExpense = async (item) => {
       try {
-        await expensesApi.delete(id);
+        await expensesApi.delete(item.id, item._version);
         notifyDeleteSuccess('разход')();
       } catch (exception) {
         console.error('Failed to delete expense', exception);

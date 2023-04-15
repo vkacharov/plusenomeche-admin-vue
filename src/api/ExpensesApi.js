@@ -19,6 +19,7 @@ export class ExpensesApi extends BaseSearchApi {
         return apiExpenses.map(expense => {
             return {
                 id: expense.id,
+                _version: expense._version,
                 expenseName: expense.expenseName, 
                 date: expense.date,
                 description: expense.description,

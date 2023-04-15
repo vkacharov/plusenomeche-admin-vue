@@ -87,9 +87,9 @@ export default {
     allocationsApi.onCreate(notifyCreateSuccess('заделена сума'));
     const editModalVisible = ref(false);
 
-    const deleteAllocation = async (id) => {
+    const deleteAllocation = async (item) => {
       try {
-        await allocationsApi.delete(id);
+        await allocationsApi.delete(item.id, item._version);
         notifyDeleteSuccess('заделена сума')();
       } catch (exception) {
         console.error('Failed to delete Allocated Amount', exception);

@@ -80,13 +80,14 @@ export class BaseSearchApi {
       }
     }
 
-    async delete(id) {
+    async delete(id, _version) {
       try {
         const result = await API.graphql({
           query: this.#deleteMutation,
           variables: { 
             input: {
-              id: id
+              id: id, 
+              _version: _version
             }
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS'

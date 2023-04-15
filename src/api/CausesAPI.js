@@ -20,6 +20,7 @@ export class CausesApi extends BaseSearchApi {
 
             return {
               id: cause.id,
+              _version: cause._version,
               causeName: cause.causeName, 
               date: cause.date,
               description: cause.description,
