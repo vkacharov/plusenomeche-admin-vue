@@ -6,6 +6,7 @@ import { onCreateAllocation } from '../graphql/subscriptions';
 export class AllocationsApi extends BaseSearchApi {
     constructor() {
         super({
+              entity: 'allocation',
               search: 'searchAllocations', 
               searchQuery: searchAllocations, 
               createMutation: createAllocation, 
@@ -19,7 +20,6 @@ export class AllocationsApi extends BaseSearchApi {
         return apiAllocations.map(allocation => {
 
             return {
-              id: allocation.id,
               _version: allocation._version,
               allocationName: allocation.allocationName, 
               date: allocation.date,

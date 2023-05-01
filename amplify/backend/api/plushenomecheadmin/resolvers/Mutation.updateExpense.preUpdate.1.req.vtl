@@ -1,0 +1,6 @@
+{
+    "operation": "GetItem",
+    "key": {
+        "allocationName": $util.dynamodb.toDynamoDBJson($ctx.args.input.allocationName)
+    }
+}

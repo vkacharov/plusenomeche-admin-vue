@@ -1,57 +1,46 @@
 type Expense @searchable @model @auth(rules: [{allow: groups, groups: ["Admin"], provider: userPools}]) {
-  id: ID!
-  expenseName: String!
+  expenseName: String! @primaryKey
   description: String
   amount: Int
   date: AWSDate
-  causeID: String
   causeName: String
-  donationID: String
   donationName: String
-  allocationID: ID! @index(name: "byAllocation")
-  allocationName: String
+  allocationName: String! @index(name: "byAllocation")
 }
 
 type Allocation @searchable @model @auth(rules: [{allow: groups, groups: ["Admin"], provider: userPools}]) {
-  id: ID!
-  allocationName: String!
+  allocationName: String! @primaryKey
   description: String
   date: AWSDate
-  causeID: ID! @index(name: "byCause")
-  causeName: String
-  donationID: ID! @index(name: "byDonation")
-  donationName: String
+  causeName: String! @index(name: "byCause")
+  donationName: String! @index(name: "byDonation")
   amount: Int
-  Expenses: [Expense] @hasMany(indexName: "byAllocation", fields: ["id"])
+  Expenses: [Expense] @hasMany(indexName: "byAllocation", fields: ["allocationName"])
 }
 
 type Cause @searchable @model @auth(rules: [{allow: groups, groups: ["Admin"], provider: userPools}]) {
-  id: ID!
-  causeName: String!
+  causeName: String! @primaryKey
   description: String
   date: AWSDate
   amount: Int
   type: String
-  Allocations: [Allocation] @hasMany(indexName: "byCause", fields: ["id"])
+  Allocations: [Allocation] @hasMany(indexName: "byCause", fields: ["causeName"])
 }
 
 type Donation @searchable @model @auth(rules: [{allow: groups, groups: ["Admin"], provider: userPools}]) {
-  id: ID!
-  donationName: String!
+  donationName: String! @primaryKey
   description: String
   amount: Int
   type: String
   date: AWSDate
-  donorID: ID! @index(name: "byDonor")
-  donorName: String
-  Allocations: [Allocation] @hasMany(indexName: "byDonation", fields: ["id"])
+  donorName: String! @index(name: "byDonor")
+  Allocations: [Allocation] @hasMany(indexName: "byDonation", fields: ["donationName"])
 }
 
 type Donor @searchable @model @auth(rules: [{allow: groups, groups: ["Admin"], provider: userPools}]) {
-  id: ID!
-  donorName: String!
+  donorName: String! @primaryKey
   description: String
   date: AWSDate
-  Donations: [Donation] @hasMany(indexName: "byDonor", fields: ["id"])
+  Donations: [Donation] @hasMany(indexName: "byDonor", fields: ["donorName"])
 }
  

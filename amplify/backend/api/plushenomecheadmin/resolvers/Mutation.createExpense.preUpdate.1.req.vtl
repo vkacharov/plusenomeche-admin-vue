@@ -1,6 +1,6 @@
 {
     "operation": "GetItem",
     "key": {
-        "id": $util.dynamodb.toDynamoDBJson($ctx.args.input.allocationID),
+        "allocationName": $util.dynamodb.toDynamoDBJson($ctx.args.input.allocationName),
     }
 }

@@ -65,19 +65,19 @@ export default {
     });
 
     const filterConfig = [
-      {name: 'expenseName', label: 'име', type: 'string'}, 
+      {name: 'expenseName', label: 'име', type: 'id'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
-      {name: 'donationID', label: 'дарение', type: 'select', api: 'donationsApi'},
-      {name: 'causeID', label: 'кауза', type: 'select', api: 'causesApi'},
-      {name: 'allocationID', label: 'заделена сума', type: 'select', api: 'allocationsApi'},
+      {name: 'donationName', label: 'дарение', type: 'select', api: 'donationsApi'},
+      {name: 'causeName', label: 'кауза', type: 'select', api: 'causesApi'},
+      {name: 'allocationName', label: 'заделена сума', type: 'select', api: 'allocationsApi'},
     ];
 
     const addEditConfig = [
       {name: 'expenseName', label: 'име', type: 'string'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
-      {name: 'allocationID', label: 'заделена сума', type: 'select', api: 'allocationsApi'},
+      {name: 'allocationName', label: 'заделена сума', type: 'select', api: 'allocationsApi'},
       {name: 'amount', label: 'сума', type: 'number'}];
 
     const createExpense = (item) => {
@@ -134,7 +134,7 @@ export default {
   <div>
     <PaginatedTable
       :columns="columns"
-      :apiName="'expensesApi'"
+      :entity="'expense'"
       @tableEditButtonClick="editModalVisible = true"
       @tableDeleteConfirmed="deleteExpense"
     />

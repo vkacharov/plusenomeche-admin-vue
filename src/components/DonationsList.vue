@@ -75,10 +75,10 @@ export default {
     }
 
     const filterConfig = [
-      {name: 'donationName', label: 'име', type: 'string'}, 
+      {name: 'donationName', label: 'име', type: 'id'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
-      {name: 'donorID', label: 'дарител', type: 'select', api: 'donorsApi'},
+      {name: 'donorName', label: 'дарител', type: 'select', api: 'donorsApi'},
       {name: 'type', label: 'вид', type: 'string'},
     ];
 
@@ -121,7 +121,7 @@ export default {
   <div>
     <PaginatedTable
       :columns="columns"
-      :apiName="'donationsApi'"
+      :entity="'donation'"
       @tableEditButtonClick="editModalVisible = true"
       @tableDeleteConfirmed="deleteDonation"
     />

@@ -36,7 +36,7 @@ export default {
             const apiОptions = apiResult.items.map(item => {
                 return {
                 label: item[nameField], 
-                code: item.id
+                code: item[nameField]
             }});
             options.value = apiОptions;
             loading(false);

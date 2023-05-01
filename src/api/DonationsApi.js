@@ -6,6 +6,7 @@ import { onCreateDonation } from '../graphql/subscriptions';
 export class DonationsApi extends BaseSearchApi {
     constructor() {
         super({
+          entity: 'donation',
           search: 'searchDonations', 
           searchQuery: searchDonations, 
           createMutation: createDonation, 

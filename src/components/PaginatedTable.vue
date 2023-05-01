@@ -9,7 +9,7 @@ export default {
     components: {TableLite, Modal},
 
     props: {
-        apiName: {
+        entity: {
             type: String
         },
 
@@ -39,7 +39,9 @@ export default {
             }]
         });
         
-        const apiName = props.apiName;
+        const entity = props.entity;
+        const entityName = entity + 'Name';
+        const apiName = entity + 'sApi';
 
         const api = inject(apiName);
         const filtersStore = useFiltersStore();
@@ -80,19 +82,19 @@ export default {
         }
 
         const deleteModalVisible = ref(false);
-        const idToDelete = ref("");
+        const nameToDelete = ref("");
         const versionToDelete = ref(0);
 
         const onDeleteButtonClicked = (item) => {
             deleteModalVisible.value = true;
-            idToDelete.value = item.value.id;
+            nameToDelete.value = item.value[entityName];
             versionToDelete.value = item.value._version;
         }
 
         const onDeleteConfirmed = () => {
             deleteModalVisible.value = false;
             context.emit('tableDeleteConfirmed', {
-                id: idToDelete.value,
+                id: nameToDelete.value,
                 _version: versionToDelete.value
             });
         }

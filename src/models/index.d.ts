@@ -1,4 +1,4 @@
-import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, __modelMeta__, CustomIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
@@ -8,40 +8,32 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/
 
 type EagerExpense = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Expense, 'id'>;
+    identifier: CustomIdentifier<Expense, 'expenseName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly expenseName: string;
   readonly description?: string | null;
   readonly amount?: number | null;
   readonly date?: string | null;
-  readonly causeID?: string | null;
   readonly causeName?: string | null;
-  readonly donationID?: string | null;
   readonly donationName?: string | null;
-  readonly allocationID: string;
-  readonly allocationName?: string | null;
+  readonly allocationName: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
 type LazyExpense = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Expense, 'id'>;
+    identifier: CustomIdentifier<Expense, 'expenseName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly expenseName: string;
   readonly description?: string | null;
   readonly amount?: number | null;
   readonly date?: string | null;
-  readonly causeID?: string | null;
   readonly causeName?: string | null;
-  readonly donationID?: string | null;
   readonly donationName?: string | null;
-  readonly allocationID: string;
-  readonly allocationName?: string | null;
+  readonly allocationName: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -54,17 +46,14 @@ export declare const Expense: (new (init: ModelInit<Expense>) => Expense) & {
 
 type EagerAllocation = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Allocation, 'id'>;
+    identifier: CustomIdentifier<Allocation, 'allocationName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly allocationName: string;
   readonly description?: string | null;
   readonly date?: string | null;
-  readonly causeID: string;
-  readonly causeName?: string | null;
-  readonly donationID: string;
-  readonly donationName?: string | null;
+  readonly causeName: string;
+  readonly donationName: string;
   readonly amount?: number | null;
   readonly Expenses?: (Expense | null)[] | null;
   readonly createdAt?: string | null;
@@ -73,17 +62,14 @@ type EagerAllocation = {
 
 type LazyAllocation = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Allocation, 'id'>;
+    identifier: CustomIdentifier<Allocation, 'allocationName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly allocationName: string;
   readonly description?: string | null;
   readonly date?: string | null;
-  readonly causeID: string;
-  readonly causeName?: string | null;
-  readonly donationID: string;
-  readonly donationName?: string | null;
+  readonly causeName: string;
+  readonly donationName: string;
   readonly amount?: number | null;
   readonly Expenses: AsyncCollection<Expense>;
   readonly createdAt?: string | null;
@@ -98,10 +84,9 @@ export declare const Allocation: (new (init: ModelInit<Allocation>) => Allocatio
 
 type EagerCause = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Cause, 'id'>;
+    identifier: CustomIdentifier<Cause, 'causeName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly causeName: string;
   readonly description?: string | null;
   readonly date?: string | null;
@@ -114,10 +99,9 @@ type EagerCause = {
 
 type LazyCause = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Cause, 'id'>;
+    identifier: CustomIdentifier<Cause, 'causeName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly causeName: string;
   readonly description?: string | null;
   readonly date?: string | null;
@@ -136,17 +120,15 @@ export declare const Cause: (new (init: ModelInit<Cause>) => Cause) & {
 
 type EagerDonation = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Donation, 'id'>;
+    identifier: CustomIdentifier<Donation, 'donationName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly donationName: string;
   readonly description?: string | null;
   readonly amount?: number | null;
   readonly type?: string | null;
   readonly date?: string | null;
-  readonly donorID: string;
-  readonly donorName?: string | null;
+  readonly donorName: string;
   readonly Allocations?: (Allocation | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -154,17 +136,15 @@ type EagerDonation = {
 
 type LazyDonation = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Donation, 'id'>;
+    identifier: CustomIdentifier<Donation, 'donationName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly donationName: string;
   readonly description?: string | null;
   readonly amount?: number | null;
   readonly type?: string | null;
   readonly date?: string | null;
-  readonly donorID: string;
-  readonly donorName?: string | null;
+  readonly donorName: string;
   readonly Allocations: AsyncCollection<Allocation>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -178,10 +158,9 @@ export declare const Donation: (new (init: ModelInit<Donation>) => Donation) & {
 
 type EagerDonor = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Donor, 'id'>;
+    identifier: CustomIdentifier<Donor, 'donorName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly donorName: string;
   readonly description?: string | null;
   readonly date?: string | null;
@@ -192,10 +171,9 @@ type EagerDonor = {
 
 type LazyDonor = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Donor, 'id'>;
+    identifier: CustomIdentifier<Donor, 'donorName'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
   readonly donorName: string;
   readonly description?: string | null;
   readonly date?: string | null;

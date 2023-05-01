@@ -1,0 +1,18 @@
+## Since we dropped the versioning and conflict resolution, 
+## we have to manually check if there are Donations referencing the Donor being deleted
+
+#set( $query = {
+  "expression": "#partitionKey = :partitionKey",
+  "expressionNames": {
+      "#partitionKey": "donorName"
+  },
+  "expressionValues": {
+      ":partitionKey": $util.dynamodb.toDynamoDB($ctx.args.input.donorName)
+  }
+} )
+
+{
+    "operation": "Query",
+    "query":     $util.toJson($query),
+    "index": "byDonor"
+}

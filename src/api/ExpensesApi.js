@@ -6,6 +6,7 @@ import { onCreateExpense } from '../graphql/subscriptions';
 export class ExpensesApi extends BaseSearchApi {
     constructor() {
         super({
+            entity: 'expense',
             search: 'searchExpenses', 
             searchQuery: searchExpenses, 
             createMutation: createExpense, 
@@ -18,7 +19,6 @@ export class ExpensesApi extends BaseSearchApi {
     parseApiItems(apiExpenses) {
         return apiExpenses.map(expense => {
             return {
-                id: expense.id,
                 _version: expense._version,
                 expenseName: expense.expenseName, 
                 date: expense.date,

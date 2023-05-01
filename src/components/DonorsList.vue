@@ -55,7 +55,7 @@ export default {
     }
 
     const formConfig = [
-      {name: 'donorName', label: 'име', type: 'string'}, 
+      {name: 'donorName', label: 'име', type: 'id'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'}];
 
@@ -83,7 +83,7 @@ export default {
   <div>
     <PaginatedTable
       :columns="columns"
-      :apiName="'donorsApi'"
+      :entity="'donor'"
       @tableEditButtonClick="editModalVisible = true"
       @tableDeleteConfirmed="deleteDonor"
     />

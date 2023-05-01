@@ -3,13 +3,6 @@ export const schema = {
         "Expense": {
             "name": "Expense",
             "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "expenseName": {
                     "name": "expenseName",
                     "isArray": false,
@@ -38,22 +31,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "causeID": {
-                    "name": "causeID",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "causeName": {
                     "name": "causeName",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "donationID": {
-                    "name": "donationID",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -66,18 +45,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "allocationID": {
-                    "name": "allocationID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "allocationName": {
                     "name": "allocationName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -111,9 +83,17 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
+                        "fields": [
+                            "expenseName"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
                         "name": "byAllocation",
                         "fields": [
-                            "allocationID"
+                            "allocationName"
                         ]
                     }
                 },
@@ -143,13 +123,6 @@ export const schema = {
         "Allocation": {
             "name": "Allocation",
             "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "allocationName": {
                     "name": "allocationName",
                     "isArray": false,
@@ -171,24 +144,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "causeID": {
-                    "name": "causeID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "causeName": {
                     "name": "causeName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "donationID": {
-                    "name": "donationID",
-                    "isArray": false,
-                    "type": "ID",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -196,7 +155,7 @@ export const schema = {
                     "name": "donationName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "amount": {
@@ -218,7 +177,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "allocationID"
+                            "allocationName"
                         ]
                     }
                 },
@@ -253,9 +212,17 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
+                        "fields": [
+                            "allocationName"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
                         "name": "byCause",
                         "fields": [
-                            "causeID"
+                            "causeName"
                         ]
                     }
                 },
@@ -264,7 +231,7 @@ export const schema = {
                     "properties": {
                         "name": "byDonation",
                         "fields": [
-                            "donationID"
+                            "donationName"
                         ]
                     }
                 },
@@ -294,13 +261,6 @@ export const schema = {
         "Cause": {
             "name": "Cause",
             "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "causeName": {
                     "name": "causeName",
                     "isArray": false,
@@ -348,7 +308,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "causeID"
+                            "causeName"
                         ]
                     }
                 },
@@ -381,6 +341,14 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "causeName"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -406,13 +374,6 @@ export const schema = {
         "Donation": {
             "name": "Donation",
             "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "donationName": {
                     "name": "donationName",
                     "isArray": false,
@@ -448,18 +409,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "donorID": {
-                    "name": "donorID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "donorName": {
                     "name": "donorName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "Allocations": {
@@ -474,7 +428,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "donationID"
+                            "donationName"
                         ]
                     }
                 },
@@ -509,9 +463,17 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
+                        "fields": [
+                            "donationName"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
                         "name": "byDonor",
                         "fields": [
-                            "donorID"
+                            "donorName"
                         ]
                     }
                 },
@@ -541,13 +503,6 @@ export const schema = {
         "Donor": {
             "name": "Donor",
             "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "donorName": {
                     "name": "donorName",
                     "isArray": false,
@@ -581,7 +536,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "donorID"
+                            "donorName"
                         ]
                     }
                 },
@@ -614,6 +569,14 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "donorName"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -640,5 +603,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "956e7d6b6546e2300fd06187e11f74b4"
+    "version": "8ebbe3811ae2ff17ef7f5f926d0b5d18"
 };

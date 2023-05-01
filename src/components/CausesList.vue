@@ -55,7 +55,7 @@ export default {
     });
 
     const filterConfig = [
-      {name: 'causeName', label: 'име', type: 'string'}, 
+      {name: 'causeName', label: 'име', type: 'id'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
       {name: 'type', label: 'вид', type: 'string'},
@@ -118,7 +118,7 @@ export default {
   <div>
     <PaginatedTable
       :columns="columns"
-      :apiName="'causesApi'"
+      :entity="'cause'"
       @tableEditButtonClick="editModalVisible = true"
       @tableDeleteConfirmed="deleteCause"
     />

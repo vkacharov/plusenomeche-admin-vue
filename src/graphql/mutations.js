@@ -7,22 +7,15 @@ export const createExpense = /* GraphQL */ `
     $condition: ModelExpenseConditionInput
   ) {
     createExpense(input: $input, condition: $condition) {
-      id
       expenseName
       description
       amount
       date
-      causeID
       causeName
-      donationID
       donationName
-      allocationID
       allocationName
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -32,22 +25,15 @@ export const updateExpense = /* GraphQL */ `
     $condition: ModelExpenseConditionInput
   ) {
     updateExpense(input: $input, condition: $condition) {
-      id
       expenseName
       description
       amount
       date
-      causeID
       causeName
-      donationID
       donationName
-      allocationID
       allocationName
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -57,22 +43,15 @@ export const deleteExpense = /* GraphQL */ `
     $condition: ModelExpenseConditionInput
   ) {
     deleteExpense(input: $input, condition: $condition) {
-      id
       expenseName
       description
       amount
       date
-      causeID
       causeName
-      donationID
       donationName
-      allocationID
       allocationName
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -82,42 +61,28 @@ export const createAllocation = /* GraphQL */ `
     $condition: ModelAllocationConditionInput
   ) {
     createAllocation(input: $input, condition: $condition) {
-      id
       allocationName
       description
       date
-      causeID
       causeName
-      donationID
       donationName
       amount
       Expenses {
         items {
-          id
           expenseName
           description
           amount
           date
-          causeID
           causeName
-          donationID
           donationName
-          allocationID
           allocationName
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -127,42 +92,28 @@ export const updateAllocation = /* GraphQL */ `
     $condition: ModelAllocationConditionInput
   ) {
     updateAllocation(input: $input, condition: $condition) {
-      id
       allocationName
       description
       date
-      causeID
       causeName
-      donationID
       donationName
       amount
       Expenses {
         items {
-          id
           expenseName
           description
           amount
           date
-          causeID
           causeName
-          donationID
           donationName
-          allocationID
           allocationName
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -172,42 +123,28 @@ export const deleteAllocation = /* GraphQL */ `
     $condition: ModelAllocationConditionInput
   ) {
     deleteAllocation(input: $input, condition: $condition) {
-      id
       allocationName
       description
       date
-      causeID
       causeName
-      donationID
       donationName
       amount
       Expenses {
         items {
-          id
           expenseName
           description
           amount
           date
-          causeID
           causeName
-          donationID
           donationName
-          allocationID
           allocationName
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -217,7 +154,6 @@ export const createCause = /* GraphQL */ `
     $condition: ModelCauseConditionInput
   ) {
     createCause(input: $input, condition: $condition) {
-      id
       causeName
       description
       date
@@ -225,29 +161,19 @@ export const createCause = /* GraphQL */ `
       type
       Allocations {
         items {
-          id
           allocationName
           description
           date
-          causeID
           causeName
-          donationID
           donationName
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -257,7 +183,6 @@ export const updateCause = /* GraphQL */ `
     $condition: ModelCauseConditionInput
   ) {
     updateCause(input: $input, condition: $condition) {
-      id
       causeName
       description
       date
@@ -265,29 +190,19 @@ export const updateCause = /* GraphQL */ `
       type
       Allocations {
         items {
-          id
           allocationName
           description
           date
-          causeID
           causeName
-          donationID
           donationName
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -297,7 +212,6 @@ export const deleteCause = /* GraphQL */ `
     $condition: ModelCauseConditionInput
   ) {
     deleteCause(input: $input, condition: $condition) {
-      id
       causeName
       description
       date
@@ -305,29 +219,19 @@ export const deleteCause = /* GraphQL */ `
       type
       Allocations {
         items {
-          id
           allocationName
           description
           date
-          causeID
           causeName
-          donationID
           donationName
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -337,39 +241,27 @@ export const createDonation = /* GraphQL */ `
     $condition: ModelDonationConditionInput
   ) {
     createDonation(input: $input, condition: $condition) {
-      id
       donationName
       description
       amount
       type
       date
-      donorID
       donorName
       Allocations {
         items {
-          id
           allocationName
           description
           date
-          causeID
           causeName
-          donationID
           donationName
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -379,39 +271,27 @@ export const updateDonation = /* GraphQL */ `
     $condition: ModelDonationConditionInput
   ) {
     updateDonation(input: $input, condition: $condition) {
-      id
       donationName
       description
       amount
       type
       date
-      donorID
       donorName
       Allocations {
         items {
-          id
           allocationName
           description
           date
-          causeID
           causeName
-          donationID
           donationName
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -421,39 +301,27 @@ export const deleteDonation = /* GraphQL */ `
     $condition: ModelDonationConditionInput
   ) {
     deleteDonation(input: $input, condition: $condition) {
-      id
       donationName
       description
       amount
       type
       date
-      donorID
       donorName
       Allocations {
         items {
-          id
           allocationName
           description
           date
-          causeID
           causeName
-          donationID
           donationName
           amount
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -463,34 +331,24 @@ export const createDonor = /* GraphQL */ `
     $condition: ModelDonorConditionInput
   ) {
     createDonor(input: $input, condition: $condition) {
-      id
       donorName
       description
       date
       Donations {
         items {
-          id
           donationName
           description
           amount
           type
           date
-          donorID
           donorName
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -500,34 +358,24 @@ export const updateDonor = /* GraphQL */ `
     $condition: ModelDonorConditionInput
   ) {
     updateDonor(input: $input, condition: $condition) {
-      id
       donorName
       description
       date
       Donations {
         items {
-          id
           donationName
           description
           amount
           type
           date
-          donorID
           donorName
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -537,34 +385,24 @@ export const deleteDonor = /* GraphQL */ `
     $condition: ModelDonorConditionInput
   ) {
     deleteDonor(input: $input, condition: $condition) {
-      id
       donorName
       description
       date
       Donations {
         items {
-          id
           donationName
           description
           amount
           type
           date
-          donorID
           donorName
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

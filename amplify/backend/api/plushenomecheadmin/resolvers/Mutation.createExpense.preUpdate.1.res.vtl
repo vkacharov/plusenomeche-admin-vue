@@ -3,9 +3,6 @@
     $util.error($ctx.error.message, $ctx.error.type)
 #end
 ## Pass back the result from DynamoDB. **
-#set($ctx.args.input.allocationName = $ctx.result.allocationName)
 #set($ctx.args.input.donationName = $ctx.result.donationName)
-#set($ctx.args.input.donationID = $ctx.result.donationID)
 #set($ctx.args.input.causeName = $ctx.result.causeName)
-#set($ctx.args.input.causeID = $ctx.result.causeID)
 $util.toJson($ctx.result)

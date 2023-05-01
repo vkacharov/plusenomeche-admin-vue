@@ -1,0 +1,18 @@
+## Since we dropped the versioning and conflict resolution, 
+## we have to manually check if there are Allocations referencing the Donation being deleted
+
+#set( $query = {
+  "expression": "#partitionKey = :partitionKey",
+  "expressionNames": {
+      "#partitionKey": "allocationName"
+  },
+  "expressionValues": {
+      ":partitionKey": $util.dynamodb.toDynamoDB($ctx.args.input.allocationName)
+  }
+} )
+
+{
+    "operation": "Query",
+    "query":     $util.toJson($query),
+    "index": "byAllocation"
+}

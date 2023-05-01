@@ -1,14 +1,14 @@
 {
-  "prod": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-plushenomecheadmin-prod-230331-authRole",
-      "UnauthRoleArn": "arn:aws:iam::734523877834:role/amplify-plushenomecheadmin-prod-230331-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::734523877834:role/amplify-plushenomecheadmin-prod-230331-authRole",
+      "AuthRoleName": "amplify-plushenomecheadmin-dev-231002-authRole",
+      "UnauthRoleArn": "arn:aws:iam::734523877834:role/amplify-plushenomecheadmin-dev-231002-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::734523877834:role/amplify-plushenomecheadmin-dev-231002-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-plushenomecheadmin-prod-230331-deployment",
-      "UnauthRoleName": "amplify-plushenomecheadmin-prod-230331-unauthRole",
-      "StackName": "amplify-plushenomecheadmin-prod-230331",
-      "StackId": "arn:aws:cloudformation:eu-west-1:734523877834:stack/amplify-plushenomecheadmin-prod-230331/1acc1b40-d96d-11ed-af50-0281cd44b4b3",
+      "DeploymentBucketName": "amplify-plushenomecheadmin-dev-231002-deployment",
+      "UnauthRoleName": "amplify-plushenomecheadmin-dev-231002-unauthRole",
+      "StackName": "amplify-plushenomecheadmin-dev-231002",
+      "StackId": "arn:aws:cloudformation:eu-west-1:734523877834:stack/amplify-plushenomecheadmin-dev-231002/833966c0-dbc9-11ed-b017-0aa92aa32ded",
       "AmplifyAppId": "d2ky9g9t40mi5s"
     },
     "categories": {

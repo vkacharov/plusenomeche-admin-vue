@@ -28,7 +28,7 @@
                     formInputs[field.name] = edit[field.name];
                 });
 
-                formInputs.id = edit.id;
+                formInputs._version = edit._version;
             }
 
             const onAddEditButtonClick = () => {
@@ -56,6 +56,10 @@
     <div class="add-edit-form">
         <div v-for="field in config" class="add-edit-field">
             <label>{{field.label}}</label>
+
+            <div v-if="field.type == 'id'">
+                <input v-model="formInputs[field.name]" :readonly="isEdit" :disabled="isEdit">
+            </div>
 
             <div v-if="field.type == 'string'">
                 <input v-model="formInputs[field.name]">

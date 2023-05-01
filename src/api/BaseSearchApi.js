@@ -7,8 +7,10 @@ export class BaseSearchApi {
     #onCreateSubscription;
     #updateMutation;
     #deleteMutation;
+    #id;
 
     constructor(props) {
+        this.#id = props.entity + 'Name';
         this.#search = props.search;
         this.#searchQuery = props.searchQuery;
         this.#createMutation = props.createMutation;
@@ -80,12 +82,13 @@ export class BaseSearchApi {
       }
     }
 
-    async delete(id, _version) {
+    async delete(name, id, _version) {
       try {
         const result = await API.graphql({
           query: this.#deleteMutation,
           variables: { 
             input: {
+              [this.#id]: name,
               id: id, 
               _version: _version
             }
@@ -97,23 +100,6 @@ export class BaseSearchApi {
       } catch (exception) {
         throw exception.errors[0];
       }  
-    }
-
-    async get(query, id) {
-      try {
-        const result = await API.graphql({
-          query: query, 
-          variables: {
-            id: id
-          }, 
-          authMode: 'AMAZON_COGNITO_USER_POOLS'
-        });
-        
-        return result; 
-      } catch (exception) {
-        console.error(exception);
-        throw exception;
-      }
     }
   
     parseApiItems(apiItems) {

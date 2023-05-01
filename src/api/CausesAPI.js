@@ -6,6 +6,7 @@ import { onCreateCause } from '../graphql/subscriptions';
 export class CausesApi extends BaseSearchApi {
     constructor() {
         super({
+              entity: 'cause',
               search: 'searchCauses', 
               searchQuery: searchCauses, 
               createMutation: createCause, 
@@ -19,7 +20,6 @@ export class CausesApi extends BaseSearchApi {
         return apiCauses.map(cause => {
 
             return {
-              id: cause.id,
               _version: cause._version,
               causeName: cause.causeName, 
               date: cause.date,

@@ -3,6 +3,6 @@
     $util.error($ctx.error.message, $ctx.error.type)
 #end
 ## Pass back the result from DynamoDB. **
-$util.qr($ctx.stash.put("DONOR QUERY RESULT", $util.toJson($ctx.result)))
-#set($ctx.args.input.donorName = $ctx.result.donorName)
+#set($ctx.args.input.donationName = $ctx.result.donationName)
+#set($ctx.args.input.causeName = $ctx.result.causeName)
 $util.toJson($ctx.result)

@@ -60,11 +60,11 @@ export default {
     });
 
     const filterConfig = [
-      {name: 'allocationName', label: 'име', type: 'string'}, 
+      {name: 'allocationName', label: 'име', type: 'id'}, 
       {name: 'description', label: 'описание', type: 'string'}, 
       {name: 'date', label: 'дата', type: 'date'},
-      {name: 'donationID', label: 'дарение', type: 'select', api: 'donationsApi'},
-      {name: 'causeID', label: 'кауза', type: 'select', api: 'causesApi'},
+      {name: 'donationName', label: 'дарение', type: 'select', api: 'donationsApi'},
+      {name: 'causeName', label: 'кауза', type: 'select', api: 'causesApi'},
     ];
 
     const addEditConfig = [... filterConfig, {name: 'amount', label: 'сума', type: 'number'}];
@@ -123,7 +123,7 @@ export default {
   <div>
     <PaginatedTable
       :columns="columns"
-      :apiName="'allocationsApi'"
+      :entity="'allocation'"
       @tableEditButtonClick="editModalVisible = true"
       @tableDeleteConfirmed="deleteAllocation"
     />
