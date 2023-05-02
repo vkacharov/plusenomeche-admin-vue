@@ -4,7 +4,7 @@ export function createSearchFilter(filter) {
     for (let key in filter) {
         const field = filter[key];
         if (field.value) {
-            if (field.type == 'string' || field.type == 'select') {
+            if (field.type == 'string' || field.type == 'select' || field.type == 'id') {
                 searchFilter[key] = {
                     match: field.value
                 }

@@ -53,7 +53,7 @@
     <div class="filter-component">
         <div v-for="field in config" class="filter-field">
             <label>{{field.label}}</label>
-            <div v-if="field.type == 'string'">
+            <div v-if="field.type == 'string' || field.type == 'id'">
                 <input v-model="formInputs[field.name].value">
             </div>
             <div v-if="field.type == 'date'">
